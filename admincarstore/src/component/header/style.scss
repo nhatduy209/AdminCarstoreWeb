@@ -1,24 +1,31 @@
 .header {
     &-container {
-        width: calc(100% - 340px);
+        width: calc(100% - 140px);
         background-color: #fff;
         border-radius: 20px 0 0;
         color: #000;
         position: fixed;
         padding-inline: 20px;
         top: 0;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        &.collapse {
+            width: calc(100% - 40px);
+        }
+        .mini-avatar{
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            position: fixed;
+            right: 12px;
+        }
     }
     &-content {
         display: flex;
         align-items: center;
         height: 50px;
         justify-content: space-between;
-        .mini-avatar{
-            height: 40px;
-            width: 40px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+        padding-right: 200px;
+        transition: 0.5s ease-in-out;
     }
 }

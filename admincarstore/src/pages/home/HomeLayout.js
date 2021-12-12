@@ -7,8 +7,8 @@ import Header from '../../component/header/Header';
 const HomeLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className='main-layout'>
-        <Navigator/>
+    <div className={`main-layout ${isOpen ? 'collapse' : ''}`}>
+        {Navigator(isOpen)}
         <div className='main-page'>
           {Header(setIsOpen,isOpen)}
           hello

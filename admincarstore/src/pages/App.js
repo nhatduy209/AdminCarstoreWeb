@@ -23,6 +23,9 @@ function App() {
         />
         <Route exact path="/login" element={<Login/>} />
         <Route exact path="/home" element={<HomeLayout/>} />
+        <Route exact path="/list" element={<HomeLayout/>} />
+        <Route exact path="/booking" element={<HomeLayout/>} />
+        <Route exact path="/store-info" element={<HomeLayout/>} />
       </Routes>
     </div>
   )

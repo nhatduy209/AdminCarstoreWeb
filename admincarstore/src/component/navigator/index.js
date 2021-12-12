@@ -1,17 +1,22 @@
 export const linksList = [
     {
       title: 'Car management',
-      icon: 'fas fa-car',
-      link: 'https://quasar.dev'
+      icon: 'fa-house',
+      path: '/home'
+    },
+    {
+      title: 'Car management',
+      icon: 'fa-car',
+      path: '/list'
     },
     {
       title: 'Store infomation',
-      icon: 'fas fa-store',
-      link: 'https://github.com/quasarframework'
+      icon: 'fa-store',
+      path: '/store-info'
     },
     {
       title: 'Booking management',
-      icon: 'fas fa-calendar-check',
-      link: 'https://awesome.quasar.dev'
+      icon: 'fa-calendar-check',
+      path: '/booking'
     }
   ];
