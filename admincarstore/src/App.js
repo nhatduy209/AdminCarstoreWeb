@@ -1,23 +1,21 @@
 /* eslint-disable react/react-in-jsx-scope */
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { useState } from 'react';
+import Navigator from './component/navigator/Navidator';
+import Header from './component/header/Header';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+      <div className='main-layout'>
+        <Navigator/>
+        <div className='main-page'>
+          {Header(setIsOpen,isOpen)}
+          hello
+        </div>
+      </div>
     </div>
   );
 }

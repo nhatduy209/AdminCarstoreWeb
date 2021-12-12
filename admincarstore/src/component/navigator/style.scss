@@ -1,0 +1,33 @@
+.navigator {
+    &-container {
+        width: 300px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+    }
+    &-item{
+        display: flex;
+        justify-content: space-between;
+        padding-inline: 40px;
+        padding-block: 20px;
+        color: #fff;
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+    }
+    &-header {
+        padding: 40px 20px;
+        color: #fff;
+        &__avatar {
+            height: 80px;
+            width: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        &__info {
+            margin: 12px;
+        }
+    }
+}
