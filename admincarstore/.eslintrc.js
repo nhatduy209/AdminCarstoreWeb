@@ -13,5 +13,7 @@ module.exports = {
     requireConfigFile: false,
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'no-unused-vars': 'off',
+  },
 };
