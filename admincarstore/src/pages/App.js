@@ -7,12 +7,13 @@ import {
   Route,
   Navigate 
 } from "react-router-dom";
+import CarManagement from './car-management/CarManagement';
 
 function App() {
   return (
     <div className="App">
       <Routes >
-        <Route
+        {/* <Route
           exact
           path="/"
           render={() => {
@@ -20,12 +21,9 @@ function App() {
                 <Navigate to="/login" />
               )
           }}
-        />
+        /> */}
         <Route exact path="/login" element={<Login/>} />
-        <Route exact path="/home" element={<HomeLayout/>} />
-        <Route exact path="/list" element={<HomeLayout/>} />
-        <Route exact path="/booking" element={<HomeLayout/>} />
-        <Route exact path="/store-info" element={<HomeLayout/>} />
+        <Route exact path="*" element={<HomeLayout/>} />
       </Routes>
     </div>
   )

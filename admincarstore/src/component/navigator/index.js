@@ -1,8 +1,8 @@
 export const linksList = [
     {
-      title: 'Car management',
+      title: 'Home',
       icon: 'fa-house',
-      path: '/home'
+      path: '/'
     },
     {
       title: 'Car management',
