@@ -11,11 +11,11 @@ import {Icon} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { getcar, getListCar } from '../../Redux/reducer/CarReducer';
+import {getCar, getListCar} from '../../Redux/reducer/CarReducer';
 import {ToastContainer, toast} from 'react-toastify';
 
 function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+  return {name, calories, fat, carbs, protein};
 }
 
 const rows = [
@@ -32,84 +32,92 @@ const CarManagement = () => {
   const getListCars = useSelector(getListCar);
   const dispatch = useDispatch();
 
+  console.log('LIST--', getListCars);
+
   const handleGet = useCallback(() => {
     console.log('click');
-    dispatch(getcar);
-    toast.success('Success Loggin !', {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    setCar(getListCars);
-  })
+    try {
+      dispatch(getCar());
+    } catch (Err) {
+      console.log(Err);
+    }
+    console.log('OH NO');
+    // toast.success('Success Loggin !', {
+    //   position: toast.POSITION.TOP_RIGHT,
+    // });
+    // setCar(getListCars);
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
   const optionClick = () => {
     console.log('click');
-  }
+  };
   return (
     <div className="car-management-container">
-      <div className='car-management__header'>
-      <div className='car-management__header__title'>
-        Title
-      </div>
-      <div className='car-management__header__control'>
-        <input/>
-        <div className='add-button'>
-        <Icon
-        onClick={() => handleGet()}
-          baseClassName="fas"
-          className="fa-car-side"
-          sx={{fontSize: 20, padding: 1, color: '#fff', marginLeft: -0.5}}
-        />
+      <div className="car-management__header">
+        <div className="car-management__header__title">Title</div>
+        <div className="car-management__header__control">
+          <input />
+          <div className="add-button">
+            <Icon
+              onClick={() => handleGet()}
+              baseClassName="fas"
+              className="fa-car-side"
+              sx={{fontSize: 20, padding: 1, color: '#fff', marginLeft: -0.5}}
+            />
+          </div>
         </div>
       </div>
-      </div>
       <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>#</TableCell>
-            <TableCell align="right" width="45">Image</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Brand</TableCell>
-            <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Color</TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow
-              key={index}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {index}
+        <Table sx={{minWidth: 650}} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>#</TableCell>
+              <TableCell align="right" width="45">
+                Image
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              <TableCell align="right" onClick={() => optionClick()}><Icon
-                baseClassName="fas"
-                className="fa-ellipsis-vertical"
-                sx={{fontSize: 18}}
-              /></TableCell>
+              <TableCell align="right">Name</TableCell>
+              <TableCell align="right">Brand</TableCell>
+              <TableCell align="right">Quantity</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Color</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <TablePagination
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow
+                key={index}
+                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                <TableCell component="th" scope="row">
+                  {index}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right" onClick={() => optionClick()}>
+                  <Icon
+                    baseClassName="fas"
+                    className="fa-ellipsis-vertical"
+                    sx={{fontSize: 18}}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
@@ -118,9 +126,9 @@ const CarManagement = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-    </TableContainer>
+      </TableContainer>
     </div>
-  )
-}
+  );
+};
 
 export default CarManagement;

@@ -4,12 +4,13 @@ import {STATUS} from '../../Config/Status/Index';
 import GetService from '../../Service/GetService';
 
 const initialState = {
-  listCar: [],
-  status: false
+  listCar: ['HELLo'],
+  status: false,
 };
 
 // First, create the thunk
-export const getcar = createAsyncThunk('car', async () => {
+export const getCar = createAsyncThunk('car/getlist', async () => {
+  console.log('Tòn ngu ngốc');
   var getService = new GetService();
   const response = await getService.getAPI(APP_URL.GET_LIST_CAR);
   console.log(response);
@@ -17,7 +18,7 @@ export const getcar = createAsyncThunk('car', async () => {
 });
 
 export const carReducer = createSlice({
-  name: 'counter',
+  name: 'carReducer',
   initialState,
   reducers: {
     changeName: state => {
@@ -25,7 +26,7 @@ export const carReducer = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getcar.fulfilled, (state, action) => {
+    builder.addCase(getCar.fulfilled, (state, action) => {
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.result === STATUS.SUCCESS) {
