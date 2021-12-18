@@ -9,7 +9,7 @@ const initialState = {
     avatar: '',
     birthday: '',
     cart: [],
-    email: '',
+    email: 'admin@gmail.com',
     gender: true,
     meetings: [],
     name: '',

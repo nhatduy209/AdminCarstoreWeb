@@ -10,6 +10,7 @@ import {
 import CarManagement from '../car-management/CarManagement';
 import Home from '../home-page/home';
 import StoreInfo from '../store-info/StoreInfo';
+import Booking from '../booking/Booking';
 
 const HomeLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const HomeLayout = () => {
           <Routes>
             <Route exact path="*" element={<Home/>} />
             <Route path="/list" element={<CarManagement/>} />
-            <Route path="/booking" element={<CarManagement/>} />
+            <Route path="/booking" element={<Booking/>} />
             <Route path="/store-info" element={<StoreInfo/>} />
           </Routes>
         </div>

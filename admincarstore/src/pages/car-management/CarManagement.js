@@ -11,42 +11,42 @@ import {Icon} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCar, getListCar} from '../../Redux/reducer/CarReducer';
-import {ToastContainer, toast} from 'react-toastify';
+import {getCar} from '../../Redux/reducer/CarReducer';
+import CarForm from './Component/CarForm/CarForm';
+import Dialog from '@mui/material/Dialog';
+import Box from '@mui/material/Box';
 
-function createData(name, calories, fat, carbs, protein) {
-  return {name, calories, fat, carbs, protein};
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  transition: '0.5s ease-in-out',
+  width: 400,
+  bgcolor: 'background.paper',
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+const options = [
+  'View',
+  'Edit',
+  'Delete'
+]
 const CarManagement = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [pageIndex, setPageIndex] = useState(1);
   const [page, setPage] = useState(0);
-  const [cars, setCar] = useState([]);
-  const getListCars = useSelector(getListCar);
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const isOpen  = Boolean(anchorEl);
+  const cars = useSelector(state => state.CarReducer.listCar);
   const dispatch = useDispatch();
 
-  console.log('LIST--', getListCars);
-
-  const handleGet = useCallback(() => {
-    console.log('click');
-    try {
-      dispatch(getCar());
-    } catch (Err) {
-      console.log(Err);
-    }
-    console.log('OH NO');
-    // toast.success('Success Loggin !', {
-    //   position: toast.POSITION.TOP_RIGHT,
-    // });
-    // setCar(getListCars);
-  }, []);
+  useEffect(() => {
+    dispatch(getCar());
+  }, [pageIndex, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,8 +57,12 @@ const CarManagement = () => {
     setPage(0);
   };
 
-  const optionClick = () => {
-    console.log('click');
+  const optionClick = (item) => {
+    console.log('click', item);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
   return (
     <div className="car-management-container">
@@ -68,7 +72,7 @@ const CarManagement = () => {
           <input />
           <div className="add-button">
             <Icon
-              onClick={() => handleGet()}
+              onClick={() => optionClick()}
               baseClassName="fas"
               className="fa-car-side"
               sx={{fontSize: 20, padding: 1, color: '#fff', marginLeft: -0.5}}
@@ -93,25 +97,34 @@ const CarManagement = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {cars.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                 <TableCell component="th" scope="row">
-                  {index}
+                  {index + 1}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                <TableCell align="right" onClick={() => optionClick()}>
+                <TableCell align="right">
+                  <img width={200} src={row.img}/></TableCell>
+                <TableCell align="right">{row.name ?? '--'}</TableCell>
+                <TableCell align="right">{row.category ?? '--'}</TableCell>
+                <TableCell align="right">{row?.color?.count ?? '--'}</TableCell>
+                <TableCell align="right">{`$${row.prices ?? '--'}`}</TableCell>
+                <TableCell align="right">{row.color?.count ?? '--'}</TableCell>
+                <TableCell align="right">
+                  <div>
                   <Icon
                     baseClassName="fas"
                     className="fa-ellipsis-vertical"
                     sx={{fontSize: 18}}
                   />
+                  <div>
+                    <div>View</div>
+                    <div>Edit</div>
+                    <div>Delete</div>
+                  </div>
+                  
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -120,13 +133,27 @@ const CarManagement = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={cars.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
+      <Dialog open={open} aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+          <div className='car-form-container'>
+          <div className='car-form__header'>
+          <div>Title</div>
+          <Icon onClick={() => setOpen(false)}
+                    baseClassName="fas"
+                    className="fa-xmark"
+                    sx={{fontSize: 24}}
+                  />
+          </div>
+        {CarForm(selectedItem)}
+          </div>
+      </Dialog>
     </div>
   );
 };

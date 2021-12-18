@@ -10,7 +10,6 @@ const initialState = {
 
 // First, create the thunk
 export const getCar = createAsyncThunk('car/getlist', async () => {
-  console.log('Tòn ngu ngốc');
   var getService = new GetService();
   const response = await getService.getAPI(APP_URL.GET_LIST_CAR);
   console.log(response);
@@ -29,13 +28,7 @@ export const carReducer = createSlice({
     builder.addCase(getCar.fulfilled, (state, action) => {
       // Add user to the state array
       console.log('ACTION -', action);
-      if (action.payload.result === STATUS.SUCCESS) {
-        state.listCar = action.payload.data;
-        state.status = action.payload.result;
-      } else {
-        console.log(action);
-        state.status = action.payload.result;
-      }
+      state.listCar = action.payload;
     });
   },
 });
@@ -43,6 +36,9 @@ export const carReducer = createSlice({
 // Action creators are generated for each case reducer function
 export const {changeName} = carReducer.actions;
 
-export const getListCar = state => state.CarReducer.listCar;
+export const getListCar = state => {
+  console.log('state -', state);
+  return state.CarReducer.listCar;
+};
 
 export default carReducer.reducer;
