@@ -24,7 +24,7 @@ const Navigator = isOpen => {
               <Icon
                 baseClassName="fas"
                 className={`${item.icon}`}
-                sx={{fontSize: 30, padding: 1}}
+                sx={{fontSize: 16, padding: 1}}
               />
               <div className='navigator-item__title'>{item.title}</div>
             </Link>

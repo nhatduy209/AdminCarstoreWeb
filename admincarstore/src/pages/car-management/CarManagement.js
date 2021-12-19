@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getCar} from '../../Redux/reducer/CarReducer';
 import CarForm from './Component/CarForm/CarForm';
 import Dialog from '@mui/material/Dialog';
-import Box from '@mui/material/Box';
+import { getCategory } from '../../Redux/reducer/CategoryReducer';
 
 const style = {
   position: 'absolute',
@@ -46,6 +46,7 @@ const CarManagement = () => {
 
   useEffect(() => {
     dispatch(getCar());
+    dispatch(getCategory());
   }, [pageIndex, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
@@ -61,9 +62,10 @@ const CarManagement = () => {
     console.log('click', item);
     setOpen(true);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+  const renderNull = () => {
+    return cars.length > 0 ? <caption></caption> : <caption><div className='table-null'><img height={100} width={100} src='https://i.pinimg.com/originals/98/4a/0e/984a0eb26ddb184a63ad4f9f53f8efeb.png'/> No data</div></caption>
+  }
   return (
     <div className="car-management-container">
       <div className="car-management__header">
@@ -82,6 +84,7 @@ const CarManagement = () => {
       </div>
       <TableContainer component={Paper}>
         <Table sx={{minWidth: 650}} aria-label="simple table">
+        {renderNull()}
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
@@ -97,7 +100,7 @@ const CarManagement = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cars.map((row, index) => (
+            { cars.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
@@ -108,9 +111,9 @@ const CarManagement = () => {
                   <img width={200} src={row.img}/></TableCell>
                 <TableCell align="right">{row.name ?? '--'}</TableCell>
                 <TableCell align="right">{row.category ?? '--'}</TableCell>
-                <TableCell align="right">{row?.color?.count ?? '--'}</TableCell>
+                <TableCell align="right">{row?.color?.length ?? '--'}</TableCell>
                 <TableCell align="right">{`$${row.prices ?? '--'}`}</TableCell>
-                <TableCell align="right">{row.color?.count ?? '--'}</TableCell>
+                <TableCell align="right">{row.color?.length ?? '--'}</TableCell>
                 <TableCell align="right">
                   <div>
                   <Icon
@@ -133,25 +136,27 @@ const CarManagement = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={cars.length}
+          count={cars.length ?? 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
-      <Dialog open={open} aria-labelledby="alert-dialog-title"
+      <Dialog open={open}
+        className='car-form'
+        aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-          <div className='car-form-container'>
-          <div className='car-form__header'>
-          <div>Title</div>
-          <Icon onClick={() => setOpen(false)}
-                    baseClassName="fas"
-                    className="fa-xmark"
-                    sx={{fontSize: 24}}
-                  />
-          </div>
-        {CarForm(selectedItem)}
+          <div className='car-form--main'>
+            <div className='car-form__header'>
+              <div>Title</div>
+              <Icon onClick={() => setOpen(false)}
+                        baseClassName="fas"
+                        className="fa-xmark"
+                        sx={{fontSize: 24}}
+                      />
+            </div>
+            {CarForm(selectedItem)}
           </div>
       </Dialog>
     </div>

@@ -51,16 +51,16 @@ const Login = () => {
       />
       {/* Same as */}
       <ToastContainer />
-      <FormControl className="login-form">
+      <form className="login-form">
         <div className="login-title">Login</div>
         <div className="login-form__title">Email</div>
-        <OutlinedInput
+        <input
           className="login-form__input"
           placeholder="Please enter Email"
           onChange={value => setEmail(value.target.value)}
         />
         <div className="login-form__title">Password</div>
-        <OutlinedInput
+        <input
           className="login-form__input"
           placeholder="Please enter Password"
           onChange={value => setPassword(value.target.value)}
@@ -72,7 +72,7 @@ const Login = () => {
           <div>Login</div>
           <Icon baseClassName="fas" className="fa-circle-arrow-right" />
         </button>
-      </FormControl>
+      </form>
     </div>
   );
 };

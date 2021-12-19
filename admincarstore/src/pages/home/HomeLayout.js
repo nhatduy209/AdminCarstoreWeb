@@ -21,6 +21,7 @@ const HomeLayout = () => {
           {Header(setIsOpen,isOpen)}
           <Routes>
             <Route exact path="*" element={<Home/>} />
+            <Route path="/user" element={<StoreInfo/>} />
             <Route path="/list" element={<CarManagement/>} />
             <Route path="/booking" element={<Booking/>} />
             <Route path="/store-info" element={<StoreInfo/>} />

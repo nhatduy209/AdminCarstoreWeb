@@ -17,6 +17,12 @@ const Booking = () => {
         date: element.date_meeting
       })
     });
+    data.forEach(element => {
+      list.push({
+        title: element.full_name,
+        date: element.date_meeting
+      })
+    });
 
     console.log(list);
 

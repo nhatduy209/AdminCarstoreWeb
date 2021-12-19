@@ -5,6 +5,11 @@ export const linksList = [
       path: '/'
     },
     {
+      title: 'User',
+      icon: 'fa-user',
+      path: '/user'
+    },
+    {
       title: 'Car management',
       icon: 'fa-car',
       path: '/list'
