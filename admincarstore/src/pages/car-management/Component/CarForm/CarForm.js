@@ -11,9 +11,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getCategory} from '../../../../Redux/reducer/CategoryReducer';
 import {STATUS} from '../../../../Config/Status/Index';
 import {CarDefault} from '../../../../model/car';
-import { getListColor } from '../../../../Redux/reducer/ColorReducer';
-import { validate } from '../../../../helps/validattion';
-import { addCar } from '../../../../Redux/reducer/CarReducer';
+import {getListColor} from '../../../../Redux/reducer/ColorReducer';
+import {validate} from '../../../../helps/validattion';
+import {addCar} from '../../../../Redux/reducer/CarReducer';
 
 const CarForm = selectedItem => {
   const dispatch = useDispatch();
@@ -34,28 +34,28 @@ const CarForm = selectedItem => {
   };
 
   const handleListColor = () => {
-    return (
-      listColor.map((el, index) => (
-        <div key={index} style={{
+    return listColor.map((el, index) => (
+      <div
+        key={index}
+        style={{
           backgroundColor: el.color,
           width: 24,
           height: 24,
         }}></div>
-      ) )
-    )
-  }
+    ));
+  };
 
   const handleAddCar = () => {
     car.listColor = listColor;
-    console.log(car)
-    if(validate(car).length > 0) {
+    console.log(car);
+    if (validate(car).length > 0) {
       console.log('Please fill in all');
       return;
     }
 
     dispatch(addCar(car));
-  }
-  
+  };
+
   return (
     <div className="car-form--container">
       <form className="car-form-content">
@@ -139,9 +139,7 @@ const CarForm = selectedItem => {
                 sx={{fontSize: 18}}
               />
             </div>
-            <div>
-              {handleListColor()}
-            </div>
+            <div>{handleListColor()}</div>
             {/* <ColorForm></ColorForm> */}
           </div>
         </div>
