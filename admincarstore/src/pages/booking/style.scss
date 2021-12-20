@@ -1,0 +1,14 @@
+.booking-form {
+  .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+    width: 90%;
+    max-width: 550px;
+    padding: 20px;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  &-content {
+    margin-block: 12px;
+  }
+}
