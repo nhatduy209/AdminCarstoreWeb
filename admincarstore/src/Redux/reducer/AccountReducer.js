@@ -1,9 +1,12 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk, current} from '@reduxjs/toolkit';
 import {APP_URL} from '../../Config/Url/URL';
 import {STATUS, GET_LIST_USER_STATUS} from '../../Config/Status/Index';
 import PostService from '../../Service/PostService';
 import GetService from '../../Service/GetService';
+import DeleteService from '../../Service/DeleteService';
 import {token_authen} from '../../Config/Status/Key';
+import {toast} from 'react-toastify';
+
 const initialState = {
   account: {
     address: '',
@@ -38,6 +41,16 @@ export const login = createAsyncThunk('account/login', async paramsLogin => {
   return response.data;
 });
 
+// First, create the thunk
+export const deleteUser = createAsyncThunk('account/delete', async email => {
+  const params = {
+    email: email,
+  };
+  var delService = new DeleteService();
+  const response = await delService.DeleteAPI(APP_URL.DELETE_USER, params);
+  return response.data;
+});
+
 export const getAllUser = createAsyncThunk('account/getUser', async () => {
   var getService = new GetService();
   const response = await getService.getAPI(APP_URL.GET_LIST_USER);
@@ -50,6 +63,13 @@ export const accountReducer = createSlice({
   reducers: {
     changeName: state => {
       state.account.email = 'change@gmail.com';
+    },
+
+    deleteUserRedux: (state, action) => {
+      console.log('before', current(state));
+      state.lisAcc.listUser = state.lisAcc.listUser.filter(
+        item => item.email !== action.payload,
+      );
     },
   },
   extraReducers: builder => {
@@ -73,11 +93,21 @@ export const accountReducer = createSlice({
         state.lisAcc.status = GET_LIST_USER_STATUS.FAIL;
       }
     });
+
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
+      // Add user to the state array
+      console.log('HELLO', action.payload);
+      if (action.payload.result === STATUS.SUCCESS) {
+        toast.success('Delete user successfully');
+      } else {
+        toast.error('Delete user error');
+      }
+    });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {changeName} = accountReducer.actions;
+export const {changeName, deleteUserRedux} = accountReducer.actions;
 
 export const getCurrentUser = state => state.AccountReducer.account;
 

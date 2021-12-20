@@ -35,4 +35,5 @@ export const APP_URL = {
   GET_LIST_COMMENT: URL_HEROKU + 'car/listcomment',
   ADD_COMMENT: URL_HEROKU + 'car/addcomment',
   GET_LIST_USER: URL_HEROKU + 'account/getlist',
+  DELETE_USER: URL_HEROKU + 'account/delete',
 };

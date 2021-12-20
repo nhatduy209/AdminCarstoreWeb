@@ -10,7 +10,6 @@ export default class GetService {
           token: authen_token ?? 'undefined', //the token is a variable which holds the token
         },
       });
-
       return {
         data: response.data,
         status: STATUS.SUCCESS,

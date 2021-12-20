@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Icon} from '@mui/material';
+import {Icon, speedDialActionClasses} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -15,7 +15,14 @@ import {getCar} from '../../Redux/reducer/CarReducer';
 import UserForm from './Component/UserForm/UserForm';
 import Dialog from '@mui/material/Dialog';
 import {getCategory} from '../../Redux/reducer/CategoryReducer';
-import {getAllUser, getListUser} from '../../Redux/reducer/AccountReducer';
+import {ToastContainer} from 'react-toastify';
+
+import {
+  getAllUser,
+  getListUser,
+  deleteUser,
+  deleteUserRedux,
+} from '../../Redux/reducer/AccountReducer';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -40,14 +47,19 @@ const User = () => {
   const cars = useSelector(state => state.CarReducer.listCar);
   const dispatch = useDispatch();
 
+  const listUser = useSelector(getListUser);
   useEffect(() => {
+    console.log('IS FETCH', listUser.listUser.length);
     dispatch(getAllUser());
   }, [pageIndex, rowsPerPage]);
-
-  const listUser = useSelector(getListUser);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  const handleDelete = useCallback(email => {
+    dispatch(deleteUser({email}));
+    dispatch(deleteUserRedux(email));
+  }, []);
 
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -58,8 +70,6 @@ const User = () => {
     console.log('click', item);
     setOpen(true);
   };
-
-  console.log('USER---', listUser);
 
   const renderNull = () => {
     return cars.length > 0 ? (
@@ -77,8 +87,24 @@ const User = () => {
       </caption>
     );
   };
+
+  console.log('HELLO --- LENGTZH ', listUser?.listUser?.length);
+
   return (
     <div className="car-management-container">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {/* Same as */}
+      <ToastContainer />
       <div className="car-management__header">
         <div className="car-management__header__title">Title</div>
         <div className="car-management__header__control">
@@ -87,7 +113,7 @@ const User = () => {
             <Icon
               onClick={() => optionClick()}
               baseClassName="fas"
-              className="fa-car-side"
+              className="fa-user-add"
               sx={{fontSize: 20, padding: 1, color: '#fff', marginLeft: -0.5}}
             />
           </div>
@@ -127,16 +153,28 @@ const User = () => {
                 <TableCell align="right">{row?.address ?? '--'}</TableCell>
                 <TableCell align="right">{row?.phone ?? '--'}</TableCell>
                 <TableCell align="right">
-                  <div>
-                    <Icon
-                      baseClassName="fas"
-                      className="fa-ellipsis-vertical"
-                      sx={{fontSize: 18}}
-                    />
-                    <div>
-                      <div>View</div>
-                      <div>Edit</div>
-                      <div>Delete</div>
+                  <div className="user-option">
+                    <div className="user-option-item edit">
+                      <Icon
+                        baseClassName="fas"
+                        className="fa-user-pen"
+                        sx={{fontSize: 18, padding: 0.5}}
+                      />
+                    </div>
+                    <div className="user-option-item view">
+                      <Icon
+                        baseClassName="fas"
+                        className="fa-info"
+                        sx={{fontSize: 18, padding: 0.5}}
+                      />
+                    </div>
+                    <div className="user-option-item delete">
+                      <Icon
+                        onClick={() => handleDelete(row.email)}
+                        baseClassName="fas"
+                        className="fa-user-xmark"
+                        sx={{fontSize: 18, padding: 0.5}}
+                      />
                     </div>
                   </div>
                 </TableCell>
