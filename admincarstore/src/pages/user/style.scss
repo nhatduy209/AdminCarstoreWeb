@@ -33,3 +33,28 @@
     }
   }
 }
+.user-option {
+  display: grid;
+  justify-content: center;
+  &-item{
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    &.view{
+      background-color: #DFE3EE
+    }
+    &.edit{
+      background-color: #7289DA
+    }
+    &.delete{
+      background-color: #BF0000
+    }
+  }
+}
