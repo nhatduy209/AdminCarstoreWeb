@@ -6,18 +6,18 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import CarManagement from './car-management/CarManagement';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
-
+import {token_authen} from '../Config/Status/Key';
 function App() {
   const navigate = useNavigate();
   const account = useSelector(state => state);
-  let tokenID = localStorage.getItem('tokenId');
-  // useEffect(() => {
-  //   tokenID = localStorage.getItem('tokenId');
-  //   if(!tokenID) {
-  //     console.log(tokenID);
-  //     navigate('/login');
-  //   }
-  // }, [tokenID])
+  const tokenID = 'token';
+  useEffect(() => {
+    const tokenID = localStorage.getItem(token_authen);
+    console.log('HELLO ', tokenID);
+    if (!tokenID) {
+      navigate('/login');
+    }
+  }, [tokenID]);
   return (
     <div className="App">
       <Routes>

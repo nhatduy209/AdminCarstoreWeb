@@ -12,10 +12,10 @@ import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCar} from '../../Redux/reducer/CarReducer';
-import UserForm from './Component/UserForm/UserForm'
+import UserForm from './Component/UserForm/UserForm';
 import Dialog from '@mui/material/Dialog';
-import { getCategory } from '../../Redux/reducer/CategoryReducer';
-
+import {getCategory} from '../../Redux/reducer/CategoryReducer';
+import {getAllUser, getListUser} from '../../Redux/reducer/AccountReducer';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -28,11 +28,7 @@ const style = {
   px: 4,
   pb: 3,
 };
-const options = [
-  'View',
-  'Edit',
-  'Delete'
-]
+const options = ['View', 'Edit', 'Delete'];
 const User = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [pageIndex, setPageIndex] = useState(1);
@@ -40,15 +36,15 @@ const User = () => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
-  const isOpen  = Boolean(anchorEl);
+  const isOpen = Boolean(anchorEl);
   const cars = useSelector(state => state.CarReducer.listCar);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCar());
-    dispatch(getCategory());
+    dispatch(getAllUser());
   }, [pageIndex, rowsPerPage]);
 
+  const listUser = useSelector(getListUser);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -58,14 +54,29 @@ const User = () => {
     setPage(0);
   };
 
-  const optionClick = (item) => {
+  const optionClick = item => {
     console.log('click', item);
     setOpen(true);
   };
 
+  console.log('USER---', listUser);
+
   const renderNull = () => {
-    return cars.length > 0 ? <caption></caption> : <caption><div className='table-null'><img height={100} width={100} src='https://i.pinimg.com/originals/98/4a/0e/984a0eb26ddb184a63ad4f9f53f8efeb.png'/> No data</div></caption>
-  }
+    return cars.length > 0 ? (
+      <caption></caption>
+    ) : (
+      <caption>
+        <div className="table-null">
+          <img
+            height={100}
+            width={100}
+            src="https://i.pinimg.com/originals/98/4a/0e/984a0eb26ddb184a63ad4f9f53f8efeb.png"
+          />{' '}
+          No data
+        </div>
+      </caption>
+    );
+  };
   return (
     <div className="car-management-container">
       <div className="car-management__header">
@@ -84,21 +95,23 @@ const User = () => {
       </div>
       <TableContainer component={Paper}>
         <Table sx={{minWidth: 650}} aria-label="simple table">
-        {renderNull()}
+          {renderNull()}
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell align="right" width="45">
-                Image
+                Avatar
               </TableCell>
               <TableCell align="right">Name</TableCell>
               <TableCell align="right">Email</TableCell>
               <TableCell align="right">Role</TableCell>
+              <TableCell align="right">Address</TableCell>
+              <TableCell align="right">Phone Number</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { cars.map((row, index) => (
+            {listUser?.listUser.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
@@ -106,23 +119,25 @@ const User = () => {
                   {index + 1}
                 </TableCell>
                 <TableCell align="right">
-                  <img width={200} src={row.img}/></TableCell>
+                  <img width={100} src={row.avatar} />
+                </TableCell>
                 <TableCell align="right">{row.name ?? '--'}</TableCell>
                 <TableCell align="right">{row.email ?? '--'}</TableCell>
                 <TableCell align="right">{row?.role ?? '--'}</TableCell>
+                <TableCell align="right">{row?.address ?? '--'}</TableCell>
+                <TableCell align="right">{row?.phone ?? '--'}</TableCell>
                 <TableCell align="right">
                   <div>
-                  <Icon
-                    baseClassName="fas"
-                    className="fa-ellipsis-vertical"
-                    sx={{fontSize: 18}}
-                  />
-                  <div>
-                    <div>View</div>
-                    <div>Edit</div>
-                    <div>Delete</div>
-                  </div>
-                  
+                    <Icon
+                      baseClassName="fas"
+                      className="fa-ellipsis-vertical"
+                      sx={{fontSize: 18}}
+                    />
+                    <div>
+                      <div>View</div>
+                      <div>Edit</div>
+                      <div>Delete</div>
+                    </div>
                   </div>
                 </TableCell>
               </TableRow>
@@ -139,21 +154,23 @@ const User = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
-      <Dialog open={open}
-        className='car-form'
+      <Dialog
+        open={open}
+        className="car-form"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-          <div className='car-form--main'>
-            <div className='car-form__header'>
-              <div>Title</div>
-              <Icon onClick={() => setOpen(false)}
-                        baseClassName="fas"
-                        className="fa-xmark"
-                        sx={{fontSize: 24}}
-                      />
-            </div>
-            {UserForm (selectedItem)}
+        <div className="car-form--main">
+          <div className="car-form__header">
+            <div>Title</div>
+            <Icon
+              onClick={() => setOpen(false)}
+              baseClassName="fas"
+              className="fa-xmark"
+              sx={{fontSize: 24}}
+            />
           </div>
+          {UserForm(selectedItem)}
+        </div>
       </Dialog>
     </div>
   );

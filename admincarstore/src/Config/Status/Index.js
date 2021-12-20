@@ -3,3 +3,9 @@ export const STATUS = {
   FAIL: 'FAIL',
   NONE: 'NOME',
 };
+
+export const GET_LIST_USER_STATUS = {
+  SUCCESS: 'GET_LIST_USER_SUCCESS',
+  FAIL: 'GET_LIST_USER_FAIL',
+  NONE: 'NONE',
+};

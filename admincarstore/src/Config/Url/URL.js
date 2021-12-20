@@ -34,4 +34,5 @@ export const APP_URL = {
   GET_HISTORY_ITEM: URL_HEROKU + 'account/gethistoryitems',
   GET_LIST_COMMENT: URL_HEROKU + 'car/listcomment',
   ADD_COMMENT: URL_HEROKU + 'car/addcomment',
+  GET_LIST_USER: URL_HEROKU + 'account/getlist',
 };
