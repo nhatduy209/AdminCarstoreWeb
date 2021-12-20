@@ -1,0 +1,35 @@
+.car-management{
+  &-container {
+    padding: 20px;
+  }
+  &__header {
+    padding-block: 20px;
+    &__title {
+      font-size: 56px;
+      font-weight: bolder;
+      text-align:start
+    }
+    &__control {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .add-button {
+        padding: 12px;
+        border-radius: 50%;
+        background-color: #6868ac;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        height: 36px;
+        width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      input {
+        height: 32px;
+        width: 40%;
+        max-width: 340px;
+        min-width: 240px;
+      }
+    }
+  }
+}

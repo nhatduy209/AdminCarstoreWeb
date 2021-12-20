@@ -1,0 +1,61 @@
+.car-form{
+  .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+    width: 90%;
+    max-width: 550px;
+  }
+  &--main {
+    padding: 20px;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  &-content {
+    display: flex;
+    justify-content: space-around;
+    margin-left: -12px;
+    &__img {
+      margin: auto;
+    }
+    &__field {
+      padding: 8px;
+      &__input {
+        width: 93%;
+        height: 30px;
+        border: 0.5px solid #ccc;
+        padding-inline: 8px;
+        border-radius: 4px;
+        &.select-list {
+          width: 103%;
+          height: 34px;
+          border: 0.5px solid #ccc;
+          font-size: 14px;
+        }
+      }
+      &__title {
+        padding-block: 12px;
+        font-weight: 600;
+      }
+      &__label{
+        padding-block: 12px;
+      }
+    }
+  }
+}
+.color-form {
+  padding: 20px;
+  &__header{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.list-color{
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

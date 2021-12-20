@@ -11,6 +11,7 @@ import CarManagement from '../car-management/CarManagement';
 import Home from '../home-page/home';
 import StoreInfo from '../store-info/StoreInfo';
 import Booking from '../booking/Booking';
+import User from '../user/user';
 
 const HomeLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const HomeLayout = () => {
           {Header(setIsOpen,isOpen)}
           <Routes>
             <Route exact path="*" element={<Home/>} />
-            <Route path="/user" element={<StoreInfo/>} />
+            <Route path="/user" element={<User/>} />
             <Route path="/list" element={<CarManagement/>} />
             <Route path="/booking" element={<Booking/>} />
             <Route path="/store-info" element={<StoreInfo/>} />
