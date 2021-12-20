@@ -15,12 +15,14 @@ import {useEffect} from 'react';
 function App() {
   const navigate = useNavigate()
   const account = useSelector(state => state)
-  const tokenID = localStorage.getItem('tokenId');
-  useEffect(() => {
-    if(!tokenID) {
-      navigate('/login');
-    }
-  }, [tokenID])
+  let tokenID = localStorage.getItem('tokenId');
+  // useEffect(() => {
+  //   tokenID = localStorage.getItem('tokenId');
+  //   if(!tokenID) {
+  //     console.log(tokenID);
+  //     navigate('/login');
+  //   }
+  // }, [tokenID])
   return (
     <div className="App">
       <Routes >

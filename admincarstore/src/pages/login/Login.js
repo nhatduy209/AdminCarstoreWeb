@@ -24,7 +24,6 @@ const Login = () => {
 
   const handleLogin = useCallback(
     (email, password) => {
-      navigate('/login');
       dispatch(login({email, password}));
       if (getUser.isLoggin === STATUS.SUCCESS) {
         toast.success('Success Loggin !', {
@@ -56,7 +55,7 @@ const Login = () => {
       />
       {/* Same as */}
       <ToastContainer />
-      <form className="login-form">
+      <FormControl className="login-form">
         <div className="login-title">Login</div>
         <div className="login-form__title">Email</div>
         <input
@@ -77,7 +76,7 @@ const Login = () => {
           <div>Login</div>
           <Icon baseClassName="fas" className="fa-circle-arrow-right" />
         </button>
-      </form>
+      </FormControl>
     </div>
   );
 };
