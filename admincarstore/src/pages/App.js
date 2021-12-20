@@ -5,13 +5,22 @@ import Login from './login/Login';
 import {
   Routes ,
   Route,
-  Navigate 
+  useNavigate
 } from "react-router-dom";
 import CarManagement from './car-management/CarManagement';
 import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+
 
 function App() {
+  const navigate = useNavigate()
   const account = useSelector(state => state)
+  const tokenID = localStorage.getItem('tokenId');
+  useEffect(() => {
+    if(!tokenID) {
+      navigate('/login');
+    }
+  }, [tokenID])
   return (
     <div className="App">
       <Routes >

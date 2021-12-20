@@ -7,8 +7,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {STATUS} from '../../Config/Status/Index';
+import {
+  useNavigate
+} from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const getUser = useSelector(getCurrentUser);
@@ -20,6 +24,7 @@ const Login = () => {
 
   const handleLogin = useCallback(
     (email, password) => {
+      navigate('/login');
       dispatch(login({email, password}));
       if (getUser.isLoggin === STATUS.SUCCESS) {
         toast.success('Success Loggin !', {

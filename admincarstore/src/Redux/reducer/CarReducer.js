@@ -3,7 +3,7 @@ import {APP_URL} from '../../Config/Url/URL';
 import {STATUS} from '../../Config/Status/Index';
 import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
-import {uploadImageToStorage} from '../../Common/PushImage';
+import {uploadImageToStorage} from '../../common/PushImage';
 
 const initialState = {
   listCar: [],
