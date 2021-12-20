@@ -1,0 +1,10 @@
+.store-info{
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  height: calc( 100% - 45px );
+  align-items: center;
+  &__container {
+    width: 350px;
+  }
+}
