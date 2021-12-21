@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {APP_URL} from '../../Config/Url/URL';
 import {STATUS} from '../../Config/Status/Index';
 import GetService from '../../Service/GetService';
+import PostService from '../../Service/PostService';
 
 const initialState = {
   listBooking: [],
@@ -15,6 +16,27 @@ export const getBooking = createAsyncThunk('meetings/getmeetings', async email =
   };
   var getService = new GetService();
   const response = await getService.getApiWithParam(APP_URL.GET_MEETINGS, params);
+  console.log(response);
+  return response.data;
+});
+
+export const confirmBooking = createAsyncThunk('meetings/confirm', async data => {
+  var postAPI = new PostService();
+  const params = {
+    id_meeting: data.id_meeting,
+    clients_email: data.clients_email,
+  };
+  const response = await postAPI.PostAPI(APP_URL.CONFIRM_BOOKING, params);
+  console.log(response);
+  return response.data;
+});
+export const cancelBooking = createAsyncThunk('meetings/cancel', async data => {
+  var postAPI = new PostService();
+    const params = {
+      id_meeting: data.id_meeting,
+      email: data.email,
+    };
+    const response = await postAPI.PostAPI(APP_URL.CANCEL_BOOKING, params);
   console.log(response);
   return response.data;
 });
@@ -35,9 +57,27 @@ export const bookingReducer = createSlice({
         state.status = STATUS.FAIL;
       }
     });
+    builder.addCase(confirmBooking.fulfilled, (state, action) => {
+      // Add user to the state array
+      console.log('ACTION -', action);
+      if (action.payload.result === STATUS.SUCCESS) {
+        state.confirmStatus = STATUS.SUCCESS;
+      } else {
+        state.confirmStatus = STATUS.FAIL;
+      }
+    });
+    builder.addCase(cancelBooking.fulfilled, (state, action) => {
+      // Add user to the state array
+      console.log('ACTION -', action);
+      if (action.payload.result === STATUS.SUCCESS) {
+        state.cancelStatus = STATUS.SUCCESS;
+      } else {
+        state.cancelStatus = STATUS.FAIL;
+      }
+    });
   },
 });
 
-export const getCurrentUser = state => state.AccountReducer.account;
+export const getDetailMeeting = (state, id) => state.BookingReducer.listBooking.filter((el) => el.id_meeting === id);
 
 export default bookingReducer.reducer;

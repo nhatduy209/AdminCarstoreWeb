@@ -1,0 +1,30 @@
+.booking-form {
+  &-content {
+    &__title {
+      margin-block: 12px;
+      font-weight: bolder;
+    }
+    &__group {
+      border-radius: 12px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    &__field {
+      padding: 12px;
+      border-bottom: 0.5px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      &.end-field {
+        border: none;
+      }
+    }
+    &__label {
+      max-width: 120px;
+      font-weight: bold;
+    }
+    &__input {
+      max-width: 350px;
+    }
+  }
+}
