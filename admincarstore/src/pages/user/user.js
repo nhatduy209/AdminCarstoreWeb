@@ -22,6 +22,7 @@ import {
   getListUser,
   deleteUser,
   deleteUserRedux,
+  filterUser,
 } from '../../Redux/reducer/AccountReducer';
 const style = {
   position: 'absolute',
@@ -46,10 +47,19 @@ const User = () => {
   const isOpen = Boolean(anchorEl);
   const cars = useSelector(state => state.CarReducer.listCar);
   const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState('');
 
-  const listUser = useSelector(getListUser);
+  const listUser = useSelector(state => {
+    if (!searchText.length) {
+      return state.AccountReducer.lisAcc.listUser;
+    } else {
+      return state.AccountReducer.lisAcc.listUser.filter(item =>
+        item.name.includes(searchText),
+      );
+    }
+  });
+
   useEffect(() => {
-    console.log('IS FETCH', listUser.listUser.length);
     dispatch(getAllUser());
   }, [pageIndex, rowsPerPage]);
   const handleChangePage = (event, newPage) => {
@@ -70,6 +80,16 @@ const User = () => {
     console.log('click', item);
     setOpen(true);
   };
+
+  const onSearch = val => {
+    setTimeout(() => setSearchText(val.target.value), 3000);
+  };
+
+  // useEffect(() => {
+  //   if (searchText.length) {
+  //     dispatch(filterUser(searchText));
+  //   }
+  // }, [searchText]);
 
   const renderNull = () => {
     return cars.length > 0 ? (
@@ -106,9 +126,9 @@ const User = () => {
       {/* Same as */}
       <ToastContainer />
       <div className="car-management__header">
-        <div className="car-management__header__title">Title</div>
+        <div className="car-management__header__title">User</div>
         <div className="car-management__header__control">
-          <input />
+          <input onChange={val => onSearch(val)} />
           <div className="add-button">
             <Icon
               onClick={() => optionClick()}
@@ -137,7 +157,7 @@ const User = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listUser?.listUser.map((row, index) => (
+            {listUser?.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
@@ -154,18 +174,15 @@ const User = () => {
                 <TableCell align="right">{row?.phone ?? '--'}</TableCell>
                 <TableCell align="right">
                   <div className="user-option">
-                    <div className="user-option-item edit">
-                      <Icon
-                        baseClassName="fas"
-                        className="fa-user-pen"
-                        sx={{fontSize: 18, padding: 0.5}}
-                      />
-                    </div>
                     <div className="user-option-item view">
                       <Icon
                         baseClassName="fas"
                         className="fa-info"
-                        sx={{fontSize: 18, padding: 0.5}}
+                        sx={{fontSize: 18, padding: 3}}
+                        onClick={() => {
+                          setSelectedItem(row);
+                          setOpen(true);
+                        }}
                       />
                     </div>
                     <div className="user-option-item delete">
