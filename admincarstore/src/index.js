@@ -4,16 +4,16 @@ import './index.css';
 import App from './pages/App';
 import reportWebVitals from './reportWebVitals';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from 'react-router-dom';
 import {store} from '../src/Redux/Store';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(
   <React.Fragment>
     <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.Fragment>,
   document.getElementById('root'),

@@ -71,6 +71,13 @@ export const accountReducer = createSlice({
         item => item.email !== action.payload,
       );
     },
+    filterUser: (state, action) => {
+      if (action.payload) {
+        state.lisAcc.listUser = state.lisAcc.listUser.filter(item =>
+          item.name.includes(action.payload),
+        );
+      }
+    },
   },
   extraReducers: builder => {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -90,7 +97,7 @@ export const accountReducer = createSlice({
         state.lisAcc.status = GET_LIST_USER_STATUS.SUCCESS;
         console.log('ACTION GET USER -', state.lisAcc.listUser);
       } else {
-        state.lisAcc.status = GET_LIST_USER_STATUS.FAIL;
+        return state.AccountReducer.lisAcc;
       }
     });
 
@@ -107,7 +114,7 @@ export const accountReducer = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {changeName, deleteUserRedux} = accountReducer.actions;
+export const {changeName, deleteUserRedux, filterUser} = accountReducer.actions;
 
 export const getCurrentUser = state => state.AccountReducer.account;
 
