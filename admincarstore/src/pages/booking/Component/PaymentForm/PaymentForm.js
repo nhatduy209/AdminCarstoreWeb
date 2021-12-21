@@ -34,7 +34,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const renderConfirmButton = () => {
     if(meetingDetail?.status_meeting) {
       return (
-        <button className="confirm-btn">
+        <button className="go-to-history-perchase">
         <div onClick={() => routeToPayment()}>Go to history purchase</div>
       </button>
       )
@@ -150,7 +150,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
           </div>
         </div>
       </form>
-      <div className="group-btn">
+      <div className="form-group-btn">
         <button className="cancel-btn">
           <div onClick={() => setOpenPayment(false)}>Cancel</div>
         </button>

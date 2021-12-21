@@ -3,18 +3,29 @@
 import './style.scss';
 import {linksList} from './index';
 import {Icon} from '@mui/material';
-import {Link, useLocation } from 'react-router-dom';
+import {Link, useLocation, useNavigate } from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import { clearAccountInfo } from '../../Redux/reducer/AccountReducer';
+import {token_authen} from '../../Config/Status/Key'
 
 const Navigator = isOpen => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
+  const info = useSelector(state => state.AccountReducer.account);
+  const logout = () => {
+    dispatch(clearAccountInfo());
+    localStorage.setItem(token_authen, null);
+    navigate('/login');
+  }
   return (
     <div className={`navigator-container ${isOpen ? 'collapse' : ''}`}>
       <div className="navigator-header">
         <img
           className="navigator-header__avatar"
           src="https://i.ytimg.com/vi/bXUblyGMU8Q/hqdefault.jpg"></img>
-        <div className="navigator-header__info">Thiếu nữ áo đen</div>
-        <div className="navigator-header__info">camLanSuc@gmail.com</div>
+        <div className="navigator-header__info">{info.name}</div>
+        <div className="navigator-header__info">{info.egmail}</div>
       </div>
       <div className="navigator-menu">
         {linksList.map((item, index) => {
@@ -31,6 +42,14 @@ const Navigator = isOpen => {
           );
         })}
       </div>
+      <div onClick={() => logout()} className={`navigator-item log-out-item`}>
+          <Icon
+            baseClassName="fas"
+            className="fa-right-from-bracket"
+            sx={{fontSize: 16, padding: 1}}
+          />
+          <div className='navigator-item__title'>Log out</div>
+        </div>
     </div>
   );
 };

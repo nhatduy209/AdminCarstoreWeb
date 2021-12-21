@@ -23,5 +23,10 @@ export const linksList = [
       title: 'Booking management',
       icon: 'fa-calendar-check',
       path: '/booking'
+    },
+    {
+      title: 'Payment History',
+      icon: 'fa-clipboard-check',
+      path: '/payment-history'
     }
   ];

@@ -64,7 +64,22 @@ export const accountReducer = createSlice({
     changeName: state => {
       state.account.email = 'change@gmail.com';
     },
-
+    clearAccountInfo: state => {
+      state.account = {
+        address: '',
+        avatar: '',
+        birthday: '',
+        cart: [],
+        email: 'admin@gmail.com',
+        gender: true,
+        meetings: [],
+        name: '',
+        password: '',
+        phone: '',
+        phoneNum: ',',
+        isLoggin: STATUS.NONE,
+      };
+    },
     deleteUserRedux: (state, action) => {
       console.log('before', current(state));
       state.lisAcc.listUser = state.lisAcc.listUser.filter(
@@ -114,7 +129,7 @@ export const accountReducer = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {changeName, deleteUserRedux, filterUser} = accountReducer.actions;
+export const {changeName, deleteUserRedux, filterUser, clearAccountInfo} = accountReducer.actions;
 
 export const getCurrentUser = state => state.AccountReducer.account;
 
