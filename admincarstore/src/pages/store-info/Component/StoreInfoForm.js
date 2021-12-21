@@ -1,49 +1,87 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { STATUS } from '../../../Config/Status/Index';
+import {ToastContainer, toast} from 'react-toastify';
+import { changeEditStatus, editStoreInfo, getStoreInfo } from '../../../Redux/reducer/StoreInfoReducer';
 import './style.scss';
 
-const StoreInfoForm = detail => {
+const StoreInfoForm = (detail, setOpen) => {
+  const dispatch = useDispatch();
+  const [storeDetail, setStoreDetail] = useState(detail);
+  const editStatus = useSelector(state => state.StoreInfoReducer?.editStatus ?? false)
+  useEffect(() => {
+    if(editStatus === STATUS.SUCCESS) {
+      dispatch(changeEditStatus());
+      setOpen(false);
+    }
+  },[editStatus])
+
+  useEffect(() => {
+    setStoreDetail(detail)
+  },[detail]);
+
+  const handleEdit = () => {
+    dispatch(editStoreInfo(storeDetail));
+  }
   return (
     <div>
-      <form className="booking-form-content">
-        <div className="booking-form-content__title">Client Information</div>
-        <div className="booking-form-content__group">
-        <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Introduce</div>
-            <div className="booking-form-content__field__input">
-              {detail?.intro ?? '--'}
-            </div>
+      <form className="store-info-form-content">
+        <div className="store-info-form-content__group">
+          <div className="store-info-form-content__field">
+            <div className="store-info-form-content__field__label">Introduce</div>
+            <input
+              type="text"
+              value={storeDetail?.intro}
+              onChange={value =>
+                setStoreDetail({...storeDetail, intro: value.target.value})
+              }
+              className="store-info-form-content__field__input"></input>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">CEO</div>
-            <div className="booking-form-content__field__input">
-              {detail?.CEO ?? '--'}
-            </div>
+          <div className="store-info-form-content__field">
+            <div className="store-info-form-content__field__label">CEO</div>
+            <input
+              type="text"
+              value={storeDetail?.CEO}
+              onChange={value =>
+                setStoreDetail({...storeDetail, CEO: value.target.value})
+              }
+              className="store-info-form-content__field__input"></input>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Like</div>
-            <div className="booking-form-content__field__input">
+          <div className="store-info-form-content__field">
+            <div className="store-info-form-content__field__label">Like</div>
+            <div className="store-info-form-content__field__input">
               {detail?.like ?? '--'}
             </div>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Phone</div>
-            <div className="booking-form-content__field__input">
-              {detail?.phone ?? '--'}
-            </div>
+          <div className="store-info-form-content__field">
+            <div className="store-info-form-content__field__label">Phone</div>
+            <input
+              type="text"
+              value={storeDetail?.phone}
+              onChange={value =>
+                setStoreDetail({...storeDetail, phone: value.target.value})
+              }
+              className="store-info-form-content__field__input"></input>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Address</div>
-            <div className="booking-form-content__field__input">
-              {detail?.address ?? '--'}
-            </div>
+          <div className="store-info-form-content__field">
+            <div className="store-info-form-content__field__label">Address</div>
+            <input
+              type="text"
+              value={storeDetail?.address}
+              onChange={value =>
+                setStoreDetail({...storeDetail, address: value.target.value})
+              }
+              className="store-info-form-content__field__input"></input>
           </div>
         </div>
       </form>
-      <div className="group-btn">
+      <div className="form-group-btn">
+        <button className="confirm-btn">
+          <div onClick={() => handleEdit()}>Edit</div>
+        </button>
         <button className="cancel-btn">
-          <div>Cancel</div>
+          <div onClick={() => setOpen(false)}>Cancel</div>
         </button>
       </div>
     </div>

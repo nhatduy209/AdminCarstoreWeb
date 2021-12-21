@@ -5,7 +5,6 @@ export const validate = item => {
     if(typeof(item[key]) === 'string' &&  item[key].length < 1) {
       errorFields.push(key);
     }
-    console.log(item[key], key);
     if(!item[key] && typeof item[key] !== 'number') {
       errorFields.push(key);
     }

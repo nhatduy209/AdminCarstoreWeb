@@ -51,7 +51,7 @@ export const addCar = createAsyncThunk('car/add', async item => {
     price: item.prices,
     img: item.color[0].url,
   };
-  //console.log('params', params, newList);
+  console.log('params', params, newList);
   var postService = new PostService();
   // const response = await postService.postService(APP_URL.ADD_ITEM, params);
   // console.log(response);

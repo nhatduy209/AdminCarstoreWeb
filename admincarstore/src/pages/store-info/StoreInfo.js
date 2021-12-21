@@ -51,7 +51,7 @@ const StoreInfo = () => {
               {detail?.phone ?? '--'}
             </div>
           </div>
-          <div className="booking-form-content__field">
+          <div className="booking-form-content__field end-field">
             <div className="booking-form-content__field__label">Address</div>
             <div className="booking-form-content__field__input">
               {detail?.address ?? '--'}
@@ -59,7 +59,7 @@ const StoreInfo = () => {
           </div>
         </div>
         <div className="group-btn">
-          <button className="cancel-btn">
+          <button className="confirm-btn">
             <div onClick={() => setOpen(true)}>edit</div>
           </button>
         </div>
@@ -71,7 +71,7 @@ const StoreInfo = () => {
         aria-describedby="alert-dialog-description">
         <div className="car-form--main">
           <div className="car-form__header">
-            <div>Title</div>
+            <div className="car-form__header__title">Title</div>
             <Icon
               onClick={() => setOpen(false)}
               baseClassName="fas"
@@ -79,7 +79,7 @@ const StoreInfo = () => {
               sx={{fontSize: 24}}
             />
           </div>
-          {StoreInfoForm(detail)}
+          {StoreInfoForm(detail, setOpen)}
         </div>
       </Dialog>
     </div>

@@ -16,8 +16,7 @@ const metadata = {
 };
 export const uploadImageToStorage = async (path, imageName) => {
   try {
-    console.log('PATH --', path);
-    fetch(path)
+    await fetch(path)
       .then(response => {
         return response.blob();
       })
@@ -64,6 +63,7 @@ export const uploadImageToStorage = async (path, imageName) => {
             // Upload completed successfully, now we can get the download URL
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               console.log('File available at', downloadURL);
+              return downloadURL;
             });
           },
         );

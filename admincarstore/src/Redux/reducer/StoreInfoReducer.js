@@ -5,13 +5,7 @@ import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
 
 const initialState = {
-  storeInfo: {
-    address: "TPHCM",
-    CEO: "Trần Nhất Duy",
-    like: 2000,
-    phone: "01241512",
-    intro: "12123"
-  },
+  storeInfo: null,
   status: 'FAIL',
 };
 
@@ -36,6 +30,9 @@ export const storeInfoReducer = createSlice({
   name: 'storeInfoReducer',
   initialState,
   reducers: {
+    changeEditStatus: state => {
+      state.editStatus = false;
+    }
   },
   extraReducers: builder => {
     builder.addCase(getStoreInfo.fulfilled, (state, action) => {
@@ -53,13 +50,15 @@ export const storeInfoReducer = createSlice({
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         state.storeInfo = action.payload.data.data;
-        state.status = STATUS.SUCCESS;
+        state.editStatus = STATUS.SUCCESS;
       } else {
-        state.status = STATUS.FAIL;
+        state.editStatus = STATUS.FAIL;
       }
     });
   },
 });
+
+export const {changeEditStatus} = storeInfoReducer.actions;
 
 // export const getCurrentUser = state => state.AccountReducer.account;
 
