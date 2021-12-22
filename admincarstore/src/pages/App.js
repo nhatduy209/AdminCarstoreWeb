@@ -7,17 +7,23 @@ import CarManagement from './car-management/CarManagement';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {token_authen} from '../Config/Status/Key';
+import { getCurrentUser, login } from '../Redux/reducer/AccountReducer';
 function App() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const account = useSelector(state => state);
+  const getUser = useSelector(getCurrentUser);
+  const isLoggin = useSelector(state => state.AccountReducer.account.isLoggin)
   const tokenID = 'token';
   useEffect(() => {
     const tokenID = localStorage.getItem(token_authen);
-    console.log('HELLO ', tokenID);
+    const acc = localStorage.getItem('account');
     if (!tokenID) {
       navigate('/login');
     }
-  }, [tokenID]);
+    if (tokenID && !getUser.isLoggin) {
+      dispatch(login({...acc}));
+    }
+  }, [isLoggin]);
   return (
     <div className="App">
       <Routes>

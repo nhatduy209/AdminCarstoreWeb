@@ -44,7 +44,6 @@ const Booking = () => {
   };
 
   const showPayment = () => {
-    console.log('hhh')
     setTimeout(() => {
       setOpenPayment(true);
     }, 500)

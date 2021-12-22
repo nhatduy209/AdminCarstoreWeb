@@ -7,6 +7,7 @@ import {Link, useLocation, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { clearAccountInfo } from '../../Redux/reducer/AccountReducer';
 import {token_authen} from '../../Config/Status/Key'
+import defaultAvatar from '../../assets/img/default-avatar.svg'
 
 const Navigator = isOpen => {
   const dispatch = useDispatch();
@@ -22,10 +23,11 @@ const Navigator = isOpen => {
     <div className={`navigator-container ${isOpen ? 'collapse' : ''}`}>
       <div className="navigator-header">
         <img
+        onClick={() => navigate('/profile')}
           className="navigator-header__avatar"
-          src="https://i.ytimg.com/vi/bXUblyGMU8Q/hqdefault.jpg"></img>
+          src={info.avatar.length < 1 ? defaultAvatar : info.avatar }></img>
         <div className="navigator-header__info">{info.name}</div>
-        <div className="navigator-header__info">{info.egmail}</div>
+        <div className="navigator-header__info">{info.email}</div>
       </div>
       <div className="navigator-menu">
         {linksList.map((item, index) => {
