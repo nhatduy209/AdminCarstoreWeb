@@ -14,11 +14,14 @@ export const colorReducer = createSlice({
     },
     setDefault: state => {
       state.listColor = [];
+    },
+    setColor: (state, listColor) => {
+      state.listColor = listColor.payload;
     }
   },
 });
 
-export const {addColor, setDefault} = colorReducer.actions;
+export const {addColor, setDefault, setColor} = colorReducer.actions;
 
 export const getListColor = state => state.ColorReducer.listColor;
 

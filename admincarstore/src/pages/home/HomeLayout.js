@@ -27,6 +27,7 @@ const HomeLayout = () => {
             <Route path="/booking" element={<Booking/>} />
             <Route path="/store-info" element={<StoreInfo/>} />
             <Route path="/profile" element={<StoreInfo/>} />
+            <Route path="/payment-history" element={<StoreInfo/>} />
           </Routes>
         </div>
       </div>
