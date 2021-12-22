@@ -1,38 +1,51 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import {STATUS} from '../../../../Config/Status/Index';
-import {
-  cancelBooking,
-  getBooking,
-} from '../../../../Redux/reducer/BookingReducer';
+import { createPayment } from '../../../../Redux/reducer/PaymentHistoryReducer';
 import './style.scss';
 
 const PaymentForm = (selectedMeeting, setOpenPayment) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const adminAcc = useSelector(state => state.AccountReducer.account);
   const meetings = useSelector(state => state.BookingReducer.listBooking);
-  const confirmStatus = useSelector(
-    state => state.BookingReducer.cancelStatus,
-  );
   const meetingDetail = meetings.filter(
     el => el.id_meeting === selectedMeeting,
   )[0];
-  useEffect(() => {
-    if (confirmStatus === STATUS.SUCCESS) {
-      setOpenPayment(false);
-      dispatch(getBooking());
-    }
-  }, [confirmStatus]);
+  console.log(adminAcc,meetingDetail);
   const handleConfirm = () => {
-    dispatch(cancelBooking(meetingDetail));
+    const data = {
+      client: {
+        name: meetingDetail?.full_name ?? '',
+        address: meetingDetail?.address ?? 'adbxyz',
+        email: meetingDetail?.email ?? 'testing@gmail.com',
+        personal_id: meetingDetail?.personal_id ?? '12412411',
+      },
+      car: {
+        name: meetingDetail?.car_booking?.car_name ?? 'CAMRY 2.0G',
+        prices: meetingDetail?.car_booking?.price ?? 20000,
+        color: meetingDetail?.car_booking?.color ?? 'black',
+        category: meetingDetail?.car_booking?.category ?? 'Toyota',
+        image: meetingDetail?.car_booking?.image ?? '',
+      },
+      admin: {
+        name: adminAcc.name,
+        email: adminAcc.email,
+        personal_id: '12412411',
+      },
+    }
+    dispatch(createPayment(data));
   };
 
   const routeToPayment = () => {
+    navigate('/payment-history');
     setOpenPayment(false);
   }
 
   const renderConfirmButton = () => {
-    if(meetingDetail?.status_meeting) {
+    if(meetingDetail?.status_payment) {
       return (
         <button className="go-to-history-perchase">
         <div onClick={() => routeToPayment()}>Go to history purchase</div>
@@ -137,7 +150,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
               Meeting status
             </div>
             <div className="booking-form-content__field__input">
-              {!meetingDetail?.status_meeting ? 'Waiting confirm' : 'confirmed'}
+              {!meetingDetail?.status_payment ? 'Waiting confirm' : 'confirmed'}
             </div>
           </div>
           <div className="booking-form-content__field end-field">
