@@ -2,6 +2,7 @@
 import './style.scss';
 import {Icon} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Dialog from '@mui/material/Dialog';
 import {ColorExtractor} from 'react-color-extractor';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -15,7 +16,7 @@ const SWATCHES_STYLES = {
   justifyContent: 'center',
 };
 
-const ColorForm = (setOpen, open) => {
+const ColorForm = (setColorOpen, colorOpen) => {
   const dispatch = useDispatch();
   const [colors, setColor] = useState([]);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -25,13 +26,13 @@ const ColorForm = (setOpen, open) => {
   const listColor = useSelector(state => state.ColorReducer.listColor);
 
   useEffect(() => {
-    if (!open) {
+    if (!colorOpen) {
       setSelectedColor(null);
       setUrl(defaultImage);
       setImg(null);
       setNumberInStore(0);
     }
-  }, [open]);
+  }, [colorOpen]);
   const renderSwatches = () => {
     return colors.map((color, id) => {
       return (
@@ -64,7 +65,7 @@ const ColorForm = (setOpen, open) => {
       return;
     }
     dispatch(addColor(item));
-    setOpen(false);
+    setColorOpen(false);
   };
 
   const upload = e => {
@@ -84,55 +85,68 @@ const ColorForm = (setOpen, open) => {
 
   const getColors = listColor => setColor([...listColor]);
   return (
-    <div className="color-form--container">
-      <Avatar
-        className="color-form-content__img"
-        alt="Remy Sharp"
-        src={url}
-        sx={{width: 160, height: 160}}
-      />
-      <div className="color-form-content__img-picker">
-        Pick image
-        <input
-          required
-          onChange={upload}
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          className="image-picker-btn"
-        />
-      </div>
-      <ColorExtractor src={url} getColors={getColors} />
-      <div style={SWATCHES_STYLES}>{renderSwatches()}</div>
-      <div className="color-form-content">
-        <div className="car-form-content__field review-color">
-          <div className="car-form-content__field__label">Color</div>
-          <div
-            style={{backgroundColor: selectedColor}}
-            className="selected-color"></div>
-        </div>
-
-        <div className="car-form-content__field">
-          <div className="car-form-content__field__label">Quantity</div>
-          <input
-            required
-            className="car-form-content__field__input"
-            placeholder="Please enter car's quantity"
-            value={numberInStore}
-            onChange={value => setNumberInStore(value.target.value)}
-            type="number"
+    <Dialog open={colorOpen} className="color-form">
+      <div className="color-form--main">
+        <div className="color-form__header">
+          <div>Title</div>
+          <Icon
+            onClick={() => setColorOpen(false)}
+            baseClassName="fas"
+            className="fa-xmark"
+            sx={{fontSize: 24}}
           />
         </div>
+        <div className="color-form--container">
+          <Avatar
+            className="color-form-content__img"
+            alt="Remy Sharp"
+            src={url}
+            sx={{width: 160, height: 160}}
+          />
+          <div className="color-form-content__img-picker">
+            Pick image
+            <input
+              required
+              onChange={upload}
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              className="image-picker-btn"
+            />
+          </div>
+          <ColorExtractor src={url} getColors={getColors} />
+          <div style={SWATCHES_STYLES}>{renderSwatches()}</div>
+          <div className="color-form-content">
+            <div className="car-form-content__field review-color">
+              <div className="car-form-content__field__label">Color</div>
+              <div
+                style={{backgroundColor: selectedColor}}
+                className="selected-color"></div>
+            </div>
 
-        <div className="group-btn">
-          <button className="cancel-btn">
-            <div onClick={() => setOpen(false)}>Cancel</div>
-          </button>
-          <button className="confirm-btn">
-            <div onClick={() => addCurentColor()}>Confirm</div>
-          </button>
+            <div className="car-form-content__field">
+              <div className="car-form-content__field__label">Quantity</div>
+              <input
+                required
+                className="car-form-content__field__input"
+                placeholder="Please enter car's quantity"
+                value={numberInStore}
+                onChange={value => setNumberInStore(value.target.value)}
+                type="number"
+              />
+            </div>
+
+            <div className="group-btn">
+              <button className="cancel-btn">
+                <div onClick={() => setColorOpen(false)}>Cancel</div>
+              </button>
+              <button className="confirm-btn">
+                <div onClick={() => addCurentColor()}>Confirm</div>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 };
 

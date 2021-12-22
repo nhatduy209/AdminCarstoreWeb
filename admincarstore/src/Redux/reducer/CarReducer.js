@@ -8,15 +8,16 @@ import {uploadImageToStorage} from '../../common/PushImage';
 const initialState = {
   listCar: [],
   status: false,
-  addStats: false,
-  editStats: false,
-  deleteStats: false,
 };
 
 // First, create the thunk
-export const getCar = createAsyncThunk('car/getlist', async () => {
+export const getCar = createAsyncThunk('car', async (data) => {
+  const params = {
+    start: data.start,
+    end: data.end,
+  };
   var getService = new GetService();
-  const response = await getService.getAPI(APP_URL.GET_LIST_CAR);
+  const response = await getService.getApiWithParam(APP_URL.GET_LIST_CAR, params);
   console.log(response);
   return response;
 });
@@ -68,20 +69,21 @@ export const editCar = createAsyncThunk('car/update', async item => {
     description: item.description,
     color: item.color,
     price: item.prices,
-    img: item.color[0].url,
+    img: item.img,
   };
   var postService = new PostService();
-  const response = await postService.postService(APP_URL.UPDATE_ITEM, params);
+  const response = await postService.PostAPI(APP_URL.UPDATE_ITEM, params);
   console.log(response);
   return response;
 });
 
 export const deleteCar = createAsyncThunk('car/remove', async item => {
+  console.log(item);
   const params = {
-    name: item.name,
+    name: item,
   };
   var postService = new PostService();
-  const response = await postService.postService(APP_URL.REMOVE_ITEM, params);
+  const response = await postService.PostAPI(APP_URL.REMOVE_ITEM, params);
   console.log(response);
   return response;
 });
@@ -90,14 +92,15 @@ export const carReducer = createSlice({
   name: 'carReducer',
   initialState,
   reducers: {
-    changeAddStatus: state => {
-      state.addStats = false;
+    changeCarStatus: state => {
+      state.status = false;
     },
-    changeEditStatus: state => {
-      state.editStats = false;
-    },
-    changeDeleteStatus: state => {
-      state.deleteStats = false;
+    filterCar: (state, action) => {
+      if (action.payload) {
+        state.listCar = state.listCar.filter(item =>
+          item.name.includes(action.payload),
+        );
+      }
     },
   },
   extraReducers: builder => {
@@ -106,9 +109,9 @@ export const carReducer = createSlice({
       console.log('ACTION -', action);
       if (action && action.payload.status === STATUS.SUCCESS) {
         console.log('state -', state);
-        state.addStats = action.payload.status;
+        state.status = action.payload.status;
       } else {
-        state.addStatus = STATUS.FAIL;
+        state.status = STATUS.FAIL;
       }
     });
     builder.addCase(editCar.fulfilled, (state, action) => {
@@ -116,9 +119,9 @@ export const carReducer = createSlice({
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         console.log('state -', state);
-        state.editStats = action.payload.status;
+        state.status = action.payload.status;
       } else {
-        state.editStatus = STATUS.FAIL;
+        state.status = STATUS.FAIL;
       }
     });
     builder.addCase(deleteCar.fulfilled, (state, action) => {
@@ -126,9 +129,9 @@ export const carReducer = createSlice({
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         console.log('state -', state);
-        state.deleteStats = action.payload.status;
+        state.status = action.payload.status;
       } else {
-        state.deleteStatus = STATUS.FAIL;
+        state.status = STATUS.FAIL;
       }
     });
     builder.addCase(getCar.fulfilled, (state, action) => {
@@ -145,7 +148,7 @@ export const carReducer = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {changeAddStatus, changeEditStatus, changeDeleteStatus} =
+export const {changeCarStatus, filterCar} =
   carReducer.actions;
 
 export const getListCar = state => {
