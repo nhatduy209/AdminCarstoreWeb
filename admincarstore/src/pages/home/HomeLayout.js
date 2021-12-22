@@ -12,6 +12,7 @@ import Home from '../home-page/home';
 import StoreInfo from '../store-info/StoreInfo';
 import Booking from '../booking/Booking';
 import User from '../user/user';
+import PaymentHistory from '../payment-history/PaymentHistory';
 
 const HomeLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ const HomeLayout = () => {
             <Route path="/booking" element={<Booking/>} />
             <Route path="/store-info" element={<StoreInfo/>} />
             <Route path="/profile" element={<StoreInfo/>} />
-            <Route path="/payment-history" element={<StoreInfo/>} />
+            <Route path="/payment-history" element={<PaymentHistory/>} />
           </Routes>
         </div>
       </div>

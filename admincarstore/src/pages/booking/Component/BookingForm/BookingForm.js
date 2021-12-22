@@ -46,8 +46,8 @@ const BookingForm = (selectedMeeting, setOpen, showPayment) => {
     }
     return (
       <div>
-        <button className="confirm-btn">
-          <div onClick={() => cancelMeeting()}>cancel booking</div>
+        <button className="cancel-booking-btn">
+          <div onClick={() => cancelMeeting()}>Cancel booking</div>
         </button>
         <button className="confirm-btn">
           <div onClick={() => handleConfirm()}>Confirm</div>
@@ -160,7 +160,7 @@ const BookingForm = (selectedMeeting, setOpen, showPayment) => {
           </div>
         </div>
       </form>
-      <div className="group-btn">
+      <div className="form-group-btn">
         <button className="cancel-btn">
           <div onClick={() => setOpen(false)}>Cancel</div>
         </button>

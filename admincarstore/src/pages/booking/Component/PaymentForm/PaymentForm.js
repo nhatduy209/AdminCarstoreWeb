@@ -35,6 +35,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
         email: adminAcc.email,
         personal_id: '12412411',
       },
+      id_meeting: meetingDetail?.id_meeting ?? '',
     }
     dispatch(createPayment(data));
   };

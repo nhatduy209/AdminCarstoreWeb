@@ -1,10 +1,12 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { STATUS } from '../../Config/Status/Index';
 import { APP_URL } from '../../Config/Url/URL';
+import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
 
 const initialState = {
   paymentList: [],
+  bills: [],
   status: 'FAIL',
 };
 
@@ -14,8 +16,17 @@ export const createPayment = createAsyncThunk('payment/create', async data => {
     client: data.client,
     car: data.car,
     admin: data.admin,
+    id_meeting: data.id_meeting,
   };
+  console.log(params);
   const response = await postService.PostAPI(APP_URL.CREATE_PAYMENT, params);
+  console.log(response);
+  return response;
+});
+
+export const getBills = createAsyncThunk('payment/getStatistic', async () => {
+  var getService = new GetService();
+  const response = await getService.getAPI(APP_URL.GET_BILLS);
   console.log(response);
   return response;
 });
@@ -38,11 +49,19 @@ export const paymentHistoryReducer = createSlice({
         state.status = STATUS.FAIL;
       }
     });
+    builder.addCase(getBills.fulfilled, (state, action) => {
+      // Add user to the state array
+      console.log('ACTION -', action);
+      if (action.payload.status === STATUS.SUCCESS) {
+        state.bills = action.payload.data.data;
+        state.status = STATUS.SUCCESS;
+      } else {
+        state.status = STATUS.FAIL;
+      }
+    });
   },
 });
 
 // export const {addColor, setDefault} = paymentHistoryReducer.actions;
-
-export const getListColor = state => state.PaymentHistoryReducer.listColor;
 
 export default paymentHistoryReducer.reducer;

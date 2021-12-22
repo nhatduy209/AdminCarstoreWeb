@@ -31,6 +31,7 @@ export const APP_URL = {
   LOGOUT: URL_HEROKU + 'account/logout',
   GET_MEETINGS: URL_HEROKU + 'meetings/getmeetings',
   CREATE_PAYMENT: URL_HEROKU + 'payment/create',
+  GET_BILLS: URL_HEROKU + 'payment/getStatistic',
   GET_HISTORY_ITEM: URL_HEROKU + 'account/gethistoryitems',
   GET_LIST_COMMENT: URL_HEROKU + 'car/listcomment',
   ADD_COMMENT: URL_HEROKU + 'car/addcomment',

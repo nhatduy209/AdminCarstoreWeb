@@ -1,0 +1,60 @@
+.car-management{
+  &-container {
+    padding: 20px;
+  }
+  &__header {
+    padding-block: 20px;
+    &__title {
+      font-size: 56px;
+      font-weight: bolder;
+      text-align:start
+    }
+    &__control {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .add-button {
+        padding: 12px;
+        border-radius: 50%;
+        background-color: #6868ac;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        height: 36px;
+        width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      input {
+        height: 32px;
+        width: 40%;
+        max-width: 340px;
+        min-width: 240px;
+      }
+    }
+  }
+}
+.user-option {
+  display: grid;
+  justify-content: center;
+  &-item{
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    &.view{
+      background-color: #DFE3EE
+    }
+    &.edit{
+      background-color: #7289DA
+    }
+    &.delete{
+      background-color: #BF0000
+    }
+  }
+}

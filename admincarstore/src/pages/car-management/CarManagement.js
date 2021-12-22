@@ -15,6 +15,7 @@ import {changeCarStatus, deleteCar, getCar} from '../../Redux/reducer/CarReducer
 import CarForm from './Component/CarForm/CarForm';
 import Dialog from '@mui/material/Dialog';
 import { getCategory } from '../../Redux/reducer/CategoryReducer';
+import {ToastContainer} from 'react-toastify';
 
 const style = {
   position: 'absolute',
@@ -96,6 +97,17 @@ const CarManagement = () => {
   }
   return (
     <div className="car-management-container">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="car-management__header">
         <div className="car-management__header__title">Title</div>
         <div className="car-management__header__control">
