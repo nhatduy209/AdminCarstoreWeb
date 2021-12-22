@@ -26,6 +26,7 @@ const initialState = {
     status: GET_LIST_USER_STATUS.NONE,
     listUser: [],
   },
+  status: false,
 };
 
 // First, create the thunk
@@ -38,6 +39,24 @@ export const login = createAsyncThunk('account/login', async paramsLogin => {
   };
   var postService = new PostService();
   const response = await postService.PostAPI(APP_URL.LOGIN, params);
+  return response.data;
+});
+
+// First, create the thunk
+export const changeProfile = createAsyncThunk('account/changeinfo', async data => {
+  const postService = new PostService();
+    const params = {
+      name: data.name,
+      image: data.url,
+      email: data.email,
+      phone: data.phoneNum,
+      address: data.address,
+      password: data.password,
+      gender: data.gender,
+      birthday: data.date,
+    };
+    var response = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
+    console.log(response);
   return response.data;
 });
 
@@ -63,6 +82,12 @@ export const accountReducer = createSlice({
   reducers: {
     changeName: state => {
       state.account.email = 'change@gmail.com';
+    },
+    updateProfile: (state, data) => {
+      state.account = data.payload;
+    },
+    changeAccountStatus: state => {
+      state.status = false;
     },
     clearAccountInfo: state => {
       state.account = {
@@ -126,11 +151,21 @@ export const accountReducer = createSlice({
         toast.error('Delete user error');
       }
     });
+
+    builder.addCase(changeProfile.fulfilled, (state, action) => {
+      // Add user to the state array
+      if (action.payload.result === STATUS.SUCCESS) {
+        state.status = true;
+        toast.success('Update profile successfully');
+      } else {
+        toast.error('Update profile error');
+      }
+    });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {changeName, deleteUserRedux, filterUser, clearAccountInfo} = accountReducer.actions;
+export const {changeName, deleteUserRedux, filterUser, clearAccountInfo, changeAccountStatus, updateProfile} = accountReducer.actions;
 
 export const getCurrentUser = state => state.AccountReducer.account;
 

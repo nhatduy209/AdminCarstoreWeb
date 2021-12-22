@@ -13,6 +13,7 @@ import StoreInfo from '../store-info/StoreInfo';
 import Booking from '../booking/Booking';
 import User from '../user/user';
 import PaymentHistory from '../payment-history/PaymentHistory';
+import Profile from '../profile/Profile';
 
 const HomeLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ const HomeLayout = () => {
             <Route path="/list" element={<CarManagement/>} />
             <Route path="/booking" element={<Booking/>} />
             <Route path="/store-info" element={<StoreInfo/>} />
-            <Route path="/profile" element={<StoreInfo/>} />
+            <Route path="/profile" element={<Profile/>} />
             <Route path="/payment-history" element={<PaymentHistory/>} />
           </Routes>
         </div>

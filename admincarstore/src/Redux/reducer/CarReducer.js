@@ -4,6 +4,7 @@ import {STATUS} from '../../Config/Status/Index';
 import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
 import {uploadImageToStorage} from '../../common/PushImage';
+import {toast} from 'react-toastify';
 
 const initialState = {
   listCar: [],
@@ -108,9 +109,10 @@ export const carReducer = createSlice({
       // Add user to the state array
       console.log('ACTION -', action);
       if (action && action.payload.status === STATUS.SUCCESS) {
-        console.log('state -', state);
+        toast.success('Add car successfully');
         state.status = action.payload.status;
       } else {
+        toast.success('Add car error');
         state.status = STATUS.FAIL;
       }
     });
@@ -118,9 +120,10 @@ export const carReducer = createSlice({
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
-        console.log('state -', state);
+        toast.success('Update car successfully');
         state.status = action.payload.status;
       } else {
+        toast.success('Update car error');
         state.status = STATUS.FAIL;
       }
     });
@@ -128,9 +131,10 @@ export const carReducer = createSlice({
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
-        console.log('state -', state);
+        toast.success('Delete car successfully');
         state.status = action.payload.status;
       } else {
+        toast.success('Delete car error');
         state.status = STATUS.FAIL;
       }
     });
