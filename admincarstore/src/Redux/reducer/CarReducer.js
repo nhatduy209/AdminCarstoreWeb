@@ -31,6 +31,11 @@ export const addCar = createAsyncThunk('car/add', async item => {
     item.listColor[0].url,
     item.listColor[0].img,
   );
+  const newColor = {
+    numberInStore: item.listColor[0].numberInStore,
+    img: newList,
+    color: item.listColor[0].color
+  }
   console.log('params', newList);
   const params = {
     name: item.name,
@@ -39,7 +44,7 @@ export const addCar = createAsyncThunk('car/add', async item => {
     height: item.height,
     length: item.length,
     description: item.description,
-    color: item.color,
+    color: newColor,
     price: item.prices,
     img: newList,
   };
@@ -102,7 +107,7 @@ export const carReducer = createSlice({
         toast.success('Add car successfully');
         state.status = action.payload.status;
       } else {
-        toast.success('Add car error');
+        toast.error('Add car error');
         state.status = STATUS.FAIL;
       }
     });
@@ -113,7 +118,7 @@ export const carReducer = createSlice({
         toast.success('Update car successfully');
         state.status = action.payload.status;
       } else {
-        toast.success('Update car error');
+        toast.error('Update car error');
         state.status = STATUS.FAIL;
       }
     });
@@ -124,7 +129,7 @@ export const carReducer = createSlice({
         toast.success('Delete car successfully');
         state.status = action.payload.status;
       } else {
-        toast.success('Delete car error');
+        toast.error('Delete car error');
         state.status = STATUS.FAIL;
       }
     });

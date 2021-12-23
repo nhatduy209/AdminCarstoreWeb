@@ -3,6 +3,7 @@ import {APP_URL} from '../../Config/Url/URL';
 import {STATUS} from '../../Config/Status/Index';
 import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
+import {toast} from 'react-toastify';
 
 const initialState = {
   listBooking: [],
@@ -61,8 +62,10 @@ export const bookingReducer = createSlice({
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.result === STATUS.SUCCESS) {
+        toast.success('Confirm booking successfully');
         state.confirmStatus = STATUS.SUCCESS;
       } else {
+        toast.success('Confirm booking successfully');
         state.confirmStatus = STATUS.FAIL;
       }
     });
@@ -70,8 +73,10 @@ export const bookingReducer = createSlice({
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.result === STATUS.SUCCESS) {
+        toast.success('Cancel booking successfully');
         state.cancelStatus = STATUS.SUCCESS;
       } else {
+        toast.success('Cancel booking successfully');
         state.cancelStatus = STATUS.FAIL;
       }
     });

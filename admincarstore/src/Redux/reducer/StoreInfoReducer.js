@@ -3,6 +3,7 @@ import {APP_URL} from '../../Config/Url/URL';
 import {STATUS} from '../../Config/Status/Index';
 import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
+import {toast} from 'react-toastify';
 
 const initialState = {
   storeInfo: null,
@@ -49,9 +50,11 @@ export const storeInfoReducer = createSlice({
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
+        toast.success('Edit store information successfully');
         state.storeInfo = action.payload.data.data;
         state.editStatus = STATUS.SUCCESS;
       } else {
+        toast.error('Edit store information fail');
         state.editStatus = STATUS.FAIL;
       }
     });

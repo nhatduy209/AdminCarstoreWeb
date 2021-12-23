@@ -151,9 +151,12 @@ const CarManagement = () => {
                   <img width={200} src={row.img}/></TableCell>
                 <TableCell align="right">{row.name ?? '--'}</TableCell>
                 <TableCell align="right">{row.category ?? '--'}</TableCell>
-                <TableCell align="right">{row?.color?.length ?? '--'}</TableCell>
+                <TableCell align="right">{row?.color[0]?.numberInStore ?? '--'}</TableCell>
                 <TableCell align="right">{`$${row.prices ?? '--'}`}</TableCell>
-                <TableCell align="right">{row.color?.length ?? '--'}</TableCell>
+                <TableCell align="right">
+                  <div className='car-color' style={{backgroundColor: row.color[0]?.color ?? 'black'}}>
+                  </div>
+                </TableCell>
                 <TableCell align="right">
                 <div className="user-option">
                     <div className="user-option-item edit">

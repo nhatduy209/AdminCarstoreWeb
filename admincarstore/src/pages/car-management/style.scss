@@ -1,6 +1,10 @@
 .car-management{
   &-container {
     padding: 20px;
+    .car-color {
+      height: 60px;
+      width: 60px;
+    }
   }
   &__header {
     padding-block: 20px;

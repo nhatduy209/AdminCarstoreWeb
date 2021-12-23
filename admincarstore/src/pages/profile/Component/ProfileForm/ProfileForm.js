@@ -9,12 +9,15 @@ import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { changeAccountStatus, changeProfile, updateProfile } from '../../../../Redux/reducer/AccountReducer';
 import moment from 'moment';
+import { validate } from '../../../../helps/validattion';
 
 const ProfileForm = (selectedItem, setOpen, open) => {
   const dispatch = useDispatch();
   const currentAccount = useSelector(state => state.AccountReducer.account);
   const currentStatus = useSelector(state => state.AccountReducer.status);
   const [detail, setDetail] = useState(currentAccount);
+  const [img, setImg] = useState(null);
+  const [url, setUrl] = useState(detail?.image?.length < 1 ? defaultAvatar : detail?.image);
 
   useEffect(() => {
     if(!currentStatus) {
@@ -31,8 +34,32 @@ const ProfileForm = (selectedItem, setOpen, open) => {
   };
 
   const handleConfirm = () => {
-    dispatch(changeProfile(detail));
+    if (validate(detail).length > 0 ) {
+      console.log('please fill in all', validate(detail));
+      return;
+    }
+    const item = {
+      ...detail,
+      img,
+      url
+    };
+
+    dispatch(changeProfile(item));
   }
+
+  const upload = e => {
+    var reader,
+      files = e.target.files;
+    setImg(e.target.files[0].name);
+    if (files.length === 0) {
+      console.log('empty');
+    }
+    reader = new FileReader();
+    reader.onload = e => {
+      setUrl(e.target?.result);
+    };
+    reader.readAsDataURL(files[0]);
+  };
   return (
     <Dialog
       open={open}
@@ -53,9 +80,19 @@ const ProfileForm = (selectedItem, setOpen, open) => {
           <form className="car-form-content">
           <img
           className="booking-form-content__img"
-          src={detail?.avatar?.length < 1 ? defaultAvatar : detail?.avatar}
+          src={url}
           style={{height: 260}}
         />
+        <div className="color-form-content__img-picker">
+            Pick image
+            <input
+              required
+              onChange={upload}
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              className="image-picker-btn"
+            />
+          </div>
             <div className="car-form-content--left">
               <div className="car-form-content__field">
                 <div className="car-form-content__field__label">Email</div>

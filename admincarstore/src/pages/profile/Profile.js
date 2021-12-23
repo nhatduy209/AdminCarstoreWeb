@@ -28,7 +28,7 @@ const Profile = () => {
         <div className="booking-form-content__title">My Information</div>
         <img
           className="booking-form-content__img"
-          src={detail?.avatar?.length < 1 ? defaultAvatar : detail?.avatar}
+          src={detail?.image?.length < 1 ? defaultAvatar : detail?.image}
           style={{height: 260}}
         />
         <div className="booking-form-content__group">

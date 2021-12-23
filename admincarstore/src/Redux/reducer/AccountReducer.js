@@ -6,11 +6,12 @@ import GetService from '../../Service/GetService';
 import DeleteService from '../../Service/DeleteService';
 import {token_authen} from '../../Config/Status/Key';
 import {toast} from 'react-toastify';
+import { uploadImageToStorage } from '../../common/PushImage';
 
 const initialState = {
   account: {
     address: '',
-    avatar: '',
+    image: '',
     birthday: '',
     cart: [],
     email: 'admin@gmail.com',
@@ -44,19 +45,27 @@ export const login = createAsyncThunk('account/login', async paramsLogin => {
 
 // First, create the thunk
 export const changeProfile = createAsyncThunk('account/changeinfo', async data => {
+  if(data.img) {
+    const newList = await uploadImageToStorage(
+      data.url,
+      data.img,
+    );
+    data.avatar = newList;
+  }
+
   const postService = new PostService();
-    const params = {
-      name: data.name,
-      image: data.url,
-      email: data.email,
-      phone: data.phoneNum,
-      address: data.address,
-      password: data.password,
-      gender: data.gender,
-      birthday: data.date,
-    };
-    var response = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
-    console.log(response);
+  const params = {
+    name: data.name,
+    image: data.avatar,
+    email: data.email,
+    phone: data.phoneNum,
+    address: data.address,
+    password: data.password,
+    gender: data.gender,
+    birthday: data.date,
+  };
+  var response = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
+  console.log(response);
   return response.data;
 });
 
@@ -122,6 +131,7 @@ export const accountReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(login.fulfilled, (state, action) => {
       // Add user to the state array
+      console.log(action);
       if (action.payload.result === STATUS.SUCCESS) {
         state.account = action.payload.data;
         state.account.isLoggin = STATUS.SUCCESS;

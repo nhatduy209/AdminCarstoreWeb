@@ -3,6 +3,7 @@ import { STATUS } from '../../Config/Status/Index';
 import { APP_URL } from '../../Config/Url/URL';
 import GetService from '../../Service/GetService';
 import PostService from '../../Service/PostService';
+import {toast} from 'react-toastify';
 
 const initialState = {
   paymentList: [],
@@ -38,14 +39,19 @@ export const paymentHistoryReducer = createSlice({
     changePaymentStatus: state => {
       state.status = STATUS.FAIL;
     },
+    getListBills: state => {
+      return state.bills;
+    }
   },
   extraReducers: builder => {
     builder.addCase(createPayment.fulfilled, (state, action) => {
       // Add user to the state array
       console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
+        toast.success('Create bill successfully');
         state.status = STATUS.SUCCESS;
       } else {
+        toast.success('Create bill fail');
         state.status = STATUS.FAIL;
       }
     });
@@ -62,6 +68,6 @@ export const paymentHistoryReducer = createSlice({
   },
 });
 
-// export const {addColor, setDefault} = paymentHistoryReducer.actions;
+export const {getListBills} = paymentHistoryReducer.actions;
 
 export default paymentHistoryReducer.reducer;

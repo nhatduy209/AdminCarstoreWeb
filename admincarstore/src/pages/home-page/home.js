@@ -2,6 +2,8 @@
 import './style.scss';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -23,9 +25,15 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import {Pie, Line} from 'react-chartjs-2';
 import { getBills } from '../../Redux/reducer/PaymentHistoryReducer';
 import { getCategory } from '../../Redux/reducer/CategoryReducer';
+import moment from 'moment';
 export const options = {
   responsive: true,
   plugins: {
@@ -34,36 +42,37 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Line Chart',
     },
   },
 };
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-export const lineData = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [12, 19, 3, 5, 2, 3, 0],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [12, 19, 3, 5, 2, 3, 0],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
+
 const Home = () => {
   const dispatch = useDispatch();
   
-  const bills = useSelector(state => {
-    state.PaymentHistoryReducer.bills ?? [];
-  });
-  const categories = useSelector(state => state.CategoryReducer.listCategory.map((el) => {return el.name}));
-  console.log('labels', categories, bills);
+  const bills = useSelector(state => state.PaymentHistoryReducer.bills ?? []);
+  const categories = useSelector(state => state.CategoryReducer.listCategory.map(el => el.name));
+  const [value, setValue] = useState(moment());
+  const preValue = moment(value).set('month', moment(value).get('month') - 1);
+
+  const handleChange = (newValue) => {
+    if(!newValue) {
+      setValue(moment());
+      return;
+    }
+    if(moment().get('year') < moment(newValue).get('year')) {
+      toast.error('Please choose current or previous date');
+        return;
+    } else if (moment(newValue).get('month') > moment().get('month')) {
+      toast.error('Please choose current or previous date');
+      return;
+    }
+    setValue(newValue);
+  };
+
+  const formatBills = (month) => {
+    const list = bills.filter(el => moment(el.selling_date).month() === moment(month).month())
+    return list;
+  }
 
   const handleCategoryData = () => {
     const data = [];
@@ -72,12 +81,29 @@ const Home = () => {
     }
     categories.forEach(element => {
       const list = []
-      bills.forEach((el) => {
-        if(el.car.categry === element) {
+      formatBills(value).forEach((el) => {
+        if(el.car.category === element) {
           list.push(el);
         }
       })
-      data.push(list.length / bills.length * 100);
+      data.push((list.length / bills.length) * 100);
+    });
+    return data;
+  }
+
+  const handleMonthData = (month) => {
+    const data = [];
+    if(!bills) {
+      return [];
+    }
+    categories.forEach(element => {
+      const list = []
+      formatBills(month).forEach((el) => {
+        if(el.car.category === element) {
+          list.push(el);
+        }
+      })
+      data.push(list.length);
     });
     return data;
   }
@@ -86,6 +112,24 @@ const Home = () => {
     dispatch(getBills());
     dispatch(getCategory());
   }, []);
+
+  const lineData = {
+    labels: categories,
+    datasets: [
+      {
+        label: `Month: ${moment(value).month() + 1}`,
+        data: handleMonthData(value),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: `Month: ${moment(value).month() === 0 ? 12 : moment(value).month()}`,
+        data: handleMonthData(preValue),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
 
   const data = {
     labels: categories,
@@ -116,6 +160,30 @@ const Home = () => {
 
   return (
     <div className="home-page-container">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
+        disableToolbar
+        format="dd/MM/yyyy"
+        margin="normal"
+        label="Choose a date"
+        value={value}
+        onChange={handleChange}
+        KeyboardButtonProps={{
+          'aria-label': 'change date',
+        }}
+      />
+    </MuiPickersUtilsProvider>
       <div className='statistic-title'>Category</div>
         <Pie data={data} />
         <div className='statistic-title'>Month Statistic</div>

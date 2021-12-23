@@ -25,7 +25,7 @@ const Navigator = isOpen => {
         <img
         onClick={() => navigate('/profile')}
           className="navigator-header__avatar"
-          src={info.avatar.length < 1 ? defaultAvatar : info.avatar }></img>
+          src={info.image.length < 1 ? defaultAvatar : info.image }></img>
         <div className="navigator-header__info">{info.name}</div>
         <div className="navigator-header__info">{info.email}</div>
       </div>

@@ -12,7 +12,7 @@ const Header = (toggleDrawer,isOpen) => {
         <Icon baseClassName="fas"
         className={!isOpen ? 'fas fa-angles-left' : 'fas fa-angles-right'}
         onClick={() => toggleDrawer(!isOpen)} sx={{ fontSize: 24 }} />
-        <img className='mini-avatar' src={info.avatar.length < 1 ? defaultAvatar : info.avatar }></img>
+        <img className='mini-avatar' src={info.image.length < 1 ? defaultAvatar : info.image }></img>
         </div>
     </div>
   );
