@@ -12,42 +12,26 @@ const initialState = {
 };
 
 // First, create the thunk
-export const getCar = createAsyncThunk('car', async (data) => {
+export const getCar = createAsyncThunk('car', async data => {
   const params = {
     start: data.start,
     end: data.end,
   };
   var getService = new GetService();
-  const response = await getService.getApiWithParam(APP_URL.GET_LIST_CAR, params);
+  const response = await getService.getApiWithParam(
+    APP_URL.GET_LIST_CAR,
+    params,
+  );
   console.log(response);
   return response;
 });
 
 export const addCar = createAsyncThunk('car/add', async item => {
-  const newList = await Promise.all(
-    item.listColor.map(async element => {
-      let el = {};
-      await uploadImageToStorage(element.url, element.img)
-        .then(res => {
-          console.log(res);
-          el = {
-            url: res,
-            color: element.color,
-            numberInStore: element.numberInStore,
-          };
-        })
-        .catch(() => {
-          console.log('err');
-          return;
-        });
-      console.log(el);
-      return el;
-    })
-  ).then(list => {
-    console.log(list);
-    return list;
-  });
-  console.log('params',newList);
+  const newList = await uploadImageToStorage(
+    item.listColor[0].url,
+    item.listColor[0].img,
+  );
+  console.log('params', newList);
   const params = {
     name: item.name,
     category: item.category,
@@ -57,11 +41,11 @@ export const addCar = createAsyncThunk('car/add', async item => {
     description: item.description,
     color: item.color,
     price: item.prices,
-    img: item.color[0].url,
+    img: newList,
   };
-  console.log('params',params ,newList);
+  console.log('params', params, newList);
   var postService = new PostService();
-  const response = await postService.postService(APP_URL.ADD_ITEM, params);
+  const response = await postService.PostAPI(APP_URL.ADD_ITEM, params);
   console.log(response);
   return response;
 });
@@ -158,8 +142,7 @@ export const carReducer = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {changeCarStatus, filterCar} =
-  carReducer.actions;
+export const {changeCarStatus, filterCar} = carReducer.actions;
 
 export const getListCar = state => {
   return state.CarReducer.listCar;
