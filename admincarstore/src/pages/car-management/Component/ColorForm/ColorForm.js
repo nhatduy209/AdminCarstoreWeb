@@ -72,7 +72,6 @@ const ColorForm = (setColorOpen, colorOpen) => {
     var reader,
       files = e.target.files;
     setImg(e.target.files[0].name);
-    console.log(e.target.files[0]);
     if (files.length === 0) {
       console.log('empty');
     }

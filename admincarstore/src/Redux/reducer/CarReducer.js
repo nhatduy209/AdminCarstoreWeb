@@ -37,11 +37,17 @@ export const addCar = createAsyncThunk('car/add', async item => {
           };
         })
         .catch(() => {
+          console.log('err');
           return;
         });
+      console.log(el);
       return el;
-    }),
-  );
+    })
+  ).then(list => {
+    console.log(list);
+    return list;
+  });
+  console.log('params',newList);
   const params = {
     name: item.name,
     category: item.category,
@@ -53,11 +59,11 @@ export const addCar = createAsyncThunk('car/add', async item => {
     price: item.prices,
     img: item.color[0].url,
   };
-  console.log('params', params, newList);
+  console.log('params',params ,newList);
   var postService = new PostService();
-  // const response = await postService.postService(APP_URL.ADD_ITEM, params);
-  // console.log(response);
-  return null;
+  const response = await postService.postService(APP_URL.ADD_ITEM, params);
+  console.log(response);
+  return response;
 });
 
 export const editCar = createAsyncThunk('car/update', async item => {

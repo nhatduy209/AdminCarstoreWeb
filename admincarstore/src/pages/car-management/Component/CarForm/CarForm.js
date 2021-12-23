@@ -59,7 +59,6 @@ const CarForm = (selectedItem, formType, setOpen, open) => {
   };
 
   const handleListColor = () => {
-    console.log(listColor);
     return listColor.map((el, index) => (
       <div
         key={index}
@@ -98,8 +97,6 @@ const CarForm = (selectedItem, formType, setOpen, open) => {
       console.log('Please fill in all');
       return;
     }
-
-    console.log(car)
     dispatch(editCar(car));
   };
 
