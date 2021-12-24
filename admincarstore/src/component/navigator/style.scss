@@ -1,6 +1,6 @@
 .navigator {
     &-container {
-        width: 300px;
+        width: 270px;
         position: absolute;
         left: 0;
         top: 0;
@@ -23,6 +23,24 @@
                     &__info {
                         display: none;
                     }
+                }
+            }
+            &.hide {
+                width: 30px;
+                .navigator {
+                    &-menu {
+                        margin-left: -270px;
+                    }
+                    &-item {
+                        margin-left: -270px;
+                    }
+                    &-header {
+                        margin-left: -270px;
+                    }
+                }
+                .item-selected {
+                    background-color: transparent;
+                    box-shadow: none;
                 }
             }
         }

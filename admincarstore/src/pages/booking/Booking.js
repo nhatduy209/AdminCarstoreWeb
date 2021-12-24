@@ -49,7 +49,7 @@ const Booking = () => {
     }, 500)
   }
   return (
-    <div>
+    <div className='booking-container'>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"

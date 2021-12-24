@@ -16,6 +16,7 @@ const CarForm = (selectedItem, formType, setOpen, open) => {
   const [colorOpen, setColorOpen] = useState(false);
   const [cat, setCat] = useState(selectedItem?.category ?? '');
   const [car, setCar] = useState(selectedItem);
+  const [showDetail, setShowDetail] = useState(false);
   const carStatus = useSelector(state => state.CarReducer.status);
   let listColor = useSelector(state => state.ColorReducer.listColor);
   const categories = useSelector(state => state.CategoryReducer.listCategory);
@@ -61,11 +62,14 @@ const CarForm = (selectedItem, formType, setOpen, open) => {
   const handleListColor = () => {
     return listColor.map((el, index) => (
       <div
+      onClick={() => setShowDetail(!showDetail)}
         key={index}
         style={{
           backgroundColor: el.color,
           width: 24,
           height: 24,
+          marginRight: 12,
+          borderRadius: '50%',
         }}></div>
     ));
   };
@@ -222,7 +226,11 @@ const CarForm = (selectedItem, formType, setOpen, open) => {
                     sx={{fontSize: 18}}
                   />
                 </div>
-                <div>{handleListColor()}</div>
+                <div style={{display: 'flex'}}>{handleListColor()}</div>
+                {formType !== 'crate' ? 
+                <div>
+                  <img width={200} src={car?.img ?? ''} />
+                  </div> : <div></div>}
                 {/* <ColorForm></ColorForm> */}
               </div>
             </div>

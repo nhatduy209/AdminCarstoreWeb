@@ -1,6 +1,6 @@
 .main-layout {
   background-color: #6868ac;
-  padding-left: 300px;
+  padding-left: 270px;
   height: 100%;
   display: flex;
   overflow: hidden;
@@ -9,6 +9,12 @@
   &.collapse {
     padding-left: 100px;
     transition: 0.5s ease-in-out;
+    &.hide {
+      padding-left: 30px;
+    }
+  }
+  &.hide {
+    padding-left: 270px;
   }
 }
 .main-page {

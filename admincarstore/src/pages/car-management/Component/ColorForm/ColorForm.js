@@ -8,6 +8,7 @@ import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addColor} from '../../../../Redux/reducer/ColorReducer';
 import {validate} from '../../../../helps/validattion';
+import {toast} from 'react-toastify';
 const defaultImage =
   'http://autopro8.mediacdn.vn/2016/dscf0015-1476658861227.jpg';
 const SWATCHES_STYLES = {
@@ -34,6 +35,9 @@ const ColorForm = (setColorOpen, colorOpen) => {
     }
   }, [colorOpen]);
   const renderSwatches = () => {
+    if(!img) {
+      return (<div></div>);
+    }
     return colors.map((color, id) => {
       return (
         <div
@@ -61,7 +65,7 @@ const ColorForm = (setColorOpen, colorOpen) => {
       numberInStore,
     };
     if (validate(item).length > 0) {
-      console.log('please fill in all', validate(item));
+      toast.error(`Please fill in all`);
       return;
     }
     dispatch(addColor(item));

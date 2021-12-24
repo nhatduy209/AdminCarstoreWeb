@@ -12,3 +12,17 @@
     margin-block: 12px;
   }
 }
+.booking {
+  &-container {
+    height: calc(100% - 50px);
+    padding-inline: 10%;
+    padding-block: 20px 10px;
+    .fc-view-harness {
+      min-height: 550px;
+      min-width: 550px;
+    }
+    .fc-scrollgrid-section-body {
+      min-width: 550px;
+    }
+  }
+}

@@ -7,35 +7,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Icon, speedDialActionClasses} from '@mui/material';
+import {Icon} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCar} from '../../Redux/reducer/CarReducer';
 import UserForm from './Component/UserForm/UserForm';
 import Dialog from '@mui/material/Dialog';
-import {getCategory} from '../../Redux/reducer/CategoryReducer';
 import {ToastContainer} from 'react-toastify';
+import defaultAvatar from '../../assets/img/default-avatar.svg'
 
 import {
   getAllUser,
-  getListUser,
   deleteUser,
   deleteUserRedux,
-  filterUser,
+  
 } from '../../Redux/reducer/AccountReducer';
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  transition: '0.5s ease-in-out',
-  width: 400,
-  bgcolor: 'background.paper',
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+
 const options = ['View', 'Edit', 'Delete'];
 const User = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -126,14 +113,12 @@ const User = () => {
       <div className="car-management__header">
         <div className="car-management__header__title">User</div>
         <div className="car-management__header__control">
-          <input onChange={val => onSearch(val)} />
-          <div className="add-button">
-            <Icon
-              onClick={() => optionClick()}
-              baseClassName="fas"
-              className="fa-user-add"
-              sx={{fontSize: 20, padding: 1, color: '#fff', marginLeft: -0.5}}
-            />
+          <div className="filter">
+            <div className="filter-text">Find:</div>
+            <input
+              className="filter-input"
+              placeholder="Find by name"
+              onChange={val => onSearch(val)}></input>
           </div>
         </div>
       </div>
@@ -163,7 +148,7 @@ const User = () => {
                   {index + 1}
                 </TableCell>
                 <TableCell align="right">
-                  <img width={100} src={row.avatar} />
+                  <img width={100} src={row.avatar ?? defaultAvatar} />
                 </TableCell>
                 <TableCell align="right">{row.name ?? '--'}</TableCell>
                 <TableCell align="right">{row.email ?? '--'}</TableCell>

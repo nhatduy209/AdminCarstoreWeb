@@ -7,6 +7,7 @@ import {getStoreInfo} from '../../Redux/reducer/StoreInfoReducer';
 import Dialog from '@mui/material/Dialog';
 import StoreInfoForm from './Component/StoreInfoForm';
 import {Icon} from '@mui/material';
+const backgroundImage = 'https://i.pinimg.com/736x/fa/c1/61/fac161945071d816084a3d18a61551c2.jpg'
 
 const StoreInfo = () => {
   const dispatch = useDispatch();
@@ -18,14 +19,15 @@ const StoreInfo = () => {
   }, [status]);
   return (
     <div className="store-info">
-      {/* <img
+      <div className="store-info-box">
+      <img
         className="store-info__img"
         alt="Remy Sharp"
-        src={carImage}
-        style={{height: 260}}
-      /> */}
+        src={backgroundImage}
+        style={{height: '100%', borderRadius: '20px 0 0 20px'}}
+      />
       <div className="store-info__container">
-        <div className="booking-form-content__title">Store Information</div>
+        <div style={{fontSize: 36, fontWeight: 'bold', marginBottom: 20}}>Store Information</div>
         <div className="booking-form-content__group">
           <div className="booking-form-content__field">
             <div className="booking-form-content__field__label">Introduce</div>
@@ -63,6 +65,7 @@ const StoreInfo = () => {
             <div onClick={() => setOpen(true)}>edit</div>
           </button>
         </div>
+      </div>
       </div>
       <Dialog
         open={open}

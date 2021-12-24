@@ -5,6 +5,7 @@ import {linksList} from './index';
 import {Icon} from '@mui/material';
 import {Link, useLocation, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
+import { useState} from 'react';
 import { clearAccountInfo } from '../../Redux/reducer/AccountReducer';
 import {token_authen} from '../../Config/Status/Key'
 import defaultAvatar from '../../assets/img/default-avatar.svg'
@@ -14,13 +15,21 @@ const Navigator = isOpen => {
   const navigate = useNavigate();
   const location = useLocation();
   const info = useSelector(state => state.AccountReducer.account);
+  const [hideMenu, setHideMenu] = useState(window.innerWidth < 991);
+  window.addEventListener('resize', (width) => {
+    if(width.target.innerWidth < 991) {
+      setHideMenu(true);
+    } else {
+      setHideMenu(false);
+    }
+  }, true);
   const logout = () => {
     dispatch(clearAccountInfo());
     localStorage.setItem(token_authen, null);
     navigate('/login');
   }
   return (
-    <div className={`navigator-container ${isOpen ? 'collapse' : ''}`}>
+    <div className={`navigator-container ${isOpen ? 'collapse' : ''} ${hideMenu ? 'hide' : ''}`}>
       <div className="navigator-header">
         <img
         onClick={() => navigate('/profile')}

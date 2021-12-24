@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
-import { useState } from 'react';
+import { useState} from 'react';
 import Navigator from '../../component/navigator/Navidator';
 import Header from '../../component/header/Header';
 import {
@@ -17,8 +17,16 @@ import Profile from '../profile/Profile';
 
 const HomeLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hideMenu, setHideMenu] = useState(window.innerWidth < 991);
+  window.addEventListener('resize', (width) => {
+    if(width.target.innerWidth < 991) {
+      setHideMenu(true);
+    } else {
+      setHideMenu(false);
+    }
+  }, true);
   return (
-    <div className={`main-layout ${isOpen ? 'collapse' : ''}`}>
+    <div className={`main-layout ${isOpen ? 'collapse' : ''} ${hideMenu ? 'hide' : ''}`}>
         {Navigator(isOpen)}
         <div className='main-page'>
           {Header(setIsOpen,isOpen)}

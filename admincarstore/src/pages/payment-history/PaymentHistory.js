@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import emptyBill from '../../assets/img/empty_bills.svg'
+import emptyBill from '../../assets/img/empty_bills.svg';
 import './style.scss';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,7 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Dialog from '@mui/material/Dialog';
 import {ToastContainer} from 'react-toastify';
 import BillForm from './Component/BillForm/BillForm';
-import { getBills } from '../../Redux/reducer/PaymentHistoryReducer';
+import {getBills} from '../../Redux/reducer/PaymentHistoryReducer';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -81,12 +81,7 @@ const PaymentHistory = () => {
     ) : (
       <caption>
         <div className="table-null">
-          <img
-            height={100}
-            width={100}
-            src={emptyBill}
-          />{' '}
-          No data
+          <img height={100} width={100} src={emptyBill} /> No data
         </div>
       </caption>
     );
@@ -110,7 +105,13 @@ const PaymentHistory = () => {
       <div className="car-management__header">
         <div className="car-management__header__title">Payment History</div>
         <div className="car-management__header__control">
-          <input onChange={val => onSearch(val)} />
+          <div className="filter">
+            <div className="filter-text">Find:</div>
+            <input
+              className="filter-input"
+              placeholder="Find by name"
+              onChange={val => onSearch(val)}></input>
+          </div>
         </div>
       </div>
       <TableContainer component={Paper}>
@@ -141,7 +142,9 @@ const PaymentHistory = () => {
                   <img width={100} src={row.car.image} />
                 </TableCell>
                 <TableCell align="right">{row.car.car_name ?? '--'}</TableCell>
-                <TableCell align="right">{row.car.selling_date ?? '--'}</TableCell>
+                <TableCell align="right">
+                  {row.car.selling_date ?? '--'}
+                </TableCell>
                 <TableCell align="right">
                   <div>
                     <div>{row.client?.name ?? '--'}</div>
@@ -149,7 +152,7 @@ const PaymentHistory = () => {
                   </div>
                 </TableCell>
                 <TableCell align="right">
-                <div>
+                  <div>
                     <div>{row.admin?.name ?? '--'}</div>
                     <div>{row.admin?.email ?? '--'}</div>
                   </div>
