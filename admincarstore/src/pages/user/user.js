@@ -77,7 +77,7 @@ const User = () => {
   // }, [searchText]);
 
   const renderNull = () => {
-    return cars.length > 0 ? (
+    return listUser.length > 0 ? (
       <caption></caption>
     ) : (
       <caption>
@@ -148,7 +148,7 @@ const User = () => {
                   {index + 1}
                 </TableCell>
                 <TableCell align="right">
-                  <img width={100} src={row.avatar ?? defaultAvatar} />
+                  <img className='navigator-header__avatar' width={100} src={row.image ?? defaultAvatar} />
                 </TableCell>
                 <TableCell align="right">{row.name ?? '--'}</TableCell>
                 <TableCell align="right">{row.email ?? '--'}</TableCell>

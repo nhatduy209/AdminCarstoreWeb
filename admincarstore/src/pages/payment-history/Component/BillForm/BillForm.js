@@ -10,7 +10,7 @@ const BillForm = selectedItem => {
           className="booking-form-content__img"
           alt="Remy Sharp"
           src={selectedItem?.car?.image ?? ''}
-          style={{height: 260}}
+          style={{width: '100%'}}
         />
         <div className="booking-form-content__title">Car Information</div>
         <div className="booking-form-content__group">

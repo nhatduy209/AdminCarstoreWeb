@@ -4,10 +4,14 @@
   padding: 20px;
   height: calc( 100% - 45px );
   align-items: center;
-  // background-image: url('https://wallpaperaccess.com/full/443429.jpg');
+  // background-image: url('https://i.pinimg.com/736x/fa/c1/61/fac161945071d816084a3d18a61551c2.jpg');
   &__container {
     width: 350px;
     margin-inline: 60px;
+  }
+  &__img {
+    height: 100%;
+    border-radius: 20px 0 0 20px;
   }
   &-box {
     display: flex;
@@ -16,5 +20,31 @@
     height: 100%;
     align-items: center;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+  @media screen and (max-width: 1250px ) {
+    &-box {
+      display: grid;
+      box-shadow: none;
+      background-image: url('https://i.pinimg.com/736x/fa/c1/61/fac161945071d816084a3d18a61551c2.jpg');
+    }
+    &__img {
+     display: none;
+    }
+    &__container {
+      width: 450px;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 12px;
+      border-radius: 20px;
+    }
+  }
+  @media screen and (max-width: 881px ) {
+    &__container {
+      width: 250px;
+      margin-bottom: 80px;
+    }
+    &-box {
+      background-image:none;
+    }
+    padding: 0px;
   }
 }

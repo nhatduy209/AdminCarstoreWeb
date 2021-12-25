@@ -191,7 +191,7 @@ const Home = () => {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               disableToolbar
-              format="dd/MM/yyyy"
+              format="MM/yyyy"
               margin="normal"
               value={value}
               onChange={handleChange}

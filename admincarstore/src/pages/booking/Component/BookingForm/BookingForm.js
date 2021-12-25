@@ -62,7 +62,7 @@ const BookingForm = (selectedMeeting, setOpen, showPayment) => {
           className="booking-form-content__img"
           alt="Remy Sharp"
           src={meetingDetail?.car_booking?.image ?? ''}
-          style={{height: 260}}
+          style={{width: '100%'}}
         />
         <div className="booking-form-content__title">Client Information</div>
         <div className="booking-form-content__group">

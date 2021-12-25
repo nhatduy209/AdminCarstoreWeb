@@ -11,6 +11,10 @@ import BookingForm from './Component/BookingForm/BookingForm';
 import {Icon} from '@mui/material';
 import './style.scss';
 import PaymentForm from './Component/PaymentForm/PaymentForm';
+import {toast} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
+
+import moment from 'moment';
 const Booking = () => {
   const handleData = data => {
     const list = [];
@@ -29,6 +33,7 @@ const Booking = () => {
   const [open, setOpen] = useState(false);
   const [openPayment, setOpenPayment] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(moment());
   const meetings = useSelector(state =>
     handleData(state.BookingReducer.listBooking),
   );
@@ -39,6 +44,10 @@ const Booking = () => {
   }, [meetingStatus]);
 
   const handleEventClick = eventInfo => {
+    if(moment(eventInfo.event._def.extendedProps.item.date_meeting) < currentMonth) {
+      toast.error("Meeting is expried!")
+      return;
+    }
     setSelectedMeeting(eventInfo.event._def.extendedProps.item.id_meeting);
     setOpen(true);
   };
@@ -50,6 +59,17 @@ const Booking = () => {
   }
   return (
     <div className='booking-container'>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
