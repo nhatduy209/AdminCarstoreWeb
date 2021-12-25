@@ -1,0 +1,17 @@
+.profile {
+  padding: 10%;
+  &__title {
+    font-size: 40px;
+    font-weight: bold;
+  }
+  &-container {
+    max-width: 750px;
+    margin: auto;
+  }
+  &__image {
+    height: 260px;
+    border-radius: 50%;
+    box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    margin-block: 20px;
+  }
+}

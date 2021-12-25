@@ -111,7 +111,7 @@ const User = () => {
       {/* Same as */}
       <ToastContainer />
       <div className="car-management__header">
-        <div className="car-management__header__title">User</div>
+        <div className="car-management__header__title">Users</div>
         <div className="car-management__header__control">
           <div className="filter">
             <div className="filter-text">Find:</div>

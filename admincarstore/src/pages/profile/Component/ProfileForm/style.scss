@@ -1,0 +1,9 @@
+.profile-form{
+  &__img-picker {
+    text-align: center;
+    margin-block: 12px;
+    .image-picker-btn {
+      left: 20%;
+    }
+  }
+}

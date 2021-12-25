@@ -1,8 +1,20 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
-import moment from 'moment';
-const BillForm = selectedItem => {
-  console.log('HELLO THERE---', selectedItem);
+// import { STATUS } from '../../../../Config/Status/Index';
+// import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+// import { changePaymentStatus } from '../../../../Redux/reducer/PaymentHistoryReducer';
+const BillForm = (selectedItem, setOpenPayment) => {
+  const dispatch = useDispatch();
+  const status = useSelector(
+    state => state.PaymentHistoryReducer.status,
+  );
+  // useEffect(() => {
+  //   if( status === STATUS.SUCCESS) {
+  //     setOpenPayment(false);
+  //     dispatch(changePaymentStatus(STATUS.FAIL));
+  //   }
+  // }, [status])
   return (
     <div className="car-form--container">
       <form className="booking-form-content">

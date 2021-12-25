@@ -1,15 +1,19 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
-import defaultAvatar from '../../../../assets/img/default-avatar.svg'
+import defaultAvatar from '../../../../assets/img/default-avatar.svg';
 import {Icon} from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Dialog from '@mui/material/Dialog';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { changeAccountStatus, changeProfile, updateProfile } from '../../../../Redux/reducer/AccountReducer';
+import {
+  changeAccountStatus,
+  changeProfile,
+  updateProfile,
+} from '../../../../Redux/reducer/AccountReducer';
 import moment from 'moment';
-import { validate } from '../../../../helps/validattion';
+import {validate} from '../../../../helps/validattion';
 
 const ProfileForm = (selectedItem, setOpen, open) => {
   const dispatch = useDispatch();
@@ -17,35 +21,37 @@ const ProfileForm = (selectedItem, setOpen, open) => {
   const currentStatus = useSelector(state => state.AccountReducer.status);
   const [detail, setDetail] = useState(currentAccount);
   const [img, setImg] = useState(null);
-  const [url, setUrl] = useState(detail?.image?.length < 1 ? defaultAvatar : detail?.image);
+  const [url, setUrl] = useState(
+    detail?.image?.length < 1 ? defaultAvatar : detail?.image,
+  );
 
   useEffect(() => {
-    if(!currentStatus) {
+    if (!currentStatus) {
       return;
     }
 
     dispatch(updateProfile(detail));
     dispatch(changeAccountStatus());
     setOpen(false);
-  }, [currentStatus])
+  }, [currentStatus]);
 
   const changeData = (event, key) => {
     setDetail({...detail, [key]: event.target.value});
   };
 
   const handleConfirm = () => {
-    if (validate(detail).length > 0 ) {
+    if (validate(detail).length > 0) {
       console.log('please fill in all', validate(detail));
       return;
     }
     const item = {
       ...detail,
       img,
-      url
+      url,
     };
 
     dispatch(changeProfile(item));
-  }
+  };
 
   const upload = e => {
     var reader,
@@ -78,27 +84,29 @@ const ProfileForm = (selectedItem, setOpen, open) => {
             />
           </div>
           <form className="car-form-content">
-          <img
-          className="booking-form-content__img"
-          src={url}
-          style={{height: 260}}
-        />
-        <div className="color-form-content__img-picker">
-            Pick image
-            <input
-              required
-              onChange={upload}
-              type="file"
-              accept=".png, .jpg, .jpeg"
-              className="image-picker-btn"
-            />
-          </div>
+            <div>
+              <img
+                className="booking-form-content__img"
+                src={url}
+                style={{height: 260}}
+              />
+              <div className="profile-form__img-picker">
+                Pick image
+                <input
+                  required
+                  onChange={upload}
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  className="image-picker-btn"
+                />
+              </div>
+            </div>
             <div className="car-form-content--left">
               <div className="car-form-content__field">
                 <div className="car-form-content__field__label">Email</div>
-                <div
-                  className="car-form-content__field__input"
-                >{detail?.email ?? ''}</div>
+                <div className="car-form-content__field__input">
+                  {detail?.email ?? ''}
+                </div>
               </div>
               <div className="car-form-content__field">
                 <div className="car-form-content__field__label">Name</div>
@@ -116,12 +124,8 @@ const ProfileForm = (selectedItem, setOpen, open) => {
                   className="car-form-content__field__input select-list"
                   value={detail?.gender ?? true}
                   onChange={value => changeData(value, 'gender')}>
-                  <MenuItem value={true}>
-                      Male
-                    </MenuItem>
-                    <MenuItem value={false}>
-                      Female
-                    </MenuItem>
+                  <MenuItem value={true}>Male</MenuItem>
+                  <MenuItem value={false}>Female</MenuItem>
                 </Select>
               </div>
               <div className="car-form-content__field">
@@ -131,7 +135,11 @@ const ProfileForm = (selectedItem, setOpen, open) => {
                   placeholder="Please enter width"
                   onChange={value => changeData(value, 'birthday')}
                   type="text"
-                  value={detail?.birthday ? moment(detail?.birthday).format('DD/MM/yyyy') : ''}
+                  value={
+                    detail?.birthday
+                      ? moment(detail?.birthday).format('DD/MM/yyyy')
+                      : ''
+                  }
                 />
               </div>
               <div className="car-form-content__field">
@@ -145,7 +153,6 @@ const ProfileForm = (selectedItem, setOpen, open) => {
                 />
               </div>
             </div>
-            
           </form>
           <div className="form-group-btn">
             <button className="cancel-btn">

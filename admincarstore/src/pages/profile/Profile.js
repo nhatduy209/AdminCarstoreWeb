@@ -12,7 +12,7 @@ const Profile = () => {
   const [open, setOpen] = useState(false);
   const detail = useSelector(state => state.AccountReducer.account);
   return (
-    <div className="store-info">
+    <div className="profile">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -24,10 +24,10 @@ const Profile = () => {
         draggable
         pauseOnHover
       />
-      <div className="store-info__container">
-        <div className="booking-form-content__title">My Information</div>
+      <div className="profile-container">
+        <div className="profile__title">My Information</div>
         <img
-          className="booking-form-content__img"
+          className="profile__img"
           src={detail?.image?.length < 1 ? defaultAvatar : detail?.image}
           style={{height: 260}}
         />

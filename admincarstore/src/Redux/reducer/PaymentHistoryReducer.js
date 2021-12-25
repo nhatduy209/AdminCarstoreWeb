@@ -68,6 +68,6 @@ export const paymentHistoryReducer = createSlice({
   },
 });
 
-export const {getListBills} = paymentHistoryReducer.actions;
+export const {getListBills, changePaymentStatus} = paymentHistoryReducer.actions;
 
 export default paymentHistoryReducer.reducer;
