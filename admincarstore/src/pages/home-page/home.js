@@ -68,11 +68,15 @@ const Home = () => {
       return;
     }
     if (moment().get('year') < moment(newValue).get('year')) {
+      console.log(moment().get('year'), moment(newValue).get('year'));
       toast.error('Please choose current or previous date');
       return;
-    } else if (moment(newValue).get('month') > moment().get('month')) {
+    } else if (moment().get('year') === moment(newValue).get('year')) {
+      if ( moment(newValue).get('month') > moment().get('month')) {
+        console.log(moment(newValue).get('month'), moment().get('month'));
       toast.error('Please choose current or previous date');
       return;
+    }
     }
     setValue(newValue);
   };
