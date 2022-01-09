@@ -5,6 +5,8 @@ import {useNavigate} from 'react-router-dom';
 import {STATUS} from '../../../../Config/Status/Index';
 import { createPayment } from '../../../../Redux/reducer/PaymentHistoryReducer';
 import './style.scss';
+import {ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 
 const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const navigate = useNavigate();
@@ -16,11 +18,15 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   )[0];
   console.log(adminAcc,meetingDetail);
   const handleConfirm = () => {
+    if(!meetingDetail?.clients_email) {
+      toast.error('Add car error');
+      return;
+    }
     const data = {
       client: {
         name: meetingDetail?.full_name ?? '',
         address: meetingDetail?.address ?? 'adbxyz',
-        email: meetingDetail?.email ?? 'testing@gmail.com',
+        email: meetingDetail?.clients_email ?? '',
         personal_id: meetingDetail?.personal_id ?? '12412411',
       },
       car: {
@@ -61,6 +67,17 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   };
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <form className="booking-form-content">
         <img
           className="booking-form-content__img"
