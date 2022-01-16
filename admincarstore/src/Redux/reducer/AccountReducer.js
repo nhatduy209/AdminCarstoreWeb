@@ -92,6 +92,9 @@ export const accountReducer = createSlice({
     changeName: state => {
       state.account.email = 'change@gmail.com';
     },
+    setLoginState: (state, isLogin) => {
+      state.account.isLoggin = isLogin;
+    },
     updateProfile: (state, data) => {
       state.account = data.payload;
     },
@@ -175,7 +178,7 @@ export const accountReducer = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {changeName, deleteUserRedux, filterUser, clearAccountInfo, changeAccountStatus, updateProfile} = accountReducer.actions;
+export const {changeName, deleteUserRedux, filterUser, clearAccountInfo, changeAccountStatus, updateProfile, setLoginState} = accountReducer.actions;
 
 export const getCurrentUser = state => state.AccountReducer.account;
 

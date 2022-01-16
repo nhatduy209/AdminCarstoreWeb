@@ -2,7 +2,7 @@
 import './style.scss';
 import {Icon} from '@mui/material';
 import {useEffect, useState, useCallback} from 'react';
-import {getCurrentUser, login} from '../../Redux/reducer/AccountReducer';
+import {getCurrentUser, login, setLoginState} from '../../Redux/reducer/AccountReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,8 +26,9 @@ const Login = () => {
       toast.error('Invalid password or email ', {
         position: toast.POSITION.TOP_RIGHT,
         hideProgressBar: true,
-        autoClose: 3000,
+        autoClose: 2000,
       });
+      dispatch(setLoginState(STATUS.NONE));
     }
   }, [getUser.isLoggin]);
 
