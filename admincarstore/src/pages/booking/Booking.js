@@ -44,11 +44,11 @@ const Booking = () => {
   }, [meetingStatus]);
 
   const handleEventClick = eventInfo => {
-    if(moment(eventInfo.event._def.extendedProps.item.date_meeting) < currentMonth) {
-      toast.error("Meeting is expried!")
+    setSelectedMeeting(eventInfo.event._def.extendedProps.item.id_meeting);
+    if(eventInfo.event._def.extendedProps.item.status_payment) {
+      setOpenPayment(true);
       return;
     }
-    setSelectedMeeting(eventInfo.event._def.extendedProps.item.id_meeting);
     setOpen(true);
   };
 

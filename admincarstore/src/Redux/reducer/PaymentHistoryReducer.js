@@ -8,7 +8,7 @@ import {toast} from 'react-toastify';
 const initialState = {
   paymentList: [],
   bills: [],
-  status: 'FAIL',
+  status: STATUS.FAIL,
 };
 
 export const createPayment = createAsyncThunk('payment/create', async data => {
@@ -19,9 +19,7 @@ export const createPayment = createAsyncThunk('payment/create', async data => {
     admin: data.admin,
     id_meeting: data.id_meeting,
   };
-  console.log(params);
   const response = await postService.PostAPI(APP_URL.CREATE_PAYMENT, params);
-  console.log(response);
   return response;
 });
 

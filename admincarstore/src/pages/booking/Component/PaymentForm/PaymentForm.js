@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {STATUS} from '../../../../Config/Status/Index';
 import { createPayment } from '../../../../Redux/reducer/PaymentHistoryReducer';
+import {getBooking} from '../../../../Redux/reducer/BookingReducer';
 import './style.scss';
 import {ToastContainer} from 'react-toastify';
 import {toast} from 'react-toastify';
@@ -16,7 +17,9 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const meetingDetail = meetings.filter(
     el => el.id_meeting === selectedMeeting,
   )[0];
-  console.log(adminAcc,meetingDetail);
+  const confirmStatus = useSelector(
+    state => state.PaymentHistoryReducer.status,
+  );
   const handleConfirm = () => {
     if(!meetingDetail?.clients_email) {
       toast.error('Add car error');
@@ -45,6 +48,13 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
     }
     dispatch(createPayment(data));
   };
+
+  useEffect(() => {
+    if (confirmStatus === STATUS.SUCCESS) {
+      setOpenPayment(false);
+      dispatch(getBooking());
+    }
+  }, [confirmStatus]);
 
   const routeToPayment = () => {
     navigate('/payment-history');
