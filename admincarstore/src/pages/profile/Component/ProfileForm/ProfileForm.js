@@ -2,7 +2,6 @@
 import './style.scss';
 import defaultAvatar from '../../../../assets/img/default-avatar.svg';
 import {Icon} from '@mui/material';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Dialog from '@mui/material/Dialog';
 import {useState, useEffect} from 'react';
@@ -15,10 +14,9 @@ import {
 import moment from 'moment';
 import {validate} from '../../../../helps/validattion';
 
-const ProfileForm = (selectedItem, setOpen, open) => {
+const ProfileForm = (setOpen, open) => {
   const dispatch = useDispatch();
   const currentAccount = useSelector(state => state.AccountReducer.account);
-  const currentStatus = useSelector(state => state.AccountReducer.status);
   const [detail, setDetail] = useState(currentAccount);
   const [img, setImg] = useState(null);
   const [url, setUrl] = useState(
@@ -26,14 +24,14 @@ const ProfileForm = (selectedItem, setOpen, open) => {
   );
 
   useEffect(() => {
-    if (!currentStatus) {
+
+    if(!detail) {
       return;
     }
 
-    dispatch(updateProfile(detail));
-    dispatch(changeAccountStatus());
-    setOpen(false);
-  }, [currentStatus]);
+    setDetail(currentAccount);
+    setUrl(currentAccount.image)
+  }, [currentAccount]);
 
   const changeData = (event, key) => {
     setDetail({...detail, [key]: event.target.value});
@@ -41,7 +39,6 @@ const ProfileForm = (selectedItem, setOpen, open) => {
 
   const handleConfirm = () => {
     if (validate(detail).length > 0) {
-      console.log('please fill in all', validate(detail));
       return;
     }
     const item = {
@@ -69,12 +66,12 @@ const ProfileForm = (selectedItem, setOpen, open) => {
   return (
     <Dialog
       open={open}
-      className="car-form"
+      className="form profile-form"
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description">
-      <div className="car-form--main">
-        <div className="car-form--container">
-          <div className="car-form__header">
+      <div className="form--main">
+        <div className="form--container">
+          <div className="form__header">
             <div>Change my profile</div>
             <Icon
               onClick={() => setOpen(false)}
@@ -83,12 +80,12 @@ const ProfileForm = (selectedItem, setOpen, open) => {
               sx={{fontSize: 24}}
             />
           </div>
-          <form className="car-form-content">
-            <div>
+          <form className="profile-form-content form-content">
+            <div style={{display: 'grid', justifyContent: 'center'}}>
               <img
                 className="booking-form-content__img"
                 src={url}
-                style={{height: 260}}
+                style={{height: 260, borderRadius: '50%'}}
               />
               <div className="profile-form__img-picker">
                 Pick image
@@ -101,37 +98,35 @@ const ProfileForm = (selectedItem, setOpen, open) => {
                 />
               </div>
             </div>
-            <div className="car-form-content--left">
-              <div className="car-form-content__field">
-                <div className="car-form-content__field__label">Email</div>
-                <div className="car-form-content__field__input">
-                  {detail?.email ?? ''}
-                </div>
+            <div className="profile-form-content--left">
+              <div className="form-content__field">
+                <div className="form-content__field__label">Email</div>
+                <input value={detail?.email ?? ''} disabled={true} className="form-content__field__input"/>
               </div>
-              <div className="car-form-content__field">
-                <div className="car-form-content__field__label">Name</div>
+              <div className="form-content__field">
+                <div className="form-content__field__label">Name</div>
                 <input
-                  className="car-form-content__field__input"
+                  className="form-content__field__input"
                   placeholder="Please enter prices"
                   onChange={value => changeData(value, 'name')}
                   value={detail?.name ?? ''}
                   type="text"
                 />
               </div>
-              <div className="car-form-content__field">
-                <div className="car-form-content__field__label">Gender</div>
-                <Select
-                  className="car-form-content__field__input select-list"
+              <div className="form-content__field">
+                <div className="form-content__field__label">Gender</div>
+                <select
+                  className="form-content__field__input select-list"
                   value={detail?.gender ?? true}
                   onChange={value => changeData(value, 'gender')}>
-                  <MenuItem value={true}>Male</MenuItem>
-                  <MenuItem value={false}>Female</MenuItem>
-                </Select>
+                  <option value={true}>Male</option>
+                  <option value={false}>Female</option>
+                </select>
               </div>
-              <div className="car-form-content__field">
-                <div className="car-form-content__field__label">BOD</div>
+              <div className="form-content__field">
+                <div className="form-content__field__label">BOD</div>
                 <input
-                  className="car-form-content__field__input"
+                  className="form-content__field__input"
                   placeholder="Please enter width"
                   onChange={value => changeData(value, 'birthday')}
                   type="text"
@@ -142,10 +137,10 @@ const ProfileForm = (selectedItem, setOpen, open) => {
                   }
                 />
               </div>
-              <div className="car-form-content__field">
-                <div className="car-form-content__field__label">Address</div>
+              <div className="form-content__field">
+                <div className="form-content__field__label">Address</div>
                 <input
-                  className="car-form-content__field__input"
+                  className="form-content__field__input"
                   placeholder="Please enter height"
                   onChange={value => changeData(value, 'address')}
                   type="text"
@@ -159,7 +154,7 @@ const ProfileForm = (selectedItem, setOpen, open) => {
               <div onClick={() => setOpen(false)}>Cancel</div>
             </button>
             <button className="confirm-btn">
-              <div onClick={() => handleConfirm()}>Edit</div>
+              <div onClick={() => handleConfirm()}>Confirm</div>
             </button>
           </div>
         </div>

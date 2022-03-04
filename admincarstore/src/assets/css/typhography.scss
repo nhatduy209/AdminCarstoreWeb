@@ -1,0 +1,30 @@
+//@mixin
+@mixin text-ellipsis{
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-multi-ellipsis($line, $line-height: 1.5, $font-size: 16px){
+  overflow: hidden;
+  max-height: $line * $line-height * $font-size;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+//style
+.text {
+  &--ellipsis {
+    @include text-ellipsis;
+  }
+  &--capitalize {
+    text-transform: capitalize;
+  }
+  &--uppercase {
+    text-transform: uppercase;
+  }
+}

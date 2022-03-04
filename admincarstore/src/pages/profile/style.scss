@@ -24,6 +24,10 @@
       margin-block: 12px;
       &__input {
         max-width: 240px;
+        text-align: end;
+      }
+      &__label {
+        margin-right: 12px;
       }
     }
     &__group {
@@ -43,5 +47,14 @@
     position: absolute;
     width: 340px;
     left: 0;
+    button {
+      width: 180px;
+      height: 42px;
+      border-radius: 24px;
+    }
+    .confirm-btn {
+      background-color: transparent;
+      background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));
+    }
   }
 }

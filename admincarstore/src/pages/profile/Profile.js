@@ -33,31 +33,31 @@ const Profile = () => {
         />
         <div className="profile-content__group">
           <div className="profile-content__field">
-            <div className="icon icon__user"></div>
+            <div className="icon icon__user profile-content__field__label"></div>
             <div className="profile-content__field__input">
               {detail?.name ?? '--'}
             </div>
           </div>
           <div className="profile-content__field">
-            <div className="icon icon__mail"></div>
+            <div className="icon icon__mail profile-content__field__label"></div>
             <div className="profile-content__field__input">
               {detail?.email ?? '--'}
             </div>
           </div>
           <div className="profile-content__field">
-            <div className="icon icon__calendar"></div>
+            <div className="icon icon__calendar profile-content__field__label"></div>
             <div className="profile-content__field__input">
               {detail?.birthday ? moment(detail?.birthday).format('DD/MM/yyyy') : '--'}
             </div>
           </div>
           <div className="profile-content__field">
-            <div className="icon icon__location"></div>
+            <div className="icon icon__location profile-content__field__label"></div>
             <div className="profile-content__field__input">
               {detail?.address ?? '--'}
             </div>
           </div>
           <div className="profile-content__field">
-            <div className="icon icon__gender"></div>
+            <div className="icon icon__gender profile-content__field__label"></div>
             <div className="profile-content__field__input">
               {detail?.gender ? 'male' : 'female'}
             </div>
@@ -69,7 +69,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
-      {ProfileForm(detail, setOpen, open)}
+      {ProfileForm(setOpen, open)}
     </div>
   );
 };

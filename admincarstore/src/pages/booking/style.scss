@@ -10,6 +10,16 @@
   }
   &-content {
     margin-block: 12px;
+    &__img {
+      height: 260px;
+      max-width: 550px;
+      object-fit: cover;
+    }
+  }
+  .MuiDialog-container{
+    .MuiDialog-paperScrollPaper {
+      top: 150px;
+    }
   }
 }
 .booking {
