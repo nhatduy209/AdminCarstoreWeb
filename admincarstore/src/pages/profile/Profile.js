@@ -1,9 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import defaultAvatar from '../../assets/img/default-avatar.svg'
-import {useState, useEffect, useCallback} from 'react';
+import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import './style.scss';
 import {ToastContainer} from 'react-toastify';
+import {Icon} from '@mui/material';
 import ProfileForm from './Component/ProfileForm/ProfileForm';
 import moment from 'moment';
 
@@ -13,7 +14,7 @@ const Profile = () => {
   const detail = useSelector(state => state.AccountReducer.account);
   return (
     <div className="profile">
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -23,42 +24,41 @@ const Profile = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
       <div className="profile-container">
-        <div className="profile__title">My Information</div>
+        {/* <div className="profile__title">My Information</div> */}
         <img
           className="profile__img"
           src={detail?.image?.length < 1 ? defaultAvatar : detail?.image}
-          style={{height: 260}}
         />
-        <div className="booking-form-content__group">
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Name</div>
-            <div className="booking-form-content__field__input">
+        <div className="profile-content__group">
+          <div className="profile-content__field">
+            <div className="icon icon__user"></div>
+            <div className="profile-content__field__input">
               {detail?.name ?? '--'}
             </div>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Email</div>
-            <div className="booking-form-content__field__input">
+          <div className="profile-content__field">
+            <div className="icon icon__mail"></div>
+            <div className="profile-content__field__input">
               {detail?.email ?? '--'}
             </div>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Birthday</div>
-            <div className="booking-form-content__field__input">
+          <div className="profile-content__field">
+            <div className="icon icon__calendar"></div>
+            <div className="profile-content__field__input">
               {detail?.birthday ? moment(detail?.birthday).format('DD/MM/yyyy') : '--'}
             </div>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Address</div>
-            <div className="booking-form-content__field__input">
+          <div className="profile-content__field">
+            <div className="icon icon__location"></div>
+            <div className="profile-content__field__input">
               {detail?.address ?? '--'}
             </div>
           </div>
-          <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Gender</div>
-            <div className="booking-form-content__field__input">
+          <div className="profile-content__field">
+            <div className="icon icon__gender"></div>
+            <div className="profile-content__field__input">
               {detail?.gender ? 'male' : 'female'}
             </div>
           </div>

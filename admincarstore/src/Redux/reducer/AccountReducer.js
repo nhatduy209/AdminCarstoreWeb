@@ -38,6 +38,7 @@ export const login = createAsyncThunk('account/login', async paramsLogin => {
     tokenDevice: 'login_web',
     role: 'admin',
   };
+  console.log(params);
   var postService = new PostService();
   const response = await postService.PostAPI(APP_URL.LOGIN, params);
   return response.data;
@@ -139,7 +140,8 @@ export const accountReducer = createSlice({
         state.account = action.payload.data;
         state.account.isLoggin = STATUS.SUCCESS;
         localStorage.setItem(token_authen, action.payload.data.token);
-        localStorage.setItem('account', {email: action.payload.data.email, password: action.payload.data.password});
+        localStorage.setItem('email', action.payload.data.email);
+        localStorage.setItem('password', action.payload.data.password);
       } else {
         state.account.isLoggin = STATUS.FAIL;
       }

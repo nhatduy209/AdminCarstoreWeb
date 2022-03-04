@@ -7,14 +7,15 @@ import {Link, useLocation, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { useState} from 'react';
 import { clearAccountInfo } from '../../Redux/reducer/AccountReducer';
-import {token_authen} from '../../Config/Status/Key'
-import defaultAvatar from '../../assets/img/default-avatar.svg'
+import {showProfile} from '../../Redux/reducer/GlobalReducer';
+import defaultAvatar from '../../assets/img/default-avatar.svg';
 
 const Navigator = isOpen => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const info = useSelector(state => state.AccountReducer.account);
+  const isShow = useSelector(state => state.GlobalReducer.isShowProfile);
   const [hideMenu, setHideMenu] = useState(window.innerWidth < 991);
   window.addEventListener('resize', (width) => {
     if(width.target.innerWidth < 991) {
@@ -25,14 +26,15 @@ const Navigator = isOpen => {
   }, true);
   const logout = () => {
     dispatch(clearAccountInfo());
-    localStorage.setItem(token_authen, null);
+    localStorage.clear();
     navigate('/login');
   }
   return (
     <div className={`navigator-container ${isOpen ? 'collapse' : ''} ${hideMenu ? 'hide' : ''}`}>
       <div className="navigator-header">
         <img
-        onClick={() => navigate('/profile')}
+        // onClick={() => navigate('/profile')}
+        onClick={() => dispatch(showProfile(!isShow))}
           className="navigator-header__avatar"
           src={info.image.length < 1 ? defaultAvatar : info.image }></img>
         <div className="navigator-header__info">{info.name}</div>

@@ -1,7 +1,7 @@
 export const STATUS = {
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
-  NONE: 'NOME',
+  NONE: 'NONE',
 };
 
 export const GET_LIST_USER_STATUS = {

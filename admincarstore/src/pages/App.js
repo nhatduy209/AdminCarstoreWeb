@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './App.scss';
+import '../assets/css/icon.scss';
 import HomeLayout from './home/HomeLayout';
 import Login from './login/Login';
 import {Routes, Route, useNavigate} from 'react-router-dom';
@@ -16,14 +17,16 @@ function App() {
   const tokenID = 'token';
   useEffect(() => {
     const tokenID = localStorage.getItem(token_authen);
-    const acc = localStorage.getItem('account');
+    const email = localStorage.email;
+    const password = localStorage.password;
     if (!tokenID) {
       navigate('/login');
     }
-    if (tokenID && !getUser.isLoggin) {
-      dispatch(login({...acc}));
+    if (tokenID && getUser.isLoggin === 'NONE') {
+      dispatch(login({email, password}));
     }
   }, [isLoggin]);
+  
   return (
     <div className="App">
       <Routes>

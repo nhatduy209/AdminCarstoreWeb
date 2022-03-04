@@ -1,0 +1,13 @@
+$--list-icon: (
+  'calendar', 'mail', 'user', 'gender', 'location'
+);
+.icon {
+  width: 1rem;
+  height: 1rem;
+  padding: 4px;
+  @each $icon-name in $--list-icon {
+    &__#{$icon-name}{
+      background-image: url('/assets/img/#{$icon-name}.svg');
+    }
+  }
+}
