@@ -2,7 +2,6 @@
 import './style.scss';
 import defaultAvatar from '../../../../assets/img/default-avatar.svg';
 import {Icon} from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
 import Dialog from '@mui/material/Dialog';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -14,10 +13,10 @@ import {
 import moment from 'moment';
 import {validate} from '../../../../helps/validattion';
 
-const ProfileForm = (setOpen, open) => {
+const ProfileForm = (setOpen, open, userInfo, isView) => {
   const dispatch = useDispatch();
   const currentAccount = useSelector(state => state.AccountReducer.account);
-  const [detail, setDetail] = useState(currentAccount);
+  const [detail, setDetail] = useState(userInfo ?? currentAccount);
   const [img, setImg] = useState(null);
   const [url, setUrl] = useState(
     detail?.image?.length < 1 ? defaultAvatar : detail?.image,
@@ -29,9 +28,15 @@ const ProfileForm = (setOpen, open) => {
       return;
     }
 
-    setDetail(currentAccount);
-    setUrl(currentAccount.image)
-  }, [currentAccount]);
+    setDetail(userInfo ?? currentAccount);
+    if (userInfo) {
+      setUrl(userInfo?.image ?? defaultAvatar)
+    } else {
+      setUrl(currentAccount?.image ?? defaultAvatar)
+    }
+  }, [currentAccount, userInfo]);
+
+  console.log(userInfo);
 
   const changeData = (event, key) => {
     setDetail({...detail, [key]: event.target.value});
@@ -87,16 +92,20 @@ const ProfileForm = (setOpen, open) => {
                 src={url}
                 style={{height: 260, borderRadius: '50%'}}
               />
-              <div className="profile-form__img-picker">
-                Pick image
-                <input
-                  required
-                  onChange={upload}
-                  type="file"
-                  accept=".png, .jpg, .jpeg"
-                  className="image-picker-btn"
-                />
-              </div>
+              {
+                !isView ?
+                <div className="profile-form__img-picker">
+                  Pick image
+                  <input
+                    disabled={isView}
+                    required
+                    onChange={upload}
+                    type="file"
+                    accept=".png, .jpg, .jpeg"
+                    className="image-picker-btn"
+                  />
+                </div> : null
+              }
             </div>
             <div className="profile-form-content--left">
               <div className="form-content__field">
@@ -106,6 +115,7 @@ const ProfileForm = (setOpen, open) => {
               <div className="form-content__field">
                 <div className="form-content__field__label">Name</div>
                 <input
+                  disabled={isView}
                   className="form-content__field__input"
                   placeholder="Please enter prices"
                   onChange={value => changeData(value, 'name')}
@@ -116,6 +126,7 @@ const ProfileForm = (setOpen, open) => {
               <div className="form-content__field">
                 <div className="form-content__field__label">Gender</div>
                 <select
+                  disabled={isView}
                   className="form-content__field__input select-list"
                   value={detail?.gender ?? true}
                   onChange={value => changeData(value, 'gender')}>
@@ -126,6 +137,7 @@ const ProfileForm = (setOpen, open) => {
               <div className="form-content__field">
                 <div className="form-content__field__label">BOD</div>
                 <input
+                  disabled={isView}
                   className="form-content__field__input"
                   placeholder="Please enter width"
                   onChange={value => changeData(value, 'birthday')}
@@ -140,6 +152,7 @@ const ProfileForm = (setOpen, open) => {
               <div className="form-content__field">
                 <div className="form-content__field__label">Address</div>
                 <input
+                  disabled={isView}
                   className="form-content__field__input"
                   placeholder="Please enter height"
                   onChange={value => changeData(value, 'address')}
@@ -153,9 +166,12 @@ const ProfileForm = (setOpen, open) => {
             <button className="cancel-btn">
               <div onClick={() => setOpen(false)}>Cancel</div>
             </button>
-            <button className="confirm-btn">
-              <div onClick={() => handleConfirm()}>Confirm</div>
-            </button>
+            {
+              !isView ?
+              <button className="confirm-btn">
+                <div onClick={() => handleConfirm()}>Confirm</div>
+              </button> : null
+            }
           </div>
         </div>
       </div>

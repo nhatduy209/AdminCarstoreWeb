@@ -11,8 +11,7 @@ import {Icon} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import UserForm from './Component/UserForm/UserForm';
-import Dialog from '@mui/material/Dialog';
+import ProfileForm from '../profile/Component/ProfileForm/ProfileForm';
 import {ToastContainer} from 'react-toastify';
 import defaultAvatar from '../../assets/img/default-avatar.svg'
 
@@ -62,7 +61,6 @@ const User = () => {
   };
 
   const optionClick = item => {
-    console.log('click', item);
     setOpen(true);
   };
 
@@ -92,8 +90,6 @@ const User = () => {
       </caption>
     );
   };
-
-  console.log('HELLO --- LENGTZH ', listUser?.listUser?.length);
 
   return (
     <div className="car-management-container">
@@ -192,24 +188,7 @@ const User = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
-      <Dialog
-        open={open}
-        className="car-form"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description">
-        <div className="car-form--main">
-          <div className="car-form__header">
-            <div>Title</div>
-            <Icon
-              onClick={() => setOpen(false)}
-              baseClassName="fas"
-              className="fa-xmark"
-              sx={{fontSize: 24}}
-            />
-          </div>
-          {UserForm(selectedItem)}
-        </div>
-      </Dialog>
+      {ProfileForm(setOpen, open, selectedItem, true)}
     </div>
   );
 };
