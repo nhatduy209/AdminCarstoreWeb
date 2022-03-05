@@ -15,7 +15,7 @@
     }
   }
   .group-btn {
-    position: inherit;
+    position: inherit !important;
     width: auto;
     .confirm-btn {
       background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));

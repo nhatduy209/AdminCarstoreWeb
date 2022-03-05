@@ -40,7 +40,8 @@ const HomeLayout = () => {
   }, true);
   return (
     <div className={`main-layout ${isOpen ? 'collapse' : ''} ${hideMenu ? 'hide' : ''}`}>
-        {Navigator(isOpen)}
+
+        {Navigator(isOpen, setIsOpen)}
         <div className='main-page'>
           {Header(setIsOpen,isOpen)}
           <Routes>

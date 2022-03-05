@@ -2,7 +2,9 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   isShowProfile: false,
-  isShowStore: false
+  isShowStore: false,
+  breadcrumb : []
+
 };
 
 export const globalReducer = createSlice({
@@ -14,12 +16,15 @@ export const globalReducer = createSlice({
     },
     showStore: (state, isShow) => {
       state.isShowStore = isShow.payload;
+    },
+    setBreadCrumb: (state, breadcrumb) => {
+      state.isShowStore = breadcrumb.payload;
     }
   },
 });
 
-export const {showProfile, showStore} = globalReducer.actions;
+export const {showProfile, showStore, setBreadCrumb} = globalReducer.actions;
 
-export const {isShowProfile, isShowStore} = state => state.GlobalReducer;
+export const {isShowProfile, isShowStore, breadcrumb} = state => state.GlobalReducer;
 
 export default globalReducer.reducer;

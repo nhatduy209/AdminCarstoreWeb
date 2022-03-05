@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import ProfileForm from '../profile/Component/ProfileForm/ProfileForm';
 import {ToastContainer} from 'react-toastify';
 import defaultAvatar from '../../assets/img/default-avatar.svg'
+import emptyList from '../../assets/img/empty-list.svg'
 
 import {
   getAllUser,
@@ -81,9 +82,9 @@ const User = () => {
       <caption>
         <div className="table-null">
           <img
-            height={100}
-            width={100}
-            src="https://i.pinimg.com/originals/98/4a/0e/984a0eb26ddb184a63ad4f9f53f8efeb.png"
+            height={150}
+            width={150}
+            src={emptyList}
           />{' '}
           No data
         </div>
