@@ -26,53 +26,53 @@ const StoreInfoForm = (detail, setOpen) => {
   }
   return (
     <div>
-      <form className="store-info-form-content">
-        <div className="store-info-form-content__group">
-          <div className="store-info-form-content__field">
-            <div className="store-info-form-content__field__label">Introduce</div>
+      <form className="form-content">
+        <div className="form-content__group">
+          <div className="form-content__field">
+            <div className="form-content__field__label">Introduce</div>
             <input
               type="text"
               value={storeDetail?.intro}
               onChange={value =>
                 setStoreDetail({...storeDetail, intro: value.target.value})
               }
-              className="store-info-form-content__field__input"></input>
+              className="form-content__field__input"></input>
           </div>
-          <div className="store-info-form-content__field">
-            <div className="store-info-form-content__field__label">CEO</div>
+          <div className="form-content__field">
+            <div className="form-content__field__label">CEO</div>
             <input
               type="text"
               value={storeDetail?.CEO}
               onChange={value =>
                 setStoreDetail({...storeDetail, CEO: value.target.value})
               }
-              className="store-info-form-content__field__input"></input>
+              className="form-content__field__input"></input>
           </div>
-          <div className="store-info-form-content__field">
-            <div className="store-info-form-content__field__label">Like</div>
-            <div className="store-info-form-content__field__input">
+          <div className="form-content__field">
+            <div className="form-content__field__label">Like</div>
+            <div className="form-content__field__input">
               {detail?.like ?? '--'}
             </div>
           </div>
-          <div className="store-info-form-content__field">
-            <div className="store-info-form-content__field__label">Phone</div>
+          <div className="form-content__field">
+            <div className="form-content__field__label">Phone</div>
             <input
               type="text"
               value={storeDetail?.phone}
               onChange={value =>
                 setStoreDetail({...storeDetail, phone: value.target.value})
               }
-              className="store-info-form-content__field__input"></input>
+              className="form-content__field__input"></input>
           </div>
-          <div className="store-info-form-content__field">
-            <div className="store-info-form-content__field__label">Address</div>
+          <div className="form-content__field">
+            <div className="form-content__field__label">Address</div>
             <input
               type="text"
               value={storeDetail?.address}
               onChange={value =>
                 setStoreDetail({...storeDetail, address: value.target.value})
               }
-              className="store-info-form-content__field__input"></input>
+              className="form-content__field__input"></input>
           </div>
         </div>
       </form>
