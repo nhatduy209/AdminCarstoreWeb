@@ -20,11 +20,6 @@ export const linksList = [
       path: '/booking'
     },
     {
-      title: 'Store infomation',
-      icon: 'fa-store',
-      path: ''
-    },
-    {
       title: 'Payment History',
       icon: 'fa-clipboard-check',
       path: '/payment-history'

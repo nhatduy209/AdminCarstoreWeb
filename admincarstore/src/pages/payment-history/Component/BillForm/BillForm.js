@@ -16,7 +16,7 @@ const BillForm = (selectedItem, setOpenPayment) => {
   //   }
   // }, [status])
   return (
-    <div className="car-form--container">
+    <div className="form--container">
       <form className="booking-form-content">
         <img
           className="booking-form-content__img"

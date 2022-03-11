@@ -85,9 +85,9 @@ const Booking = () => {
         open={open}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="booking-form">
-        <div className="booking-form-container">
-          <div className="booking-form__header">
+        className="booking-form form">
+        <div className="form-container">
+          <div className="form__header">
             <div>Meeting details</div>
             <Icon
               onClick={() => setOpen(false)}
@@ -103,9 +103,9 @@ const Booking = () => {
         open={openPayment}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="booking-form">
-        <div className="booking-form-container">
-          <div className="booking-form__header">
+        className="booking-form form">
+        <div className="form-container">
+          <div className="form__header">
             <div>Payment details</div>
             <Icon
               onClick={() => setOpenPayment(false)}

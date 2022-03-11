@@ -64,7 +64,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const renderConfirmButton = () => {
     if(meetingDetail?.status_payment) {
       return (
-        <button className="go-to-history-perchase">
+        <button className="go-to-history-perchase confirm-btn">
         <div onClick={() => routeToPayment()}>Go to history purchase</div>
       </button>
       )

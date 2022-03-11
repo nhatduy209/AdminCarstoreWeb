@@ -10,6 +10,8 @@ import { useState} from 'react';
 import { clearAccountInfo } from '../../Redux/reducer/AccountReducer';
 import {showStore} from '../../Redux/reducer/GlobalReducer';
 import defaultAvatar from '../../assets/img/default-avatar.svg';
+import logo from '../../assets/img/logo.png';
+import logoCollapse from '../../assets/img/logo-collapse.png';
 
 const Navigator = (isOpen, setIsOpen) => {
   const dispatch = useDispatch();
@@ -42,8 +44,8 @@ const Navigator = (isOpen, setIsOpen) => {
           <img
           // onClick={() => navigate('/profile')}
           onClick={() => dispatch(showStore(!isShow))}
-            className="navigator-header__avatar"
-            src={defaultAvatar}></img>
+            className={`navigator-header__avatar ${isOpen && !hideMenu ? 'collapse' : ''}`}
+            src={isOpen && !hideMenu ? logoCollapse : logo}></img>
           <div className="navigator-header__info"></div>
         </div>
         <div className="navigator-menu">

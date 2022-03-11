@@ -93,7 +93,7 @@ const User = () => {
   };
 
   return (
-    <div className="car-management-container">
+    <div className="management-container">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -120,58 +120,55 @@ const User = () => {
         </div>
       </div>
       <TableContainer component={Paper}>
-        <Table sx={{minWidth: 650}} aria-label="simple table">
+        <Table sx={{minWidth: 650}} aria-label="simple table" className='dt-table'>
           {renderNull()}
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell align="right" width="45">
+          <TableHead className='dt-table__header'>
+            <TableRow className='dt-table__header__row'>
+              <TableCell className='dt-table__header__cell'>#</TableCell>
+              <TableCell className='dt-table__header__cell' align="center" width="45">
                 Avatar
               </TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Role</TableCell>
-              <TableCell align="right">Address</TableCell>
-              <TableCell align="right">Phone Number</TableCell>
-              <TableCell align="right"></TableCell>
+              <TableCell className='dt-table__header__cell' align="center">Name</TableCell>
+              <TableCell className='dt-table__header__cell' align="center">Email</TableCell>
+              <TableCell className='dt-table__header__cell' align="center">Role</TableCell>
+              <TableCell className='dt-table__header__cell' align="center">Address</TableCell>
+              <TableCell className='dt-table__header__cell' align="center">Phone Number</TableCell>
+              <TableCell className='dt-table__header__cell' align="center" ></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className='dt-table__body'>
             {listUser?.map((row, index) => (
               <TableRow
+                className='dt-table__body__row'
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell component="th" scope="row">
+                <TableCell className='dt-table__body__cell' component="th" scope="row">
                   {index + 1}
                 </TableCell>
-                <TableCell align="right">
-                  <img className='navigator-header__avatar' width={100} src={row.image ?? defaultAvatar} />
+                <TableCell className='dt-table__body__cell' align="right">
+                  <img className='dt-table__avatar' src={row.image ?? defaultAvatar} />
                 </TableCell>
-                <TableCell align="right">{row.name ?? '--'}</TableCell>
-                <TableCell align="right">{row.email ?? '--'}</TableCell>
-                <TableCell align="right">{row?.role ?? '--'}</TableCell>
-                <TableCell align="right">{row?.address ?? '--'}</TableCell>
-                <TableCell align="right">{row?.phone ?? '--'}</TableCell>
-                <TableCell align="right">
-                  <div className="user-option">
-                    <div className="user-option-item view">
-                      <Icon
-                        baseClassName="fas"
-                        className="fa-info"
-                        sx={{fontSize: 18, padding: 3}}
+                <TableCell className='dt-table__body__cell' align="right">{row.name ?? '--'}</TableCell>
+                <TableCell className='dt-table__body__cell' align="right">{row.email ?? '--'}</TableCell>
+                <TableCell className='dt-table__body__cell' align="right">{row?.role ?? '--'}</TableCell>
+                <TableCell className='dt-table__body__cell' align="right">{row?.address ?? '--'}</TableCell>
+                <TableCell className='dt-table__body__cell' align="right">{row?.phone ?? '--'}</TableCell>
+                <TableCell className='dt-table__body__cell' align="right">
+                  <div className="option">
+                    <div className="option-item view">
+                      <div
+                        className="icon icon__detail"
                         onClick={() => {
                           setSelectedItem(row);
                           setOpen(true);
                         }}
-                      />
+                      ></div>
                     </div>
-                    <div className="user-option-item delete">
-                      <Icon
+                    <div className="option-item delete">
+                      <div
                         onClick={() => handleDelete(row.email)}
-                        baseClassName="fas"
-                        className="fa-user-xmark"
-                        sx={{fontSize: 18, padding: 0.5}}
-                      />
+                        className="icon icon__delete"
+                      ></div>
                     </div>
                   </div>
                 </TableCell>
@@ -180,6 +177,7 @@ const User = () => {
           </TableBody>
         </Table>
         <TablePagination
+          className='dt-table__pagination'
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={cars.length ?? 0}

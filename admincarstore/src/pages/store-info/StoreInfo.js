@@ -64,12 +64,12 @@ const StoreInfo = () => {
         </div>
       <Dialog
         open={open}
-        className="car-form"
+        className="form"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-        <div className="car-form--main">
-          <div className="car-form__header">
-            <div className="car-form__header__title">Title</div>
+        <div className="form--main">
+          <div className="form__header">
+            <div className="form__header__title">Title</div>
             <Icon
               onClick={() => setOpen(false)}
               baseClassName="fas"
