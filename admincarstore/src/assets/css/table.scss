@@ -1,0 +1,66 @@
+.dt-table {
+  &__header {
+    &__row {
+      background-color: lavender;
+      text-transform: uppercase;
+    }
+    &__cell {
+      font-weight: bold !important;
+    }
+  }
+  &__body {
+    &__cell {
+      background-color: rgba(256,256,256,0.3);
+      .color-preview {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-inline: auto;
+      }
+    }
+  }
+  &__avatar {
+    height: 50px;
+    border-radius: 50%;
+  }
+  .option {
+    display: flex;
+    // justify-content: center;
+    &-item {
+      width: 24px;
+      height: 24px;
+      padding: 4px;
+      border-radius: 50%;
+      text-align: center;
+      margin: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      &.view{
+        background-color: #DFE3EE
+      }
+      &.edit{
+        background-color: #7289DA
+      }
+      &.delete{
+        background-color: #ff0000
+      }
+    }
+  }
+  &__pagination {
+    padding: 12px !important;
+    border-top: 1px solid #ccc;
+    .MuiTablePagination {
+      &-actions {
+        button {
+          margin-inline: 12px;
+          background-color: #eee;
+          padding: 12px;
+          border-radius: 50%;
+          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+        }
+      }
+    }
+  }
+}

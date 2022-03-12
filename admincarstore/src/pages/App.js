@@ -1,7 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './App.scss';
 import '../assets/css/icon.scss';
-import '../assets/css/typhography.scss'
+import '../assets/css/typhography.scss';
+import '../assets/css/form.scss';
+import '../assets/css/table.scss';
 import HomeLayout from './home/HomeLayout';
 import Login from './login/Login';
 import {Routes, Route, useNavigate} from 'react-router-dom';

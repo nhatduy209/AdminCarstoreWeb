@@ -20,6 +20,7 @@ import {
 import CarForm from './Component/CarForm/CarForm';
 import {getCategory} from '../../Redux/reducer/CategoryReducer';
 import {ToastContainer} from 'react-toastify';
+import emptyList from '../../assets/img/empty-list.svg';
 
 const style = {
   position: 'absolute',
@@ -112,7 +113,7 @@ const CarManagement = () => {
           <img
             height={100}
             width={100}
-            src="https://i.pinimg.com/originals/98/4a/0e/984a0eb26ddb184a63ad4f9f53f8efeb.png"
+            src={emptyList}
           />{' '}
           No data
         </div>
@@ -120,7 +121,7 @@ const CarManagement = () => {
     );
   };
   return (
-    <div className="car-management-container">
+    <div className="management-container">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -153,79 +154,73 @@ const CarManagement = () => {
         </div>
       </div>
       <TableContainer component={Paper}>
-        <Table sx={{minWidth: 650}} aria-label="simple table">
+        <Table sx={{minWidth: 650}} aria-label="simple table" className="dt-table">
           {renderNull()}
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell align="center" width="45">
+          <TableHead className="dt-table__header">
+            <TableRow className="dt-table__header__row">
+              <TableCell className="dt-table__header__cell">#</TableCell>
+              {/* <TableCell className="dt-table__header__cell" align="center" width="45">
                 Image
-              </TableCell>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Brand</TableCell>
-              <TableCell align="center">Quantity</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Color</TableCell>
-              <TableCell align="center"></TableCell>
+              </TableCell> */}
+              <TableCell className="dt-table__header__cell" align="center">Name</TableCell>
+              <TableCell className="dt-table__header__cell" align="center">Brand</TableCell>
+              <TableCell className="dt-table__header__cell" align="center">Quantity</TableCell>
+              <TableCell className="dt-table__header__cell" align="center">Price</TableCell>
+              <TableCell className="dt-table__header__cell" align="center">Color</TableCell>
+              <TableCell className="dt-table__header__cell" align="center" width="120"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {cars.map((row, index) => (
-              <TableRow
+              <TableRow className="dt-table__body__row"
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell component="th" scope="row">
+                <TableCell className="dt-table__body__cell" component="th" scope="row">
                   {index + 1}
                 </TableCell>
-                <TableCell align="center">
-                  <img width={200} src={row.img} />
-                </TableCell>
-                <TableCell align="center">{row.name ?? '--'}</TableCell>
-                <TableCell align="center">{row.category ?? '--'}</TableCell>
-                <TableCell align="center">
+                {/* <TableCell className="dt-table__body__cell" align="center">
+                  <img className="dt-table__avatar" src={row.img} />
+                </TableCell> */}
+                <TableCell className="dt-table__body__cell" align="center">{row.name ?? '--'}</TableCell>
+                <TableCell className="dt-table__body__cell" align="center">{row.category ?? '--'}</TableCell>
+                <TableCell className="dt-table__body__cell" align="center">
                   {row?.color[0]?.numberInStore ?? '--'}
                 </TableCell>
-                <TableCell align="center">{`$${row.prices ?? '--'}`}</TableCell>
-                <TableCell align="center">
+                <TableCell className="dt-table__body__cell" align="center">{`$${row.prices ?? '--'}`}</TableCell>
+                <TableCell className="dt-table__body__cell" align="center">
                   <div
-                    className="car-color"
+                    className="color-preview"
                     style={{
                       backgroundColor: row.color[0]?.color ?? 'black',
                     }}></div>
                 </TableCell>
-                <TableCell align="center">
-                  <div className="user-option">
-                    <div className="user-option-item edit">
-                      <Icon
-                        baseClassName="fas"
-                        className="fa-pencil"
-                        sx={{fontSize: 18, padding: 3}}
+                <TableCell className="dt-table__body__cell" align="center">
+                  <div className="option">
+                    <div className="option-item edit">
+                      <div
+                      className="icon icon__edit"
                         onClick={() => {
                           setFormType('edit');
                           setSelectedItem(row);
                           setOpen(true);
                         }}
-                      />
+                      ></div>
                     </div>
-                    <div className="user-option-item view">
-                      <Icon
-                        baseClassName="fas"
-                        className="fa-info"
-                        sx={{fontSize: 18, padding: 3}}
+                    <div className="option-item view">
+                      <div
+                      className="icon icon__detail"
                         onClick={() => {
                           setFormType('detail');
                           setSelectedItem(row);
                           setOpen(true);
                         }}
-                      />
+                      ></div>
                     </div>
-                    <div className="user-option-item delete">
-                      <Icon
+                    <div className="option-item delete">
+                      <div
+                      className="icon icon__delete"
                         onClick={() => handleDelete(row)}
-                        baseClassName="fas"
-                        className="fa-trash"
-                        sx={{fontSize: 18, padding: 0.5}}
-                      />
+                      ></div>
                     </div>
                   </div>
                 </TableCell>
@@ -234,6 +229,7 @@ const CarManagement = () => {
           </TableBody>
         </Table>
         <TablePagination
+        className="dt-table__pagination"
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={cars.length ?? 0}

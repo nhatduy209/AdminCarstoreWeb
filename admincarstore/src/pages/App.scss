@@ -8,14 +8,15 @@
   justify-content: center;
   margin-top: 8px;
   button {
-    height: 32px;
-    width: 80px;
-    font-size: 14px;
-    margin-left: 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    height: 36px;
+      width: 120px;
+      font-size: 14px;
+      margin-left: 12px;
+      padding-inline: 8px;
+      cursor: pointer;
+      border: none;
+      border-radius: 24px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   }
   .cancel-btn {
     background-color: #eee;
@@ -39,156 +40,12 @@
     padding-inline: 12px;
   }
 }
-
-.form {
-  &--main {
-    padding: 12px 0;
-    background-color: #fff;
-  }
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    border-bottom: 0.5px solid rgba(20,20,20, 0.1);
-    padding-bottom: 12px;
-    padding-inline: 20px;
-    text-transform: capitalize;
-  }
-  &-content {
-    padding: 24px;
-    &__field {
-      padding: 8px;
-      margin-top: 8px;
-      &__label {
-        padding-bottom: 12px;
-        font-weight: bold;
-      }
-      &__input {
-        background-image: linear-gradient(to right,rgba(240,240,240,0.2) , rgba(240,240,240,0.5));
-        width: 96%;
-        height: 30px;
-        border: 0.5px solid #ccc;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 14px;
-        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-        &.select-list {
-          width: 100%;
-          border: 0.5px solid #ccc;
-          height: 40px;
-          font-size: 14px;
-          padding: 4px 8px;
-          border-radius: 4px;
-        }
-      }
-      option {
-        font-size: 16px;
-      }
-      .MuiInputBase-input {
-        justify-items: center;
-      }
-    }
-  }
-  &-group-btn {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 12px;
-    padding-top: 12px;
-    border-top: 0.5px solid rgba(20,20,20, 0.1);
-    button {
-      height: 36px;
-      width: 120px;
-      font-size: 14px;
-      margin-left: 12px;
-      padding-inline: 8px;
-      cursor: pointer;
-      border: none;
-      border-radius: 24px;
-      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    }
-    .cancel-btn {
-      cursor: pointer;
-      background-color: rgba(240,240,240,0.6);
-    }
-    .confirm-btn {
-      cursor: pointer;
-      background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));
-    }
-    .cancel-booking-btn{
-      width: fit-content;
-      background-color: #ccc;
-    }
-    .go-to-history-perchase {
-      width: fit-content;
-    }
-  }
-}
 .management-container {
   margin: 12px 20px 40px 60px;
 }
 // .MuiPaper-root {
 //   background-color: rgba(256,256,256,0.3) !important;
 // }
-.dt-table {
-  &__header {
-    &__row {
-      background-color: lavender;
-      text-transform: uppercase;
-    }
-    &__cell {
-      font-weight: bold !important;
-    }
-  }
-  &__body {
-    &__cell {
-      background-color: rgba(256,256,256,0.3);
-    }
-  }
-  &__avatar {
-    height: 50px;
-    border-radius: 50%;
-  }
-  .option {
-    display: flex;
-    // justify-content: center;
-    &-item {
-      width: 24px;
-      height: 24px;
-      padding: 4px;
-      border-radius: 50%;
-      text-align: center;
-      margin: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      &.view{
-        background-color: #DFE3EE
-      }
-      &.edit{
-        background-color: #7289DA
-      }
-      &.delete{
-        background-color: #BF0000
-      }
-    }
-  }
-  &__pagination {
-    padding: 12px !important;
-    border-top: 1px solid #ccc;
-    .MuiTablePagination {
-      &-actions {
-        button {
-          margin-inline: 12px;
-          background-color: #eee;
-          padding: 12px;
-          border-radius: 50%;
-          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-        }
-      }
-    }
-  }
-}
 .MuiDialog-container{
   overflow-y: scroll;
   .MuiDialog-paperScrollPaper {

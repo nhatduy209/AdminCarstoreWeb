@@ -1,6 +1,6 @@
 .main-layout {
   // background-image: linear-gradient(0deg,rgba(3, 25, 86, 0.8), transparent);
-  padding-left: 270px;
+  padding-left: 280px;
   height: 100%;
   display: flex;
   overflow: hidden;
@@ -9,7 +9,7 @@
   background-repeat: round;
   // box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
   &.collapse {
-    padding-left: 100px;
+    padding-left: 110px;
     transition: 0.5s ease-in-out;
     &.hide {
       padding-left: 30px;
