@@ -1,5 +1,5 @@
 .profile {
-  padding: 10%;
+  padding: 40px 20px;
   &__title {
     font-size: 40px;
     font-weight: bold;
@@ -8,10 +8,53 @@
     max-width: 750px;
     margin: auto;
   }
-  &__image {
-    height: 260px;
-    border-radius: 50%;
-    box-shadow: rgba(149,157,165,0.2) 0px 8px 24px;
-    margin-block: 20px;
+  &__img {
+    position: absolute;
+    left: 0;
+    width: 340px;
+    top: 0;
+    box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+  }
+  &-content {
+    &__field {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 8px;
+      border-radius: 16px;
+      margin-block: 12px;
+      &__input {
+        max-width: 240px;
+        text-align: end;
+      }
+      &__label {
+        margin-right: 12px;
+      }
+    }
+    &__group {
+      position: absolute;
+      top: 290px;
+      left: 0;
+      width: 292px;
+      height: calc(100% - 340px);
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 50px 50px 0 0;
+      box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    }
+  }
+  .group-btn {
+    bottom: 40px;
+    position: absolute;
+    width: 340px;
+    left: 0;
+    button {
+      width: 180px;
+      height: 42px;
+      border-radius: 24px;
+    }
+    .confirm-btn {
+      background-color: transparent;
+      background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));
+    }
   }
 }

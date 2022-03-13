@@ -1,0 +1,32 @@
+.header {
+    &-container {
+        width: calc(100% - 140px);
+        background-color: transparent;
+        /* border-radius: 20px 0 0; */
+        color: #000;
+        position: fixed;
+        padding-inline: 20px;
+        top: 0;
+        transition: 0.5s ease-in-out;
+        &.collapse {
+            width: calc(100% - 40px);
+            transition: 0.5s ease-in-out;
+        }
+        .mini-avatar{
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            position: fixed;
+            right: 12px;
+        }
+    }
+    &-content {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        justify-content: space-between;
+        padding-right: 200px;
+        transition: 0.5s ease-in-out;
+    }
+}

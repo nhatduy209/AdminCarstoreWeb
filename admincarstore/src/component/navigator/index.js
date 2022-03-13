@@ -15,11 +15,6 @@ export const linksList = [
       path: '/list'
     },
     {
-      title: 'Store infomation',
-      icon: 'fa-store',
-      path: '/store-info'
-    },
-    {
       title: 'Booking management',
       icon: 'fa-calendar-check',
       path: '/booking'

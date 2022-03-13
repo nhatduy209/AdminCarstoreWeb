@@ -1,5 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import emptyBill from '../../assets/img/empty_bills.svg';
 import './style.scss';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,6 +15,7 @@ import Dialog from '@mui/material/Dialog';
 import {ToastContainer} from 'react-toastify';
 import BillForm from './Component/BillForm/BillForm';
 import {getBills} from '../../Redux/reducer/PaymentHistoryReducer';
+import emptyList from '../../assets/img/empty-list.svg';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -81,14 +81,14 @@ const PaymentHistory = () => {
     ) : (
       <caption>
         <div className="table-null">
-          <img height={100} width={100} src={emptyBill} /> No data
+          <img height={100} width={100} src={emptyList} /> No data
         </div>
       </caption>
     );
   };
 
   return (
-    <div className="car-management-container">
+    <div className="management-container">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -114,50 +114,51 @@ const PaymentHistory = () => {
           </div>
         </div>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="dt-table">
         <Table sx={{minWidth: 650}} aria-label="simple table">
           {renderNull()}
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell align="right" width="45">
+          <TableHead className="dt-table__header">
+            <TableRow className="dt-table__header__row">
+              <TableCell className="dt-table__header__cell">#</TableCell>
+              <TableCell className="dt-table__header__cell" align="right" width="45">
                 Image
               </TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Selling Date</TableCell>
-              <TableCell align="right">Info</TableCell>
-              <TableCell align="right">Admin Info</TableCell>
-              <TableCell align="right"></TableCell>
+              <TableCell className="dt-table__header__cell" align="right">Name</TableCell>
+              <TableCell className="dt-table__header__cell" align="right">Selling Date</TableCell>
+              <TableCell className="dt-table__header__cell" align="right">Info</TableCell>
+              <TableCell className="dt-table__header__cell" align="right">Admin Info</TableCell>
+              <TableCell className="dt-table__header__cell" align="right"></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="dt-table__body">
             {bills?.map((row, index) => (
               <TableRow
+              className="dt-table__body__row"
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell component="th" scope="row">
+                <TableCell className="dt-table__body__cell" component="th" scope="row">
                   {index + 1}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell className="dt-table__body__cell" align="right">
                   <img width={100} src={row.car.image} />
                 </TableCell>
-                <TableCell align="right">{row.car.car_name ?? '--'}</TableCell>
-                <TableCell align="right">
+                <TableCell className="dt-table__body__cell" align="right">{row.car.car_name ?? '--'}</TableCell>
+                <TableCell className="dt-table__body__cell" align="right">
                   {row.car.selling_date ?? '--'}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell className="dt-table__body__cell" align="right">
                   <div>
                     <div>{row.client?.name ?? '--'}</div>
                     <div>{row.client?.email ?? '--'}</div>
                   </div>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell className="dt-table__body__cell" align="right">
                   <div>
                     <div>{row.admin?.name ?? '--'}</div>
                     <div>{row.admin?.email ?? '--'}</div>
                   </div>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell className="dt-table__body__cell" align="right">
                   <div className="user-option">
                     <div className="user-option-item view">
                       <Icon

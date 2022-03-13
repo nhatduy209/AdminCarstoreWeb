@@ -1,14 +1,13 @@
 .header {
     &-container {
         width: calc(100% - 140px);
-        background-color: #fff;
-        border-radius: 20px 0 0;
+        background-color: transparent;
+        /* border-radius: 20px 0 0; */
         color: #000;
         position: fixed;
         padding-inline: 20px;
         top: 0;
         transition: 0.5s ease-in-out;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         &.collapse {
             width: calc(100% - 40px);
             transition: 0.5s ease-in-out;

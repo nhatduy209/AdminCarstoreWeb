@@ -4,6 +4,7 @@ import bookingReducer from './BookingReducer';
 import carReducer from './CarReducer';
 import categoryReducer from './CategoryReducer';
 import colorReducer from './ColorReducer';
+import globalReducer from './GlobalReducer';
 import paymentHistoryReducer from './PaymentHistoryReducer';
 import storeInfoReducer from './StoreInfoReducer';
 
@@ -15,4 +16,5 @@ export default combineReducers({
   ColorReducer: colorReducer,
   StoreInfoReducer: storeInfoReducer,
   PaymentHistoryReducer: paymentHistoryReducer,
+  GlobalReducer: globalReducer
 });

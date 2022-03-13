@@ -11,16 +11,15 @@ import {Icon} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import UserForm from './Component/UserForm/UserForm';
-import Dialog from '@mui/material/Dialog';
+import ProfileForm from '../profile/Component/ProfileForm/ProfileForm';
 import {ToastContainer} from 'react-toastify';
-import defaultAvatar from '../../assets/img/default-avatar.svg'
+import defaultAvatar from '../../assets/img/default-avatar.svg';
+import emptyList from '../../assets/img/empty-list.svg';
 
 import {
   getAllUser,
   deleteUser,
   deleteUserRedux,
-  
 } from '../../Redux/reducer/AccountReducer';
 
 const options = ['View', 'Edit', 'Delete'];
@@ -62,7 +61,6 @@ const User = () => {
   };
 
   const optionClick = item => {
-    console.log('click', item);
     setOpen(true);
   };
 
@@ -82,21 +80,14 @@ const User = () => {
     ) : (
       <caption>
         <div className="table-null">
-          <img
-            height={100}
-            width={100}
-            src="https://i.pinimg.com/originals/98/4a/0e/984a0eb26ddb184a63ad4f9f53f8efeb.png"
-          />{' '}
-          No data
+          <img height={150} width={150} src={emptyList} /> No data
         </div>
       </caption>
     );
   };
 
-  console.log('HELLO --- LENGTZH ', listUser?.listUser?.length);
-
   return (
-    <div className="car-management-container">
+    <div className="management-container">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -123,58 +114,82 @@ const User = () => {
         </div>
       </div>
       <TableContainer component={Paper}>
-        <Table sx={{minWidth: 650}} aria-label="simple table">
+        <Table
+          sx={{minWidth: 650}}
+          aria-label="simple table"
+          className="dt-table">
           {renderNull()}
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell align="right" width="45">
+          <TableHead className="dt-table__header">
+            <TableRow className="dt-table__header__row">
+              <TableCell className="dt-table__header__cell">#</TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
                 Avatar
               </TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Role</TableCell>
-              <TableCell align="right">Address</TableCell>
-              <TableCell align="right">Phone Number</TableCell>
-              <TableCell align="right"></TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Email
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Role
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Address
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Phone Number
+              </TableCell>
+              <TableCell
+                className="dt-table__header__cell"
+                align="center"></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="dt-table__body">
             {listUser?.map((row, index) => (
               <TableRow
+                className="dt-table__body__row"
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell component="th" scope="row">
+                <TableCell
+                  className="dt-table__body__cell"
+                  component="th"
+                  scope="row">
                   {index + 1}
                 </TableCell>
-                <TableCell align="right">
-                  <img className='navigator-header__avatar' width={100} src={row.image ?? defaultAvatar} />
+                <TableCell className="dt-table__body__cell" align="right">
+                  <div style={{display: 'flex', width: '200px'}}>
+                    {' '}
+                    <img
+                      className="dt-table__avatar"
+                      src={row.image ?? defaultAvatar}
+                    />
+                    <div style={{marginBlock: 'auto', marginLeft: '12px'}}>{row.name ?? '--'}</div>
+                  </div>
                 </TableCell>
-                <TableCell align="right">{row.name ?? '--'}</TableCell>
-                <TableCell align="right">{row.email ?? '--'}</TableCell>
-                <TableCell align="right">{row?.role ?? '--'}</TableCell>
-                <TableCell align="right">{row?.address ?? '--'}</TableCell>
-                <TableCell align="right">{row?.phone ?? '--'}</TableCell>
-                <TableCell align="right">
-                  <div className="user-option">
-                    <div className="user-option-item view">
-                      <Icon
-                        baseClassName="fas"
-                        className="fa-info"
-                        sx={{fontSize: 18, padding: 3}}
+                <TableCell className="dt-table__body__cell" align="right">
+                  {row.email ?? '--'}
+                </TableCell>
+                <TableCell className="dt-table__body__cell" align="right">
+                  {row?.role ?? '--'}
+                </TableCell>
+                <TableCell className="dt-table__body__cell" align="right">
+                  {row?.address ?? '--'}
+                </TableCell>
+                <TableCell className="dt-table__body__cell" align="right">
+                  {row?.phone ?? '--'}
+                </TableCell>
+                <TableCell className="dt-table__body__cell" align="right">
+                  <div className="option">
+                    <div className="option-item view">
+                      <div
+                        className="icon icon__detail"
                         onClick={() => {
                           setSelectedItem(row);
                           setOpen(true);
-                        }}
-                      />
+                        }}></div>
                     </div>
-                    <div className="user-option-item delete">
-                      <Icon
+                    <div className="option-item delete">
+                      <div
                         onClick={() => handleDelete(row.email)}
-                        baseClassName="fas"
-                        className="fa-user-xmark"
-                        sx={{fontSize: 18, padding: 0.5}}
-                      />
+                        className="icon icon__delete"></div>
                     </div>
                   </div>
                 </TableCell>
@@ -183,6 +198,7 @@ const User = () => {
           </TableBody>
         </Table>
         <TablePagination
+          className="dt-table__pagination"
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={cars.length ?? 0}
@@ -192,24 +208,7 @@ const User = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
-      <Dialog
-        open={open}
-        className="car-form"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description">
-        <div className="car-form--main">
-          <div className="car-form__header">
-            <div>Title</div>
-            <Icon
-              onClick={() => setOpen(false)}
-              baseClassName="fas"
-              className="fa-xmark"
-              sx={{fontSize: 24}}
-            />
-          </div>
-          {UserForm(selectedItem)}
-        </div>
-      </Dialog>
+      {ProfileForm(setOpen, open, selectedItem, true)}
     </div>
   );
 };
