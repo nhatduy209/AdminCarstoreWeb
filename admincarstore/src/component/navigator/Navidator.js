@@ -10,8 +10,8 @@ import { useState} from 'react';
 import { clearAccountInfo } from '../../Redux/reducer/AccountReducer';
 import {showStore} from '../../Redux/reducer/GlobalReducer';
 import defaultAvatar from '../../assets/img/default-avatar.svg';
-import logo from '../../assets/img/logo.png';
-import logoCollapse from '../../assets/img/logo-collapse.png';
+import logo from '../../assets/img/logo.svg';
+import logoCollapse from '../../assets/img/logo.svg';
 
 const Navigator = (isOpen, setIsOpen) => {
   const dispatch = useDispatch();

@@ -2,6 +2,7 @@
 import './style.scss';
 import * as React from 'react';
 import { Icon } from '@mui/material';
+import Badge from '@mui/material/Badge';
 import {useSelector, useDispatch} from 'react-redux';
 import {showProfile} from '../../Redux/reducer/GlobalReducer'
 import defaultAvatar from '../../assets/img/default-avatar.svg'
@@ -26,12 +27,20 @@ const Header = (toggleDrawer,isOpen) => {
     <div className={`header-container ${isOpen ? 'collapse' : ''}`}>
         <div className='header-content'>
           {
-            hideMenu ? <div className="icon icon__collapse" onClick={() => toggleDrawer(!isOpen)}></div> :
+            hideMenu ? <div className="icon icon__collapse toggle-button" onClick={() => toggleDrawer(!isOpen)}></div> :
             <Icon baseClassName="fas"
-            className={!isOpen ? 'fas fa-angles-left' : 'fas fa-angles-right'}
+            className={!isOpen ? 'fas fa-angles-left toggle-button' : 'fas fa-angles-right toggle-button'}
             onClick={() => toggleDrawer(!isOpen)} sx={{ fontSize: 24 }} />
           }
-        <img onClick={() => toggleProfile(!isShow)} className='mini-avatar' src={info.image.length < 1 ? defaultAvatar : info.image }></img>
+          <div className='header__noti-group-button'>
+          <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
+            <div className='icon icon__message'></div>
+            </Badge>
+            <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
+            <div className='icon icon__notification'></div>
+            </Badge>
+          <img onClick={() => toggleProfile(!isShow)} className='mini-avatar toggle-button' src={info.image.length < 1 ? defaultAvatar : info.image }></img>
+          </div>
         </div>
     </div>
   );

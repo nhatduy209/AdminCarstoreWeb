@@ -52,7 +52,7 @@ const Home = () => {
 
   const bills = useSelector(state => state.PaymentHistoryReducer.bills ?? []);
   const categories = useSelector(state =>
-    state.CategoryReducer.listCategory.map(el => el.name),
+    state.CategoryReducer.listCategory,
   );
   const [value, setValue] = useState(moment());
   const preValue = moment(value).set('month', moment(value).get('month') - 1);
@@ -81,6 +81,13 @@ const Home = () => {
     setValue(newValue);
   };
 
+  // const formatBills = month => {
+  //   const list = bills.filter(
+  //     el => moment(el.selling_date).month() === moment(month).month(),
+  //   );
+  //   return list;
+  // };
+
   const formatBills = month => {
     const list = bills.filter(
       el => moment(el.selling_date).month() === moment(month).month(),
@@ -96,7 +103,7 @@ const Home = () => {
     categories.forEach(element => {
       const list = [];
       formatBills(value).forEach(el => {
-        if (el.car.category === element) {
+        if (el.car.category === element.name) {
           list.push(el);
         }
       });
@@ -113,7 +120,7 @@ const Home = () => {
     categories.forEach(element => {
       const list = [];
       formatBills(month).forEach(el => {
-        if (el.car.category === element) {
+        if (el.car.category === element.name) {
           list.push(el);
         }
       });
@@ -128,7 +135,7 @@ const Home = () => {
   }, []);
 
   const lineData = {
-    labels: categories,
+    labels: categories.map((el) => el.name),
     datasets: [
       {
         label: `Month: ${moment(value).month() + 1}`,
@@ -148,7 +155,7 @@ const Home = () => {
   };
 
   const data = {
-    labels: categories,
+    labels: categories.map((el) => el.name),
     datasets: [
       {
         label: '# of Votes',
