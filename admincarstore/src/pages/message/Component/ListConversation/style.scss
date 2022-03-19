@@ -1,0 +1,32 @@
+.profile-form{
+  &__img-picker {
+    text-align: center;
+    margin-block: 12px;
+    cursor: pointer;
+    .image-picker-btn {
+      left: 20%;
+    }
+  }
+  .MuiDialog-container{
+    .MuiDialog-paperScrollPaper {
+      top: 50px;
+    }
+  }
+  .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+    width: 90%;
+    max-width: 450px;
+  }
+  &-content {
+    margin-left: -12px;
+    &__img {
+      margin: auto;
+    }
+    &__field {
+      
+      &__title {
+        padding-block: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+}

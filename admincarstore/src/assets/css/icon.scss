@@ -1,6 +1,9 @@
 $--list-icon: (
-  'calendar', 'mail', 'user', 'gender', 'location', 'collapse',
-  'detail', 'delete', 'edit', 'collapse-menu', 'message', 'notification'
+  'mail', 'user', 'gender', 'location', 'collapse',
+  'detail', 'delete', 'edit', 'collapse-menu', 'notification'
+);
+$--list-menu-icon: (
+  'message', 'check', 'calendar', 'home', 'user', 'car'
 );
 .icon {
   width: 1rem;
@@ -10,6 +13,14 @@ $--list-icon: (
   @each $icon-name in $--list-icon {
     &__#{$icon-name}{
       background-image: url('/assets/img/#{$icon-name}.svg');
+    }
+  }
+  @each $icon-name in $--list-menu-icon {
+    &__#{$icon-name}{
+      background-image: url('/assets/img/menu-icon/#{$icon-name}.svg');
+    }
+    &__#{$icon-name}-active{
+      background-image: url('/assets/img/menu-icon/#{$icon-name}-active.svg');
     }
   }
 }

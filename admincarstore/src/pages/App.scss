@@ -60,3 +60,12 @@ select {
     background-image: linear-gradient(to right, rgba(101,101,191, 0.1), rgba(101,101,191,0.3));
   }
 }
+::-webkit-scrollbar-thumb {
+  background-color:rgba(101,101,191, 0.5);
+  border-radius: 4px;
+}
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+  height: 8px;
+}

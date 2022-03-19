@@ -17,6 +17,7 @@ import PaymentHistory from '../payment-history/PaymentHistory';
 import Profile from '../profile/Profile';
 import Dialog from '@mui/material/Dialog';
 import {showProfile, showStore} from '../../Redux/reducer/GlobalReducer'
+import Message from '../message/Message';
 
 const HomeLayout = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const HomeLayout = () => {
             <Route path="/list" element={<CarManagement/>} />
             <Route path="/booking" element={<Booking/>} />
             <Route path="/payment-history" element={<PaymentHistory/>} />
+            <Route path="/message" element={<Message/>} />
           </Routes>
           <Dialog open={isShow} onClose={handleClose} transitionDuration={transitionStyles} className='profile-toggle'>
             {Profile()}
