@@ -52,13 +52,11 @@ const Navigator = (isOpen, setIsOpen) => {
           {linksList.map((item, index) => {
             return (
               <Link to={item.path} key={index}
-              onClick={() => showStoreInfo(item)}
               className={`navigator-item ${location.pathname === item.path ? 'item-selected' : ''}`}>
-                <Icon
-                  baseClassName="fas"
-                  className={`${item.icon}`}
-                  sx={{fontSize: 16, padding: 1}}
-                />
+                <div
+                  className={`${item.icon}${location.pathname === item.path ? '-active' : ''}`}
+                  style={{fontSize: 16, padding: 1}}
+                ></div>
                 <div className='navigator-item__title'>{item.title}</div>
               </Link>
             );
@@ -91,11 +89,10 @@ const Navigator = (isOpen, setIsOpen) => {
             return (
               <Link to={item.path} key={index}
               className={`navigator-item ${location.pathname === item.path ? 'item-selected' : ''}`}>
-                <Icon
-                  baseClassName="fas"
+                <div
                   className={`${item.icon}${location.pathname === item.path ? '-active' : ''}`}
-                  sx={{fontSize: 16, padding: 1}}
-                />
+                  style={{fontSize: 16, padding: 1}}
+                ></div>
                 <div className='navigator-item__title'>{item.title}</div>
               </Link>
             );

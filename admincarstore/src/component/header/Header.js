@@ -3,6 +3,7 @@ import './style.scss';
 import * as React from 'react';
 import { Icon } from '@mui/material';
 import Badge from '@mui/material/Badge';
+import {Link, useLocation, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {showProfile} from '../../Redux/reducer/GlobalReducer'
 import defaultAvatar from '../../assets/img/default-avatar.svg'
@@ -10,6 +11,7 @@ import {useState} from 'react';
 
 const Header = (toggleDrawer,isOpen) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const info = useSelector(state => state.AccountReducer.account);
   const isShow = useSelector(state => state.GlobalReducer.isShowProfile);
   const [hideMenu, setHideMenu] = useState(window.innerWidth < 991);
@@ -34,7 +36,7 @@ const Header = (toggleDrawer,isOpen) => {
           }
           <div className='header__noti-group-button'>
           <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
-            <div className='icon icon__message'></div>
+            <div className='icon icon__message' onClick={() => navigate('/message')}></div>
             </Badge>
             <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
             <div className='icon icon__notification'></div>

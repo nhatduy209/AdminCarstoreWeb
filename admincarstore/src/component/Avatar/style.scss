@@ -1,0 +1,19 @@
+.avatar-component {
+  position: relative;
+  height: 64px;
+  width: 64px;
+  align-items: center;
+  display: flex;
+  &__image {
+    border-radius: 50%;
+  }
+  &__online-status {
+    background-color: chartreuse;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    border-radius: 50%;
+  }
+}

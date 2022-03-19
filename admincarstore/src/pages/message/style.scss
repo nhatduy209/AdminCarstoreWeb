@@ -1,3 +1,67 @@
 .message {
-  
+  margin: 12px 20px 40px 40px;
+  display: flex;
+  height: calc(100% - 50px);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  .conversation{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    align-items: center;
+    &__body {
+      width: 100%;
+      text-align: left;
+      margin-inline: 12px;
+      height: 100%;
+    }
+    &-list {
+      height: 100%;
+      width: 100%;
+      max-width: 360px;
+      border-right: 2px solid #eee;
+    }
+    &-content {
+      height: 100%;
+      width: 100%;
+      &__header {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        padding-inline: 12px;
+        background-color: rgba(149, 157, 165, 0.2);
+      }
+      &__body {
+        height: calc(100% - 160px);
+        position: relative;
+        padding-inline: 12px;
+      }
+      &__footer {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        padding-inline: 12px;
+        .message-input {
+          width: 90%;
+          height: 40px;
+          border: none;
+          margin: 12px;
+          border-radius: 24px;
+          padding-inline: 12px;
+        }
+        .send-button {
+          height: 36px;
+          width: 36px;
+          padding: 6px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          &:hover {
+            background-color: darkgrey;
+          }
+        }
+      }
+    }
+  }
 }

@@ -61,8 +61,7 @@
     &-item{
         transition: 0.5s ease-in-out;
         display: flex;
-        padding-inline: 16px;
-        padding-block: 8px;
+        padding: 16px;
         text-decoration: none;
         color: rgb(14, 18, 62);
         &__title{
