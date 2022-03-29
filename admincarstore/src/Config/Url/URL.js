@@ -1,5 +1,6 @@
-export const URL_HEROKU = 'https://nodejs-cars.herokuapp.com/';
-
+export const URL_HEROKU = 'http://localhost:8000/';
+export const URL_DEV = 'http://localhost:8000';
+export const URL_MESSAGE = 'http://localhost:8080';
 export const APP_URL = {
   LOGIN: URL_HEROKU + 'account/login',
   LOGIN_WITH_EMAIL: URL_HEROKU + 'account/loginwithgmail',
