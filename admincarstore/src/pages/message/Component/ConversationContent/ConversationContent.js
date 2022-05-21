@@ -7,7 +7,12 @@ import MessageItem from '../MessageItem/MessageItem';
 import {io} from 'socket.io-client';
 import {URL_MESSAGE} from '../../../../Config/Url/URL';
 import {generatorCode} from '../../../../common/Utils';
-const socket = io(URL_MESSAGE, {transports: ['websocket']});
+const socket = io(
+  'https://03b1-2001-ee0-4fc5-b200-656c-aa37-f8b3-f71a.ngrok.io',
+  {
+    transports: ['websocket'],
+  },
+);
 
 const idNoticeChangedReciver = `${generatorCode(10)}_reciver`;
 const idNoticeChangedSender = `${generatorCode(10)}_sender'`;
@@ -15,8 +20,13 @@ const idNoticeChangedSender = `${generatorCode(10)}_sender'`;
 const ConversationContent = () => {
   const sendMessage = useCallback(() => {
     console.log('HELLO');
-    socket.emit(idNoticeChangedSender, {data: 'message from client'});
+    socket.emit('code_from_admin', {data: 'Hêlu Duy'});
   });
+
+  socket.on('code_from_client_sending', dataFromServer => {
+    console.log('DATA SEND FROM SERVER ------' + dataFromServer.data);
+  });
+
   return (
     <div className="conversation-content">
       <div className="conversation-content__header">
