@@ -36,8 +36,6 @@ const ProfileForm = (setOpen, open, userInfo, isView) => {
     }
   }, [currentAccount, userInfo]);
 
-  console.log(userInfo);
-
   const changeData = (event, key) => {
     setDetail({...detail, [key]: event.target.value});
   };

@@ -13,8 +13,6 @@ const socket = io(URL_MESSAGE, {transports: ['websocket']});
 const Message = () => {
   const dispatch = useDispatch();
   socket.emit('hello', {data: 'message from client'});
-  // const [open, setOpen] = useState(false);
-  // const detail = useSelector(state => state.AccountReducer.account);
   return (
     <div className="message">
       {ListConversation()}

@@ -1,4 +1,4 @@
-export const URL_HEROKU = 'http://localhost:8000/';
+export const URL_HEROKU = 'https://nodejs-cars.herokuapp.com/';
 export const URL_DEV = 'http://localhost:8000';
 export const URL_MESSAGE = 'http://localhost:8080';
 export const APP_URL = {
@@ -38,4 +38,7 @@ export const APP_URL = {
   ADD_COMMENT: URL_HEROKU + 'car/addcomment',
   GET_LIST_USER: URL_HEROKU + 'account/getlist',
   DELETE_USER: URL_HEROKU + 'account/delete',
+  GET_INIT_MESSAGE: URL_HEROKU + 'message/initmessage',
+  SEND_MESSAGE: URL_HEROKU + 'message/sendingmessage',
+  GET_ALL_MESSAGE: URL_HEROKU + 'message/getlist',
 };

@@ -7,7 +7,9 @@ const Avatar = (user, avatarSize) => {
   
   return (
     <div className="avatar-component">
-      <img className={avatarSize ? `avatar-component__image ${avatarSize}` : 'avatar-component__image'}
+      <img className="avatar-component__image"
+      width={avatarSize || "50px"}
+      height={avatarSize || "50px"}
       src={user?.image ? user.image : defaultAvatar}/>
       <div className='avatar-component__online-status'></div>
     </div>
