@@ -1,16 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
 import defaultAvatar from '../../../../assets/img/default-avatar.svg';
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback, createRef, useRef} from 'react';
 import Avatar from '../../../../component/Avatar/Avatar';
 import MessageItem from '../MessageItem/MessageItem';
 import {io} from 'socket.io-client';
 import {URL_MESSAGE} from '../../../../Config/Url/URL';
 import {generatorCode} from '../../../../common/Utils';
 import {useDispatch, useSelector} from 'react-redux';
-import {sendMessage, getListMessage, setLoading} from '../../../../Redux/reducer/MessageReducer';
+import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageReducer';
 const socket = io(
-  'https://6695-115-76-154-91.ngrok.io/',
+  'https://8c79-115-74-41-209.ngrok.io/',
   {
     transports: ['websocket'],
   },
@@ -24,24 +24,35 @@ const ConversationContent = () => {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
   const messages = useSelector(state => state.MessageReducer.listMessages);
-  const currnentConv = useSelector(state => state.MessageReducer.currnentConv);
-  const send = () => {
+  const currentConv = useSelector(state => state.MessageReducer.currentConv);
+  const listMessageBottomRef = useRef();
+  const send = async () => {
     const data = {
       reciver: getMail(),
       content: inputText,
       sender: "admin_123",
     };
-    dispatch(sendMessage(data));
-    socket.emit('code_from_admin', {data: inputText, id: currnentConv.idSendingFromAdmin});
+    await dispatch(sendMessage(data));
+    socket.emit('code_from_admin', {data: inputText, id: currentConv.idSendingFromAdmin});
     setInputText("");
+    await dispatch(getListMessage());
   };
 
   socket.on('code_from_client_sending', dataFromServer => {
     console.log('DATA SEND FROM SERVER ------' + dataFromServer.data);
   });
 
+  useEffect(() => {
+    listMessageBottomRef.current.scrollIntoView(
+      { 
+        behavior: "smooth" ,
+        block: 'start'
+      }
+    );
+  }, [messages, currentConv])
+
   const getMail = () => {
-    const id = currnentConv?.payload?.id?.split('_')[0] || "--";
+    const id = currentConv?.payload?.id?.split('_')[0] || "--";
     return id;
   }
 
@@ -65,6 +76,7 @@ const ConversationContent = () => {
             {message?.content && MessageItem(getType(message), message.content)}
           </div>)
         })}
+        <div ref={listMessageBottomRef} className="list-bottom"></div>
       </div>
       <div className="conversation-content__footer">
         <input className="message-input" onChange={(value) => setInput(value)} value={inputText}/>

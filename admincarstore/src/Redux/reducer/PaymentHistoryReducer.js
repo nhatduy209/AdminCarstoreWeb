@@ -26,7 +26,6 @@ export const createPayment = createAsyncThunk('payment/create', async data => {
 export const getBills = createAsyncThunk('payment/getStatistic', async () => {
   var getService = new GetService();
   const response = await getService.getAPI(APP_URL.GET_BILLS);
-  console.log(response);
   return response;
 });
 
@@ -44,7 +43,6 @@ export const paymentHistoryReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(createPayment.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         toast.success('Create bill successfully');
         state.status = STATUS.SUCCESS;
@@ -55,7 +53,6 @@ export const paymentHistoryReducer = createSlice({
     });
     builder.addCase(getBills.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         state.bills = action.payload.data.data;
         state.status = STATUS.SUCCESS;

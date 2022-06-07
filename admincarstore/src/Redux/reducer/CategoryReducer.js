@@ -12,7 +12,6 @@ const initialState = {
 export const getCategory = createAsyncThunk('category/getlist', async () => {
   var getService = new GetService();
   const response = await getService.getAPI(APP_URL.GET_LIST_CATEGORY);
-  console.log(response);
   return response;
 });
 
@@ -24,7 +23,6 @@ export const categoryReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(getCategory.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         state.listCategory = action.payload.data.data;
         state.status = STATUS.SUCCESS;

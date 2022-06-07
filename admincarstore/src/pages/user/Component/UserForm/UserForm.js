@@ -2,7 +2,6 @@
 import './style.scss';
 import moment from 'moment';
 const UserForm = selectedItem => {
-  console.log('HELLO THERE---', selectedItem);
   return (
     <div className="car-form--container">
       <form className="car-form-content">

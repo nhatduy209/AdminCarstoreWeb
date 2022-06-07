@@ -17,7 +17,6 @@ export const getBooking = createAsyncThunk('meetings/getmeetings', async email =
   };
   var getService = new GetService();
   const response = await getService.getApiWithParam(APP_URL.GET_MEETINGS, params);
-  console.log(response);
   return response.data;
 });
 
@@ -28,7 +27,6 @@ export const confirmBooking = createAsyncThunk('meetings/confirm', async data =>
     clients_email: data.clients_email,
   };
   const response = await postAPI.PostAPI(APP_URL.CONFIRM_BOOKING, params);
-  console.log(response);
   return response.data;
 });
 export const cancelBooking = createAsyncThunk('meetings/cancel', async data => {
@@ -38,7 +36,6 @@ export const cancelBooking = createAsyncThunk('meetings/cancel', async data => {
       email: data.email,
     };
     const response = await postAPI.PostAPI(APP_URL.CANCEL_BOOKING, params);
-  console.log(response);
   return response.data;
 });
 
@@ -50,7 +47,6 @@ export const bookingReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(getBooking.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.result === STATUS.SUCCESS) {
         state.listBooking = action.payload.data;
         state.status = STATUS.SUCCESS;
@@ -60,7 +56,6 @@ export const bookingReducer = createSlice({
     });
     builder.addCase(confirmBooking.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.result === STATUS.SUCCESS) {
         toast.success('Confirm booking successfully');
         state.confirmStatus = STATUS.SUCCESS;
@@ -71,7 +66,6 @@ export const bookingReducer = createSlice({
     });
     builder.addCase(cancelBooking.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.result === STATUS.SUCCESS) {
         toast.success('Cancel booking successfully');
         state.cancelStatus = STATUS.SUCCESS;

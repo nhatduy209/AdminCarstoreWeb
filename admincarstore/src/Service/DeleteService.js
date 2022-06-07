@@ -11,7 +11,6 @@ export default class DeleteService {
       },
     });
 
-    console.log('DATA ----', response);
     return {
       data: response.data,
       status: response.data.result,

@@ -38,7 +38,6 @@ export const login = createAsyncThunk('account/login', async paramsLogin => {
     tokenDevice: 'login_web',
     role: 'admin',
   };
-  console.log(params);
   var postService = new PostService();
   const response = await postService.PostAPI(APP_URL.LOGIN, params);
   return response.data;
@@ -66,7 +65,6 @@ export const changeProfile = createAsyncThunk('account/changeinfo', async data =
     birthday: data.date,
   };
   var response = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
-  console.log(response);
   return response.data;
 });
 
@@ -119,7 +117,6 @@ export const accountReducer = createSlice({
       };
     },
     deleteUserRedux: (state, action) => {
-      console.log('before', current(state));
       state.lisAcc.listUser = state.lisAcc.listUser.filter(
         item => item.email !== action.payload,
       );
@@ -135,7 +132,6 @@ export const accountReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(login.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log(action);
       if (action.payload.result === STATUS.SUCCESS) {
         state.account = action.payload.data;
         state.account.isLoggin = STATUS.SUCCESS;
@@ -151,7 +147,6 @@ export const accountReducer = createSlice({
       if (action.payload.result === STATUS.SUCCESS) {
         state.lisAcc.listUser = action.payload.data;
         state.lisAcc.status = GET_LIST_USER_STATUS.SUCCESS;
-        console.log('ACTION GET USER -', state.lisAcc.listUser);
       } else {
         return state.AccountReducer.lisAcc;
       }
@@ -159,7 +154,6 @@ export const accountReducer = createSlice({
 
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('HELLO', action.payload);
       if (action.payload.result === STATUS.SUCCESS) {
         toast.success('Delete user successfully');
       } else {

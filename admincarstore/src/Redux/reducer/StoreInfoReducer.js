@@ -15,7 +15,6 @@ export const getStoreInfo = createAsyncThunk('store/getinfo', async () => {
   var getService = new GetService();
 
     var response = await getService.getAPI(APP_URL.GET_STORE_INFO);
-  console.log(response);
   return response;
 });
 
@@ -23,7 +22,6 @@ export const editStoreInfo = createAsyncThunk('store/editinfo', async data => {
   var postService = new PostService();
 
   var response = await postService.PostAPI(APP_URL.EDIT_STORE_INFO, data);
-  console.log(response);
   return response;
 });
 
@@ -38,7 +36,6 @@ export const storeInfoReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(getStoreInfo.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         state.storeInfo = action.payload.data.data;
         state.status = STATUS.SUCCESS;
@@ -48,7 +45,6 @@ export const storeInfoReducer = createSlice({
     });
     builder.addCase(editStoreInfo.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         toast.success('Edit store information successfully');
         state.storeInfo = action.payload.data.data;

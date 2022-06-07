@@ -57,7 +57,6 @@ select {
   &:focus {
     border: 1.5px solid #6565bf;
     outline: none;
-    background-image: linear-gradient(to right, rgba(101,101,191, 0.1), rgba(101,101,191,0.3));
   }
 }
 ::-webkit-scrollbar-thumb {

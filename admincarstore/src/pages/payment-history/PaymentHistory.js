@@ -61,7 +61,6 @@ const PaymentHistory = () => {
   };
 
   const optionClick = item => {
-    console.log('click', item);
     setOpen(true);
   };
 

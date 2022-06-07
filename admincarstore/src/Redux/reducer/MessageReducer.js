@@ -8,25 +8,22 @@ const initialState = {
   status: 'FAIL',
   listMessages: [],
   listConv: [],
-  currentConv: null
+  currentConv: null,
+  loading: false
 };
 
 // First, create the thunk
 export const sendMessage = createAsyncThunk('message/sendingmessage', async (data) => {
-  console.log(data);
   var postService = new PostService();
 
   var response = await postService.PostAPI(APP_URL.SEND_MESSAGE, data);
-  console.log('res', response, data);
   return response;
 });
 
 export const getListMessage = createAsyncThunk('message/getlist', async () => {
-  console.log('hello');
   var getService = new GetService();
 
   var response = await getService.getAPI(APP_URL.GET_ALL_MESSAGE);
-  console.log('res', response);
   return response;
 });
 
@@ -35,17 +32,18 @@ export const messageReducer = createSlice({
   initialState,
   reducers: {
     setListMessage: (state, list) => {
-      console.log(list);
       state.listMessages = list;
     },
     setCurrentConv: (state, conv) => {
-      state.currnentConv = conv;
+      state.currentConv = conv;
+    },
+    setLoading: (state, loading) => {
+      state.loading = loading;
     }
   },
   extraReducers: builder => {
     builder.addCase(sendMessage.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         state.status = STATUS.SUCCESS;
       } else {
@@ -54,18 +52,18 @@ export const messageReducer = createSlice({
     });
     builder.addCase(getListMessage.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('ACTION -', action);
       if (action.payload.status === STATUS.SUCCESS) {
         state.listConv = action.payload.data.data;
       } else {
         state.listConv = [];
       }
+      state.loading = false;
     });
   },
 });
 
 // export const {} = messageReducer.actions;
-export const {setListMessage, setCurrentConv} = messageReducer.actions;
+export const {setListMessage, setCurrentConv, setLoading} = messageReducer.actions;
 
 
 // export const getCurrentUser = state => state.AccountReducer.account;
