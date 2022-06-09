@@ -10,7 +10,7 @@ import {generatorCode} from '../../../../common/Utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageReducer';
 const socket = io(
-  'https://8c79-115-74-41-209.ngrok.io/',
+  'https://18ce-1-52-37-166.ngrok.io/',
   {
     transports: ['websocket'],
   },
@@ -32,8 +32,9 @@ const ConversationContent = () => {
       content: inputText,
       sender: "admin_123",
     };
+    console.log(currentConv);
     await dispatch(sendMessage(data));
-    socket.emit('code_from_admin', {data: inputText, id: currentConv.idSendingFromAdmin});
+    socket.emit('code_from_admin', {data: inputText, id: currentConv.payload?.idSendingFromAdmin || ''});
     setInputText("");
     await dispatch(getListMessage());
   };

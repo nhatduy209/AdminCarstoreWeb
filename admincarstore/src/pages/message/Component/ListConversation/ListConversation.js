@@ -31,6 +31,7 @@ const ListConversation = () => {
     }
     return null;
   }
+  console.log(conversations)
   useEffect(() => {
     dispatch(setLoading(true));
     getList();

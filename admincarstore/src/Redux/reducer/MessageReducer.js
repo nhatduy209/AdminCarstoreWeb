@@ -24,6 +24,7 @@ export const getListMessage = createAsyncThunk('message/getlist', async () => {
   var getService = new GetService();
 
   var response = await getService.getAPI(APP_URL.GET_ALL_MESSAGE);
+  console.log('response', response);
   return response;
 });
 
