@@ -20,3 +20,11 @@ export const diffAsDays = (time) => {
 
   return duration.asDays();
 }
+
+export const toNumber = (time) => {
+  if (!time) {
+    return 0;
+  }
+
+  return new Date(time).getTime();
+}

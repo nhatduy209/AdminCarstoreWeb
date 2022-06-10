@@ -3,7 +3,7 @@ import './style.scss';
 import {useState, useEffect} from 'react';
 import { formatTimeDuration } from '../../../../helps/formatter';
 
-const MessageItem = (side, message, isShowInfo) => {
+const MessageItem = (side, message, isShowInfo, isShowTime, isToday) => {
   const getMail = () => {
     return message?.id?.split('_')[1] || "--";
   }
@@ -14,7 +14,13 @@ const MessageItem = (side, message, isShowInfo) => {
   
   return (
     <div key={message?.id}>
-    {isShowInfo  && <div className={`message-item ${side || ''}`} style={{fontWeight: "bold", marginInline: "12px"}}>
+      {isToday && <div className={`message-item`} style={{fontColor: '#eee', fontSize: "12px", justifyContent: 'center'}}>
+      Today
+      </div>}
+    {isShowTime && <div className={`message-item`} style={{fontColor: '#eee', fontSize: "12px", justifyContent: 'center'}}>
+      {getMessageTime()}
+      </div>}
+    {(isShowInfo || isShowTime)  && <div className={`message-item ${side || ''}`} style={{fontWeight: "bold", marginInline: "12px"}}>
       {side === 'left' ? getMail() : 'Me'}
       </div>}
     <div className={`message-item ${side || ''}`}>
@@ -22,9 +28,6 @@ const MessageItem = (side, message, isShowInfo) => {
       <div className="text">{message.content}</div>
       </div>
     </div>
-    {/* {<div className={`message-item ${side || ''}`} style={{fontColor: '#eee', fontSize: "12px"}}>
-      {getMessageTime()}
-      </div>} */}
     </div>
   );
 };

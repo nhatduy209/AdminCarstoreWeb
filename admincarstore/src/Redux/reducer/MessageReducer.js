@@ -9,7 +9,8 @@ const initialState = {
   listMessages: [],
   listConv: [],
   currentConv: null,
-  loading: false
+  loading: false,
+  indexShowTime: -1
 };
 
 // First, create the thunk
@@ -39,6 +40,9 @@ export const messageReducer = createSlice({
     },
     setLoading: (state, loading) => {
       state.loading = loading;
+    },
+    setIndex: (state, index) => {
+      state.indexShowTime = index;
     }
   },
   extraReducers: builder => {
@@ -63,7 +67,7 @@ export const messageReducer = createSlice({
 });
 
 // export const {} = messageReducer.actions;
-export const {setListMessage, setCurrentConv, setLoading} = messageReducer.actions;
+export const {setListMessage, setCurrentConv, setLoading, setIndex} = messageReducer.actions;
 
 
 // export const getCurrentUser = state => state.AccountReducer.account;

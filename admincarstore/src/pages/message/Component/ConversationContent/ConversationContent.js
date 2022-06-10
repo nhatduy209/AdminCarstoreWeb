@@ -9,6 +9,8 @@ import {URL_MESSAGE} from '../../../../Config/Url/URL';
 import {generatorCode} from '../../../../common/Utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageReducer';
+import moment from 'moment';
+import { toNumber } from '../../../../helps/formatter';
 const socket = io(
   'https://f2f4-27-67-37-213.ngrok.io/',
   {
@@ -70,6 +72,18 @@ const ConversationContent = () => {
     return index - 1 < 0 || getMail(messages?.payload[index]) !== getMail(messages?.payload[index - 1])
   }
 
+  const showTime = (index) => {
+    const cur = toNumber(messages?.payload[index]?.time);
+    const bef = toNumber(messages?.payload[index - 1]?.time);
+    return index - 1 < 0 || (cur - bef)/(3600) > 360
+  }
+
+  const today = (index) => {
+    const cur = new Date(messages?.payload[index]?.time).getDate();
+    const bef = new Date(messages?.payload[index - 1]?.time).getDate();
+    return (isNaN(bef) || cur - bef > 0) && cur === new Date().getDate();
+  }
+
   return (
     <div className="conversation-content">
       <div className="conversation-content__header">
@@ -79,7 +93,7 @@ const ConversationContent = () => {
       <div className="conversation-content__body">
         {messages?.payload?.map((message, index) => {
           return (<div key={index}>
-            {message?.content && MessageItem(getType(message), message, showUser(index))}
+            {message?.content && MessageItem(getType(message), message, showUser(index), showTime(index), today(index))}
           </div>)
         })}
         <div ref={listMessageBottomRef} className="list-bottom"></div>

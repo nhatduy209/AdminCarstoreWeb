@@ -39,7 +39,7 @@ const ListConversation = () => {
       dispatch(setCurrentConv(conversations[0]));
       dispatch(setListMessage(conversations[0].message));
     }
-  }, [conversations.length]);
+  }, [conversations?.length]);
 
   useEffect(() => {
     if(currentConv && conversations?.length > 0) {
