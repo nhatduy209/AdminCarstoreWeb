@@ -1,14 +1,16 @@
 .message {
-  margin: 12px 20px 40px 40px;
   display: flex;
   position: relative;
-  height: calc(100% - 50px);
-  // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  .conversation{
+  height: calc(100% - 10px);
+  .conversation {
     display: flex;
     justify-content: space-between;
+    margin-block: 12px;
     padding: 12px;
     align-items: center;
+    &:hover {
+      background-color: lavender;
+    }
     &__body {
       width: 100%;
       text-align: left;
@@ -29,7 +31,18 @@
       height: 100%;
       width: 100%;
       max-width: 360px;
-      border-right: 2px solid #eee;
+      border-right: 1px solid lavender;
+      .search-input {
+        height: 50px;
+        width: 100vh;
+        margin-inline: 12px;
+        max-width: 300px;
+        border: none;
+        background-color: lavender;
+        border-radius: 12px;
+        padding-inline: 12px;
+        font-size: 16px;
+      }
     }
     &-content {
       height: 100%;
@@ -37,27 +50,30 @@
       &__header {
         display: flex;
         align-items: center;
-        padding-inline: 12px;
-        background-color: rgba(149, 157, 165, 0.2);
+        padding-inline: 24px;
+        height: 100px;
+        border-block: 1px solid lavender;
       }
       &__body {
-        height: calc(100% - 160px);
+        height: calc(100% - 180px);
         position: relative;
         padding-inline: 12px;
         overflow-y: auto;
+        background-color: lavender;
       }
       &__footer {
-        height: 60px;
         display: flex;
         align-items: center;
-        padding-inline: 12px;
+        background-color: lavender;
+        margin: 12px;
+        border-radius: 12px;
         .message-input {
           width: 90%;
-          height: 40px;
-          border: 1px solid #0e123e;
+          border: none;
           margin: 12px;
           border-radius: 24px;
           padding-inline: 12px;
+          background-color: rgba(0,0,0,0);
         }
         .send-button {
           height: 36px;

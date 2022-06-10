@@ -10,7 +10,7 @@ import {generatorCode} from '../../../../common/Utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageReducer';
 const socket = io(
-  'https://18ce-1-52-37-166.ngrok.io/',
+  'https://f2f4-27-67-37-213.ngrok.io/',
   {
     transports: ['websocket'],
   },
@@ -32,7 +32,6 @@ const ConversationContent = () => {
       content: inputText,
       sender: "admin_123",
     };
-    console.log(currentConv);
     await dispatch(sendMessage(data));
     socket.emit('code_from_admin', {data: inputText, id: currentConv.payload?.idSendingFromAdmin || ''});
     setInputText("");
@@ -52,18 +51,24 @@ const ConversationContent = () => {
     );
   }, [messages, currentConv])
 
-  const getMail = () => {
-    const id = currentConv?.payload?.id?.split('_')[0] || "--";
-    return id;
+  const getMail = (mess) => {
+    if(mess) {
+      return mess?.id?.split('_')[1] || "--";
+    }
+    return currentConv?.payload?.id?.split('_')[0] || "--";
   }
 
   const getType = (mess) => {
-    return mess?.id?.includes(adminId) ? "right" : "left";
+    return mess?.id?.includes(adminId) || mess?.id?.includes('admin123') ? "right" : "left";
   }
 
   const setInput = val => {
     setInputText(val.target.value);
   };
+
+  const showUser = (index) => {
+    return index - 1 < 0 || getMail(messages?.payload[index]) !== getMail(messages?.payload[index - 1])
+  }
 
   return (
     <div className="conversation-content">
@@ -74,13 +79,13 @@ const ConversationContent = () => {
       <div className="conversation-content__body">
         {messages?.payload?.map((message, index) => {
           return (<div key={index}>
-            {message?.content && MessageItem(getType(message), message.content)}
+            {message?.content && MessageItem(getType(message), message, showUser(index))}
           </div>)
         })}
         <div ref={listMessageBottomRef} className="list-bottom"></div>
       </div>
       <div className="conversation-content__footer">
-        <input className="message-input" onChange={(value) => setInput(value)} value={inputText}/>
+        <input className="message-input" onChange={(value) => setInput(value)} value={inputText} placeholder="Type something..."/>{" | "}
         <div className="send-button" onClick={() => send()}>
           <div className="icon icon__send"></div>
         </div>

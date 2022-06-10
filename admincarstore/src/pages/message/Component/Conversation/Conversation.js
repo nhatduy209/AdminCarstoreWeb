@@ -3,7 +3,6 @@ import './style.scss';
 import {useState, useEffect} from 'react';
 import Avatar from '../../../../component/Avatar/Avatar';
 import {useDispatch, useSelector} from 'react-redux';
-import formatDuration from 'date-fns/formatDuration';
 import { formatTimeDuration } from '../../../../helps/formatter';
 
 const Conversation = (data, key, onClick) => {

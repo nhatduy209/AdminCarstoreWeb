@@ -10,6 +10,7 @@ import { STATUS } from '../../../../Config/Status/Index';
 
 const ListConversation = () => {
   const dispatch = useDispatch();
+  const [inputText, setInputText] = useState("");
   const conversations = useSelector(state => state.MessageReducer.listConv);
   const currentConv = useSelector(state => state.MessageReducer.currentConv);
   const loading = useSelector(state => state.MessageReducer.loading);
@@ -31,7 +32,6 @@ const ListConversation = () => {
     }
     return null;
   }
-  console.log(conversations)
   useEffect(() => {
     dispatch(setLoading(true));
     getList();
@@ -53,11 +53,13 @@ const ListConversation = () => {
         style={{
           fontSize: '32px',
           padding: '12px',
+          marginBlock: '12px',
           fontWeight: 700,
           textAlign: 'left',
         }}>
-        Chat
+        Messages
       </div>
+      <input className="search-input" onChange={(value) => setInputText(value.target.value)} value={inputText} placeholder="Search..."/>
       <div className="conversation-list__items">
         {conversations?.map((user, index) => {
           return Conversation(user, index, () => {
