@@ -5,24 +5,24 @@ import {useState, useEffect, useCallback, createRef, useRef} from 'react';
 import Avatar from '../../../../component/Avatar/Avatar';
 import MessageItem from '../MessageItem/MessageItem';
 import {io} from 'socket.io-client';
-import {URL_MESSAGE} from '../../../../Config/Url/URL';
+import {URL_MESSAGE, URL_NGROK} from '../../../../Config/Url/URL';
 import {generatorCode} from '../../../../common/Utils';
 import {useDispatch, useSelector} from 'react-redux';
-import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageReducer';
-const socket = io(
-  'https://18ce-1-52-37-166.ngrok.io/',
-  {
-    transports: ['websocket'],
-  },
-);
-const adminId = "admin_123"
+import {
+  sendMessage,
+  getListMessage,
+} from '../../../../Redux/reducer/MessageReducer';
+const socket = io(URL_NGROK, {
+  transports: ['websocket'],
+});
+const adminId = 'admin_123';
 
 const idNoticeChangedReciver = `${generatorCode(10)}_reciver`;
 const idNoticeChangedSender = `${generatorCode(10)}_sender'`;
 
 const ConversationContent = () => {
   const dispatch = useDispatch();
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
   const messages = useSelector(state => state.MessageReducer.listMessages);
   const currentConv = useSelector(state => state.MessageReducer.currentConv);
   const listMessageBottomRef = useRef();
@@ -30,12 +30,15 @@ const ConversationContent = () => {
     const data = {
       reciver: getMail(),
       content: inputText,
-      sender: "admin_123",
+      sender: 'admin_123',
     };
     console.log(currentConv);
     await dispatch(sendMessage(data));
-    socket.emit('code_from_admin', {data: inputText, id: currentConv.payload?.idSendingFromAdmin || ''});
-    setInputText("");
+    socket.emit('code_from_admin', {
+      data: inputText,
+      id: currentConv.payload?.idSendingFromAdmin || '',
+    });
+    setInputText('');
     await dispatch(getListMessage());
   };
 
@@ -44,22 +47,20 @@ const ConversationContent = () => {
   });
 
   useEffect(() => {
-    listMessageBottomRef.current.scrollIntoView(
-      { 
-        behavior: "smooth" ,
-        block: 'start'
-      }
-    );
-  }, [messages, currentConv])
+    listMessageBottomRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, [messages, currentConv]);
 
   const getMail = () => {
-    const id = currentConv?.payload?.id?.split('_')[0] || "--";
+    const id = currentConv?.payload?.id?.split('_')[0] || '--';
     return id;
-  }
+  };
 
-  const getType = (mess) => {
-    return mess?.id?.includes(adminId) ? "right" : "left";
-  }
+  const getType = mess => {
+    return mess?.id?.includes(adminId) ? 'right' : 'left';
+  };
 
   const setInput = val => {
     setInputText(val.target.value);
@@ -73,14 +74,21 @@ const ConversationContent = () => {
       </div>
       <div className="conversation-content__body">
         {messages?.payload?.map((message, index) => {
-          return (<div key={index}>
-            {message?.content && MessageItem(getType(message), message.content)}
-          </div>)
+          return (
+            <div key={index}>
+              {message?.content &&
+                MessageItem(getType(message), message.content)}
+            </div>
+          );
         })}
         <div ref={listMessageBottomRef} className="list-bottom"></div>
       </div>
       <div className="conversation-content__footer">
-        <input className="message-input" onChange={(value) => setInput(value)} value={inputText}/>
+        <input
+          className="message-input"
+          onChange={value => setInput(value)}
+          value={inputText}
+        />
         <div className="send-button" onClick={() => send()}>
           <div className="icon icon__send"></div>
         </div>
