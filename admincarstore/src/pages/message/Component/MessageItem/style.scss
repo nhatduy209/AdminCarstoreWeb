@@ -16,6 +16,28 @@
       border-radius: 24px 0 24px 24px;
     }
   }
+  &__share-item {
+    display: flex;
+    background-color: white;
+    padding: 12px;
+    margin-block: 12px;
+    border-radius: 12px;
+    p {
+      text-align: left;
+    }
+    &__image {
+      width: 15vw;
+      height: 15vw;
+      min-height: 150px;
+      min-width: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      background-color: lavender;
+    }
+    &__text {
+      margin-left: 12px;
+    }
+  }
   .text {
     border-radius: 12px;
     padding: 12px 6px;
@@ -27,5 +49,8 @@
   &.right {
     justify-content: right;
     margin-right: 12px;
+  }
+  &.share-item {
+    justify-content: center;
   }
 }

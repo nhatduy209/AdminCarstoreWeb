@@ -12,7 +12,7 @@ import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageRedu
 import moment from 'moment';
 import { toNumber } from '../../../../helps/formatter';
 const socket = io(
-  'https://f2f4-27-67-37-213.ngrok.io/',
+  'https://96c2-2402-800-631d-2376-e95b-79c3-2cd6-874.ngrok.io/',
   {
     transports: ['websocket'],
   },
@@ -92,8 +92,8 @@ const ConversationContent = () => {
       </div>
       <div className="conversation-content__body">
         {messages?.payload?.map((message, index) => {
-          return (<div key={index}>
-            {message?.content && MessageItem(getType(message), message, showUser(index), showTime(index), today(index))}
+          return (<div style={{'cursor': 'pointer'}} key={index} onClick={() => console.log(message)}>
+            {MessageItem(getType(message), message, showUser(index), showTime(index), today(index))}
           </div>)
         })}
         <div ref={listMessageBottomRef} className="list-bottom"></div>
