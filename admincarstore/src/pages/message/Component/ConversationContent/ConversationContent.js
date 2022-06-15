@@ -1,16 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
-import defaultAvatar from '../../../../assets/img/default-avatar.svg';
-import {useState, useEffect, useCallback, createRef, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import Avatar from '../../../../component/Avatar/Avatar';
 import MessageItem from '../MessageItem/MessageItem';
 import {io} from 'socket.io-client';
-import {URL_MESSAGE} from '../../../../Config/Url/URL';
 import {generatorCode} from '../../../../common/Utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {sendMessage, getListMessage} from '../../../../Redux/reducer/MessageReducer';
-import moment from 'moment';
+import { getCar } from '../../../../Redux/reducer/CarReducer';
+import { getCategory } from '../../../../Redux/reducer/CategoryReducer';
 import { toNumber } from '../../../../helps/formatter';
+import CarForm from '../../../car-management/Component/CarForm/CarForm';
 const socket = io(
   'https://96c2-2402-800-631d-2376-e95b-79c3-2cd6-874.ngrok.io/',
   {
@@ -25,6 +25,10 @@ const idNoticeChangedSender = `${generatorCode(10)}_sender'`;
 const ConversationContent = () => {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
+  const [open, setOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(false);
+  const cars = useSelector(state => state.CarReducer.listCar);
+  const categories = useSelector(state => state.CategoryReducer.listCategory);
   const messages = useSelector(state => state.MessageReducer.listMessages);
   const currentConv = useSelector(state => state.MessageReducer.currentConv);
   const listMessageBottomRef = useRef();
@@ -52,6 +56,16 @@ const ConversationContent = () => {
       }
     );
   }, [messages, currentConv])
+  useEffect(() => {
+    dispatch(getCar({
+      start: 0,
+      end: 150,
+    }))
+  }, [cars.length])
+
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [categories.length])
 
   const getMail = (mess) => {
     if(mess) {
@@ -84,6 +98,20 @@ const ConversationContent = () => {
     return (isNaN(bef) || cur - bef > 0) && cur === new Date().getDate();
   }
 
+  const showDetail= (mess) => {
+    if(mess.shareItem) {
+      const item = cars.filter((e) => {
+        console.log(mess.shareItem.name, e.name, e.name.includes(mess.shareItem.name));
+        return e.name.includes(mess.shareItem.name);
+      });
+      console.log(item);
+      if(item.length > 0) {
+        setSelectedItem(item[0]);
+        setOpen(true);
+      }
+    }
+  }
+
   return (
     <div className="conversation-content">
       <div className="conversation-content__header">
@@ -92,7 +120,7 @@ const ConversationContent = () => {
       </div>
       <div className="conversation-content__body">
         {messages?.payload?.map((message, index) => {
-          return (<div style={{'cursor': 'pointer'}} key={index} onClick={() => console.log(message)}>
+          return (<div style={{'cursor': 'pointer'}} key={index} onClick={() => showDetail(message)}>
             {MessageItem(getType(message), message, showUser(index), showTime(index), today(index))}
           </div>)
         })}
@@ -104,6 +132,7 @@ const ConversationContent = () => {
           <div className="icon icon__send"></div>
         </div>
       </div>
+      {CarForm (selectedItem, "detail", setOpen, open)}
     </div>
   );
 };
