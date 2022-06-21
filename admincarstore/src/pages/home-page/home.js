@@ -5,6 +5,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ToastContainer} from 'react-toastify';
 import {toast} from 'react-toastify';
 import {Icon} from '@mui/material';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import defaultAvatar from '../../assets/img/default-avatar.svg';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -51,9 +54,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const bills = useSelector(state => state.PaymentHistoryReducer.bills ?? []);
-  const categories = useSelector(state =>
-    state.CategoryReducer.listCategory,
-  );
+  const categories = useSelector(state => state.CategoryReducer.listCategory);
   const [value, setValue] = useState(moment());
   const preValue = moment(value).set('month', moment(value).get('month') - 1);
 
@@ -71,10 +72,10 @@ const Home = () => {
       toast.error('Please choose current or previous date');
       return;
     } else if (moment().get('year') === moment(newValue).get('year')) {
-      if ( moment(newValue).get('month') > moment().get('month')) {
-      toast.error('Please choose current or previous date');
-      return;
-    }
+      if (moment(newValue).get('month') > moment().get('month')) {
+        toast.error('Please choose current or previous date');
+        return;
+      }
     }
     setValue(newValue);
   };
@@ -95,18 +96,22 @@ const Home = () => {
 
   const handleCategoryData = () => {
     const data = [];
+    const monthData = formatBills(value);
     if (!bills) {
-      return [];
+      return [100];
     }
     categories.forEach(element => {
       const list = [];
-      formatBills(value).forEach(el => {
+      monthData.forEach(el => {
         if (el.car.category === element.name) {
           list.push(el);
         }
       });
-      data.push((list.length / bills.length) * 100);
+      monthData.length > 0
+        ? data.push((list.length / bills.length) * 100)
+        : data.push(0);
     });
+    monthData.length < 1 && data.push(100);
     return data;
   };
 
@@ -133,7 +138,7 @@ const Home = () => {
   }, []);
 
   const lineData = {
-    labels: categories.map((el) => el.name),
+    labels: categories.map(el => el.name),
     datasets: [
       {
         label: `Month: ${moment(value).month() + 1}`,
@@ -152,8 +157,17 @@ const Home = () => {
     ],
   };
 
+  const pieLabels = () => {
+    const labels = categories.map(el => el.name);
+    if (formatBills(value).length < 1) {
+      labels.push('empty');
+    }
+    console.log(labels);
+    return labels;
+  };
+
   const data = {
-    labels: categories.map((el) => el.name),
+    labels: pieLabels(),
     datasets: [
       {
         label: '# of Votes',
@@ -165,6 +179,7 @@ const Home = () => {
           'rgba(75, 192, 192, 0.2)',
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)',
+          formatBills(value).length < 1 && 'rgba(255, 159, 64, 0)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -173,6 +188,7 @@ const Home = () => {
           'rgba(75, 192, 192, 1)',
           'rgba(153, 102, 255, 1)',
           'rgba(255, 159, 64, 1)',
+          formatBills(value).length < 1 && 'rgba(100, 100, 100, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -193,40 +209,19 @@ const Home = () => {
         pauseOnHover
       />
       <div className="month-picker-container">
-        <div className="page-title">Dashboard</div>
-        <div className="month-picker-title">Pick a month</div>
-
-        <div className="month-picker">
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              disableToolbar
-              format="MM/yyyy"
-              margin="normal"
-              value={value}
-              onChange={handleChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </div>
-      </div>
-      <div className="statistic-group">
-        <div className="statistic-item">
-          <div className="statistic-title">Category</div>
-          <Pie data={data} />
-        </div>
-        <div className="statistic-item-revenue">
-          <div className="statistic-item__summary">
-            <div className="statistic-item__summary--card left">
+        <div className="statistic-item__summary">
+          <div className="statistic-item__summary__group">
+            <div className="statistic-item__summary--card">
               <Icon
                 baseClassName="fas"
-                className="fa-hand-holding-dollar summary-icon"
+                className="fa-bell summary-icon"
                 sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
               />
               <div>
-                <div className='statistic-item__summary-content'>{`$${handleOverall()}`}</div>
-                <div className='statistic-item__summary-description'>Earned this month</div>
+                <div className="statistic-item__summary-content">{`$${handleOverall()}`}</div>
+                <div className="statistic-item__summary-description">
+                  Booking for today
+                </div>
               </div>
             </div>
             <div className="statistic-item__summary--card">
@@ -236,14 +231,186 @@ const Home = () => {
                 sx={{fontSize: 18, padding: 0.5, color: '#6565bf'}}
               />
               <div>
-                <div className='statistic-item__summary-content'>{`${formatBills(value).length} car(s)`}</div>
-                <div className='statistic-item__summary-description'>Selled this month</div>
+                <div className="statistic-item__summary-content">{`${
+                  formatBills(value).length
+                } car(s)`}</div>
+                <div className="statistic-item__summary-description">
+                  New registor
+                </div>
               </div>
             </div>
           </div>
-          <div className="statistic-item month-detail">
-            <div className="statistic-title">Month Statistic</div>
-            <Line options={options} data={lineData} />
+          <div className="statistic-item__summary__group">
+            <div className="statistic-item__summary--card">
+              <Icon
+                baseClassName="fas"
+                className="fa-hand-holding-dollar summary-icon"
+                sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
+              />
+              <div>
+                <div className="statistic-item__summary-content">{`$${handleOverall()}`}</div>
+                <div className="statistic-item__summary-description">
+                  Earned this month
+                </div>
+              </div>
+            </div>
+            <div className="statistic-item__summary--card">
+              <Icon
+                baseClassName="fas"
+                className="fa-car-side summary-icon"
+                sx={{fontSize: 18, padding: 0.5, color: '#6565bf'}}
+              />
+              <div>
+                <div className="statistic-item__summary-content">{`${
+                  formatBills(value).length
+                } car(s)`}</div>
+                <div className="statistic-item__summary-description">
+                  Selled this month
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="statistic-group">
+        <div className="statistic-group__top">
+          <div className="statistic-item">
+            <div className="statistic-title">Category</div>
+            <Pie data={data} />
+          </div>
+          <div className="top-car">
+            <h1>Top Seller</h1>
+            <div className="top-car__item">
+              <div className="top-car__item__image"></div>
+              <div className="top-car__item__detail">
+                <div className="order">top</div>
+                <div className="top-car__info">
+                  <h2 className="top-car__info__name">name</h2>
+                </div>
+              </div>
+              <div className="top-car__item__count">
+                <div className="show-more">more</div>
+                <h2>12 car(s)</h2>
+              </div>
+            </div>
+            <div className="top-car__item">
+              <div className="top-car__item__image"></div>
+              <div className="top-car__item__detail">
+                <div className="order">top</div>
+                <div className="top-car__info">
+                  <h2 className="top-car__info__name">name</h2>
+                </div>
+              </div>
+              <div className="top-car__item__count">
+                <div className="show-more">more</div>
+                <h2>12 car(s)</h2>
+              </div>
+            </div>
+            <div className="top-car__item">
+              <div className="top-car__item__image"></div>
+              <div className="top-car__item__detail">
+                <div className="order">top</div>
+                <div className="top-car__info">
+                  <h2 className="top-car__info__name">name</h2>
+                </div>
+              </div>
+              <div className="top-car__item__count">
+                <div className="show-more">more</div>
+                <h2>12 car(s)</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="filter-group">
+          {/* <div className="month-picker">
+            <div className="month-picker-title">Pick a year</div>
+            <Select
+              value={value}
+              onChange={handleChange}
+              displayEmpty
+              inputProps={{'aria-label': 'Without label'}}>
+
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </div> */}
+        </div>
+        <h1>Top User</h1>
+        <div className="top-user">
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+          <div className="top-user__item">
+            <img className="top-user__item__image" src={defaultAvatar} />
+            <div>
+              <div className="order">top</div>
+              <div className="top-user__info">
+                <h3 className="top-user__info__name">name</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="statistic-group__chart">
+          <div className="statistic-item-revenue">
+            <div className="statistic-item month-detail">
+              <div className="statistic-title">Month Statistic</div>
+              <Line options={options} data={lineData} />
+            </div>
           </div>
         </div>
       </div>

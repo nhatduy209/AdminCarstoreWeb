@@ -1,51 +1,86 @@
 .home-page-container {
-  padding: 10%;
-  padding-block: 20px;
+  padding: 20px;
   height: calc(100% - 45px);
+  padding-left: 24px;
+  overflow-x: hidden;
   canvas {
-    max-height: 450px;
-    width: 350px;
+    max-height: 750px;
+    min-width: 550px;
+    min-height: 550px;
+    width: 650px;
   }
   .statistic {
     &-group {
-      display: flex;
       justify-items: center;
-      justify-content: space-between;
+      &__chart {
+        display: flex;
+      }
+      &__top {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        overflow-x: scroll;
+        .show-more {
+          border: 1px solid #d896ff;
+          border-radius: 24px;
+          padding-bottom: 4px;
+          margin-top: 24px;
+          width: 0;
+          opacity: 0;
+          transition: 0.5s ease-in-out;
+          margin-inline: auto;
+          cursor: pointer;
+        }
+      }
     }
     &-item {
       width: 100%;
-      min-width: 350px;
+      min-width: 550px;
       max-width: 750px;
       padding: 20px;
-      margin-right: 24px;
-      border-radius: 2%;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       &.month-detail {
         width: 450px;
       }
       &__summary {
+        justify-content: space-between;
         display: flex;
         height: calc(100% - 330px);
-        margin-right: 24px;
-        margin-bottom: 12px;
+        margin-bottom: 24px;
+        transition: 0.5s ease-in-out;
+        &__group {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          transition: 0.5s ease-in-out;
+          @media screen and (max-width: 1190px) {
+            justify-content: space-around;
+            display: grid;
+          }
+        }
         &-content {
           font-size: 24px;
           font-weight: bold;
           text-align: left;
         }
         &-description {
-          color: #ccc;
+          color: #000;
         }
         &--card {
           width: 100%;
-          background-color: #fff;
-          padding-block: 12px;
-          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+          height: 100px;
+          max-width: 300px;
+          padding: 12px;
           display: flex;
           justify-content: space-evenly;
           align-items: center;
-          &.left {
-            margin-right: 24px;
+          background-color: #fff;
+          border-radius: 24px;
+          transition: 0.5s ease-in-out;
+          margin-right: 12px;
+          box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+          @media screen and (max-width: 1190px) {
+            margin-bottom: 24px;
+            min-width: 250px;
           }
         }
         .summary-icon {
@@ -54,6 +89,90 @@
           padding: 12px;
           box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         }
+      }
+    }
+  }
+  .top-user {
+    padding: 24px;
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+    align-items: center;
+    &__info {
+      display: flex;
+      align-items: center;
+    }
+    &__item {
+      margin: 12px;
+      height: 80px;
+      border-radius: 24px;
+      background-color: #fefefe;
+      padding: 12px;
+      display: flex;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      transition: 0.5s ease-in-out;
+      &:hover {
+        background-image: linear-gradient(to right, #c9c9ff, #efbbff, #f1cbff);
+        height: 160px;
+        transition: 0.5s ease-in-out;
+        &__image {
+          height: 100%;
+        }
+      }
+    }
+  }
+  .top-car {
+    width: 100%;
+    padding: 24px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 24px;
+    margin: 24px;
+    background-image: linear-gradient(to right, #8c8afc, #d1c5fc, #fff);
+    @media screen and (max-width: 700px) {
+      width: 80vw;
+    }
+    &__info {
+      height: 110px;
+      display: grid;
+      align-content: center;
+    }
+    &__item {
+      margin: 24px;
+      height: 160px;
+      border-radius: 24px;
+      display: flex;
+      justify-content: space-between;
+      transition: 0.5s ease-in-out;
+      background-color: #fefefe;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      &:hover {
+        background-image: linear-gradient(to right, #363b74, #3b5998, #d896ff);
+        color: #fefefe;
+        transition: 0.5s ease-in-out;
+        .show-more {
+          width: 70px;
+          opacity: 1;
+          transition: 0.5s ease-in-out;
+        }
+      }
+      &__detail {
+        padding: 12px;
+        width: 30%;
+        text-align: initial;
+      }
+      &__image {
+        height: 100%;
+        width: 120px;
+        background-image: url('../../assets/img/logo-2.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border-radius: 12px 0 0 12px;
+        margin-inline: 10px;
+      }
+      &__count {
+        float: right;
+        margin-right: 24px;
       }
     }
   }
@@ -85,39 +204,39 @@
   @media screen and (max-width: 1250px) {
     .statistic {
       &-group {
-        display: grid;
         justify-content: center;
+        transition: 0.5s ease-in-out;
       }
       &-item {
-        width: 450px;
         &-revenue {
           margin-block: 24px;
-        }
-        &__summary {
-          &--card {
-            height: 150px;
-            margin-bottom: 12px;
-          }
         }
       }
     }
     .month-picker {
       &-container {
-        width: 490px;
         margin: auto;
-        padding-right: 24px;
       }
     }
   }
-  @media screen and (max-width: 818px) {
+  @media screen and (max-width: 700px) {
+    padding: 16px;
+    canvas {
+      min-width: 350px;
+      min-height: 350px;
+    }
     .statistic {
       &-group {
         display: grid;
+        transition: 0.5s ease-in-out;
+        &__top {
+          display: grid;
+        }
       }
       &-item {
         width: 50%;
-        min-width: 270px;
         margin-right: 0;
+        min-width: 350px;
         &-revenue {
           margin-block: 24px;
         }
@@ -127,24 +246,18 @@
         }
         &__summary {
           margin-right: 0;
-          display: grid;
+          &-description {
+            display: none;
+            transition: 0.5s ease-in-out;
+          }
           &--card {
-            height: 90px;
-            margin-bottom: 12px;
+            min-width: 0;
+            transition: 0.5s ease-in-out;
+            width: 80%;
           }
         }
       }
     }
-    .month-picker {
-      &-container {
-        width: 290px;
-        margin: auto;
-        padding-right: 24px;
-      }
-    }
-  }
-  @media screen and (max-width: 818px) {
-    padding: 16px;
   }
   .page-title {
     font-size: 56px;
