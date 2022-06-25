@@ -8,7 +8,8 @@
         transition: 0.5s ease-in-out;
         border-radius: 0 12px 12px 0;
         padding-inline: 12px;
-        background-color: rgb(238, 238, 238);
+        background-color: #fff;
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
         &.collapse {
             width: 100px;
             transition: 0.5s ease-in-out;
@@ -25,7 +26,8 @@
                     }
                     &.item-selected {
                         border-radius: 50%;
-                        margin: 0 24px;
+                        margin: 0 20px;
+                        transition: 0.5s ease-in-out;
                     }
                 }
                 &-header {
@@ -50,6 +52,7 @@
                 .item-selected {
                     background-color: transparent;
                     box-shadow: none;
+                    transition: 0.5s ease-in-out;
                 }
             }
         }
@@ -77,6 +80,12 @@
             background-color:  rgb(14, 18, 62);
             border-radius: 30px;
             box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+            transition: 0.5s ease-in-out;
+        }
+        &:hover {
+            background-color:  rgb(123, 130, 211);
+            border-radius: 30px;
+            transition: 0.5s ease-in-out;
         }
     }
     &-header {

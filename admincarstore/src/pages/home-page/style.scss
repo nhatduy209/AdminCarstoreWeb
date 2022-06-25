@@ -22,7 +22,7 @@
         overflow-x: scroll;
         .show-more {
           border: 1px solid #d896ff;
-          border-radius: 24px;
+          border-radius: 12px;
           padding-bottom: 4px;
           margin-top: 24px;
           width: 0;
@@ -38,6 +38,10 @@
       min-width: 550px;
       max-width: 750px;
       padding: 20px;
+      margin-right: 24px;
+      box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+      border-radius: 12px;
+      background-color: #292557;
       &.month-detail {
         width: 450px;
       }
@@ -74,7 +78,7 @@
           justify-content: space-evenly;
           align-items: center;
           background-color: #fff;
-          border-radius: 24px;
+          border-radius: 12px;
           transition: 0.5s ease-in-out;
           margin-right: 12px;
           box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
@@ -96,40 +100,116 @@
     padding: 24px;
     display: flex;
     overflow-x: scroll;
-    width: 100%;
     align-items: center;
-    &__info {
-      display: flex;
-      align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    &-container {
+      box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+      border-radius: 12px;
+      margin: 24px 0;
+      background-color: #292557;
+      padding-top: 12px;
+      .statistic-title {
+        text-align: center;
+      }
+      h1 {
+        color: #fff;
+      }
     }
     &__item {
+      width: 20vw;
       margin: 12px;
-      height: 80px;
-      border-radius: 24px;
-      background-color: #fefefe;
       padding: 12px;
-      display: flex;
-      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      border-radius: 50px;
+      min-width: 290px;
+      max-width: 350px;
+      background-color: #fff;
       transition: 0.5s ease-in-out;
-      &:hover {
-        background-image: linear-gradient(to right, #c9c9ff, #efbbff, #f1cbff);
-        height: 160px;
+      align-items: center;
+      display: flex;
+      position: relative;
+      &__image {
+        border-radius: 70px;
+        margin-right: 12px;
+        height: 64px;
+        width: 64px;
+        object-fit: cover;
+        background-color: #1a1736;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
         transition: 0.5s ease-in-out;
-        &__image {
-          height: 100%;
+      }
+      &:hover {
+        background-image: linear-gradient(to right, #cac6f5, #645da8, #3124a5);
+        transition: 0.5s ease-in-out;
+        box-shadow: rgba(21, 14, 48, 0.8) 0px 3px 16px;
+        border-radius: 120px;
+        .top-user {
+          &__detail {
+            color: #fff;
+          }
+          &__item__image {
+            height: 120px;
+            width: 120px;
+            transition: 0.5s ease-in-out;
+          }
         }
       }
     }
+    &__detail {
+      padding: 12px;
+      display: grid;
+      justify-items: flex-end;
+      align-content: start;
+      transition: 0.5s ease-in-out;
+    }
+    .order {
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 24px;
+      transition: 0.5s ease-in-out;
+      position: absolute;
+      left: -20px;
+      top: 0;
+      background-color: orange;
+      &-name {
+        font-weight: 600;
+        font-size: 20px;
+      }
+    }
+    // &__detail {
+    //   padding: 12px;
+    //   display: grid;
+    //   justify-items: flex-end;
+    //   align-content: start;
+    //   .order {
+    //     font-weight: 600;
+    //     border: 1px solid #292557;
+    //     padding: 8px;
+    //     border-radius: 24px;
+    //     transition: 0.5s ease-in-out;
+    //     width: 70px;
+    //   }
+    // }
   }
   .top-car {
-    width: 100%;
     padding: 24px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 24px;
-    margin: 24px;
-    background-image: linear-gradient(to right, #8c8afc, #d1c5fc, #fff);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+    border-radius: 12px;
+    background-color: #292557;
     @media screen and (max-width: 700px) {
-      width: 80vw;
+      width: 70vw;
+      margin: auto;
+    }
+    h1 {
+      color: #fff;
+    }
+    &-container {
+      width: 100%;
+      display: grid;
+      h1 {
+        text-align: start;
+        padding-left: 24px;
+      }
     }
     &__info {
       height: 110px;
@@ -137,16 +217,16 @@
       align-content: center;
     }
     &__item {
-      margin: 24px;
+      margin: 12px 24px;
       height: 160px;
-      border-radius: 24px;
+      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       transition: 0.5s ease-in-out;
       background-color: #fefefe;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       &:hover {
-        background-image: linear-gradient(to right, #363b74, #3b5998, #d896ff);
+        background-image: linear-gradient(to right, #cac6f5, #645da8, #322997);
         color: #fefefe;
         transition: 0.5s ease-in-out;
         .show-more {
@@ -163,12 +243,10 @@
       &__image {
         height: 100%;
         width: 120px;
-        background-image: url('../../assets/img/logo-2.svg');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
+        object-fit: contain;
+        background-color: #fff;
         border-radius: 12px 0 0 12px;
-        margin-inline: 10px;
+        margin-right: 10px;
       }
       &__count {
         float: right;
@@ -181,6 +259,7 @@
     font-size: 24px;
     font-weight: bold;
     text-align: start;
+    color: #fff;
   }
   .month-picker {
     text-align: left;
@@ -231,12 +310,15 @@
         transition: 0.5s ease-in-out;
         &__top {
           display: grid;
+          justify-items: center;
         }
       }
       &-item {
         width: 50%;
         margin-right: 0;
         min-width: 350px;
+        padding: 0;
+        margin-bottom: 12px;
         &-revenue {
           margin-block: 24px;
         }

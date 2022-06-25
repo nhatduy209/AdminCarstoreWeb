@@ -35,9 +35,9 @@ const User = () => {
 
   const listUser = useSelector(state => {
     if (!searchText.length) {
-      return state.AccountReducer.lisAcc.listUser;
+      return state.AccountReducer.listAcc.listUser;
     } else {
-      return state.AccountReducer.lisAcc.listUser.filter(item =>
+      return state.AccountReducer.listAcc.listUser.filter(item =>
         item.name.includes(searchText),
       );
     }

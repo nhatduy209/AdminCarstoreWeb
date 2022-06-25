@@ -4,7 +4,7 @@ import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ToastContainer} from 'react-toastify';
 import {toast} from 'react-toastify';
-import {Icon} from '@mui/material';
+import {Icon, Rating} from '@mui/material';
 import Select, {SelectChangeEvent} from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import defaultAvatar from '../../assets/img/default-avatar.svg';
@@ -29,14 +29,12 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
 import {Pie, Line} from 'react-chartjs-2';
 import {getBills} from '../../Redux/reducer/PaymentHistoryReducer';
 import {getCategory} from '../../Redux/reducer/CategoryReducer';
+import {getBooking} from '../../Redux/reducer/BookingReducer';
+import {getAllUser} from '../../Redux/reducer/AccountReducer';
+import {getCar} from '../../Redux/reducer/CarReducer';
 import moment from 'moment';
 export const options = {
   responsive: true,
@@ -52,11 +50,43 @@ export const options = {
 
 const Home = () => {
   const dispatch = useDispatch();
-
   const bills = useSelector(state => state.PaymentHistoryReducer.bills ?? []);
   const categories = useSelector(state => state.CategoryReducer.listCategory);
+  const userStatus = useSelector(state => state.AccountReducer.listAcc.status);
   const [value, setValue] = useState(moment());
   const preValue = moment(value).set('month', moment(value).get('month') - 1);
+  const listUser = useSelector(state => state.AccountReducer?.listAcc.listUser);
+  const cars = useSelector(state => state.CarReducer.listCar);
+  const carStatus = useSelector(state => state.CarReducer.status);
+  // const handleData = data => {
+  //   const list = [];
+  //   data.forEach(element => {
+  //     list.push({
+  //       title: element.full_name,
+  //       extendedProps: {
+  //         item: element,
+  //       },
+  //       date: element.date_meeting,
+  //     });
+  //   });
+  //   console.log(list);
+  //   return list;
+  // };
+  // const meetings = useSelector(state =>
+  //   handleData(state.BookingReducer.listBooking),
+  // );
+  // const meetingStatus = useSelector(state => state.BookingReducer.status);
+
+  // useEffect(() => {
+  //   dispatch(getBooking('admin@gmail.com'));
+  // }, [meetingStatus]);
+
+  useEffect(() => {
+    dispatch(getAllUser());
+  }, [userStatus]);
+  useEffect(() => {
+    dispatch(getCar({start: 0, end: 100}));
+  }, [carStatus]);
 
   const handleOverall = () => {
     let overall = 0;
@@ -79,13 +109,63 @@ const Home = () => {
     }
     setValue(newValue);
   };
+  // User have no meeting
+  const getNewUser = () => {
+    const list = listUser.filter(el => el.meetings.length > 0);
+    return list;
+  };
+  // Top user
+  const cloneListUser = () => {
+    return listUser.map(el => {
+      return {
+        ...el,
+        payed: el.meetings.filter(e => e.status_payment).length,
+      };
+    });
+  };
+  const getTopUser = () => {
+    return cloneListUser().sort((a, b) => b.payed - a.payed);
+  };
+  // Top car
+  const cloneListCar = () => {
+    const list = [];
 
-  // const formatBills = month => {
-  //   const list = bills.filter(
-  //     el => moment(el.selling_date).month() === moment(month).month(),
-  //   );
-  //   return list;
-  // };
+    bills.forEach(el => {
+      if (list.filter(e => e.car_name === el.car.car_name).length < 1) {
+        list.push({...el.car, count: 1});
+      } else {
+        list.map(e => {
+          return {
+            ...e,
+            ...(e.car_name === el.car.car_name ? {count: e.count++} : {}),
+          };
+        });
+      }
+    });
+    console.log(list);
+    return list;
+  };
+  const getTopCar = () => {
+    return cloneListCar().sort((a, b) => b.count - a.count);
+  };
+  const getRating = (name) => {
+    if(cars?.length < 1) {
+      return [];
+    }
+    const listComments = cars.filter(el => el.name === name)[0]?.list_comments || [];
+    console.log(listComments, name);
+    if(listComments.length < 1) {
+      return 0;
+    }
+    return listComments?.map(cmt => cmt.rating).reduce((total, a) => total + a, 0) / listComments.length;
+  }
+  // Today booking
+  const getTodayBooking = () => {
+    const list = bills.filter(
+      el => moment(el.selling_date).month() === moment(new Date()).month(),
+    );
+    return list;
+  };
 
   const formatBills = month => {
     const list = bills.filter(
@@ -137,32 +217,31 @@ const Home = () => {
     dispatch(getCategory());
   }, []);
 
-  const lineData = {
-    labels: categories.map(el => el.name),
-    datasets: [
-      {
-        label: `Month: ${moment(value).month() + 1}`,
-        data: handleMonthData(value),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: `Month: ${
-          moment(value).month() === 0 ? 12 : moment(value).month()
-        }`,
-        data: handleMonthData(preValue),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  };
+  // const lineData = {
+  //   labels: categories.map(el => el.name),
+  //   datasets: [
+  //     {
+  //       label: `Month: ${moment(value).month() + 1}`,
+  //       data: handleMonthData(value),
+  //       borderColor: 'rgb(255, 99, 132)',
+  //       backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  //     },
+  //     {
+  //       label: `Month: ${
+  //         moment(value).month() === 0 ? 12 : moment(value).month()
+  //       }`,
+  //       data: handleMonthData(preValue),
+  //       borderColor: 'rgb(53, 162, 235)',
+  //       backgroundColor: 'rgba(53, 162, 235, 0.5)',
+  //     },
+  //   ],
+  // };
 
   const pieLabels = () => {
     const labels = categories.map(el => el.name);
     if (formatBills(value).length < 1) {
       labels.push('empty');
     }
-    console.log(labels);
     return labels;
   };
 
@@ -179,7 +258,7 @@ const Home = () => {
           'rgba(75, 192, 192, 0.2)',
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)',
-          formatBills(value).length < 1 && 'rgba(255, 159, 64, 0)',
+          formatBills(value).length < 1 && 'rgba(200, 200, 200, 0.7)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -218,7 +297,9 @@ const Home = () => {
                 sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
               />
               <div>
-                <div className="statistic-item__summary-content">{`$${handleOverall()}`}</div>
+                <div className="statistic-item__summary-content">{`${
+                  getTodayBooking().length
+                }`}</div>
                 <div className="statistic-item__summary-description">
                   Booking for today
                 </div>
@@ -232,10 +313,10 @@ const Home = () => {
               />
               <div>
                 <div className="statistic-item__summary-content">{`${
-                  formatBills(value).length
-                } car(s)`}</div>
+                  getNewUser().length
+                } user(s)`}</div>
                 <div className="statistic-item__summary-description">
-                  New registor
+                  New registor {getTopUser().length}
                 </div>
               </div>
             </div>
@@ -278,47 +359,34 @@ const Home = () => {
             <div className="statistic-title">Category</div>
             <Pie data={data} />
           </div>
-          <div className="top-car">
-            <h1>Top Seller</h1>
-            <div className="top-car__item">
-              <div className="top-car__item__image"></div>
-              <div className="top-car__item__detail">
-                <div className="order">top</div>
-                <div className="top-car__info">
-                  <h2 className="top-car__info__name">name</h2>
-                </div>
-              </div>
-              <div className="top-car__item__count">
-                <div className="show-more">more</div>
-                <h2>12 car(s)</h2>
-              </div>
-            </div>
-            <div className="top-car__item">
-              <div className="top-car__item__image"></div>
-              <div className="top-car__item__detail">
-                <div className="order">top</div>
-                <div className="top-car__info">
-                  <h2 className="top-car__info__name">name</h2>
-                </div>
-              </div>
-              <div className="top-car__item__count">
-                <div className="show-more">more</div>
-                <h2>12 car(s)</h2>
-              </div>
-            </div>
-            <div className="top-car__item">
-              <div className="top-car__item__image"></div>
-              <div className="top-car__item__detail">
-                <div className="order">top</div>
-                <div className="top-car__info">
-                  <h2 className="top-car__info__name">name</h2>
-                </div>
-              </div>
-              <div className="top-car__item__count">
-                <div className="show-more">more</div>
-                <h2>12 car(s)</h2>
-              </div>
-            </div>
+          <div className="top-car top-car-container">
+            <div className="statistic-title">Top Seller</div>
+            {getTopCar().length > 0 &&
+              getTopCar().map((item, index) => {
+                if (index < 3) {
+                  return (
+                    <div className="top-car__item" key={index}>
+                      <img
+                        className="top-car__item__image"
+                        src={item.image || defaultAvatar}
+                      />
+                      <div className="top-car__item__detail">
+                        <div className="order">Top {index + 1}</div>
+                        <div className="top-car__info">
+                          <h2 className="top-car__info__name">
+                            {item.car_name}
+                          </h2>
+                          <Rating name="half-rating-read" defaultValue={0} precision={0.1} value={getRating(item.car_name)} readOnly/>
+                        </div>
+                      </div>
+                      <div className="top-car__item__count">
+                        <div className="show-more">more</div>
+                        <h2>{item.count} car(s)</h2>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
           </div>
         </div>
         <div className="filter-group">
@@ -339,78 +407,25 @@ const Home = () => {
             </Select>
           </div> */}
         </div>
-        <h1>Top User</h1>
-        <div className="top-user">
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-          <div className="top-user__item">
-            <img className="top-user__item__image" src={defaultAvatar} />
-            <div>
-              <div className="order">top</div>
-              <div className="top-user__info">
-                <h3 className="top-user__info__name">name</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="statistic-group__chart">
-          <div className="statistic-item-revenue">
-            <div className="statistic-item month-detail">
-              <div className="statistic-title">Month Statistic</div>
-              <Line options={options} data={lineData} />
-            </div>
+        <div className="top-user-container">
+          <div className="statistic-title">Top User</div>
+          <div className="top-user">
+            {getTopUser().map((item, index) => {
+              if (index < 5) {
+                return (
+                  <div className="top-user__item" key={index}>
+                    <img
+                      className="top-user__item__image"
+                      src={item.image || defaultAvatar}
+                    />
+                    <div className="order">{index + 1}</div>
+                    <div className="top-user__detail">
+                      <div className="order-name">{item.name}</div>
+                    </div>
+                  </div>
+                );
+              }
+            })}
           </div>
         </div>
       </div>

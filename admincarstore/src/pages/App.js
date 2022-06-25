@@ -4,6 +4,7 @@ import '../assets/css/icon.scss';
 import '../assets/css/typhography.scss';
 import '../assets/css/form.scss';
 import '../assets/css/table.scss';
+import '../assets/css/colors.scss';
 import HomeLayout from './home/HomeLayout';
 import Login from './login/Login';
 import {Routes, Route, useNavigate} from 'react-router-dom';
@@ -16,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getUser = useSelector(getCurrentUser);
-  const isLoggin = useSelector(state => state.AccountReducer.account.isLoggin)
+  const isLoggin = useSelector(state => state.AccountReducer?.account?.isLoggin)
   const tokenID = 'token';
   useEffect(() => {
     const tokenID = localStorage.getItem(token_authen);

@@ -23,7 +23,7 @@ const initialState = {
     phoneNum: ',',
     isLoggin: STATUS.NONE,
   },
-  lisAcc: {
+  listAcc: {
     status: GET_LIST_USER_STATUS.NONE,
     listUser: [],
   },
@@ -117,13 +117,13 @@ export const accountReducer = createSlice({
       };
     },
     deleteUserRedux: (state, action) => {
-      state.lisAcc.listUser = state.lisAcc.listUser.filter(
+      state.listAcc.listUser = state.listAcc.listUser.filter(
         item => item.email !== action.payload,
       );
     },
     filterUser: (state, action) => {
       if (action.payload) {
-        state.lisAcc.listUser = state.lisAcc.listUser.filter(item =>
+        state.listAcc.listUser = state.listAcc.listUser.filter(item =>
           item.name.includes(action.payload),
         );
       }
@@ -145,10 +145,10 @@ export const accountReducer = createSlice({
     builder.addCase(getAllUser.fulfilled, (state, action) => {
       // Add user to the state array
       if (action.payload.result === STATUS.SUCCESS) {
-        state.lisAcc.listUser = action.payload.data;
-        state.lisAcc.status = GET_LIST_USER_STATUS.SUCCESS;
+        state.listAcc.listUser = action.payload.data;
+        state.listAcc.status = GET_LIST_USER_STATUS.SUCCESS;
       } else {
-        return state.AccountReducer.lisAcc;
+        return state.AccountReducer?.listAcc || [];
       }
     });
 
@@ -178,6 +178,6 @@ export const {changeName, deleteUserRedux, filterUser, clearAccountInfo, changeA
 
 export const getCurrentUser = state => state.AccountReducer.account;
 
-export const getListUser = state => state.AccountReducer.lisAcc;
+export const getListUser = state => state.AccountReducer.listAcc;
 
 export default accountReducer.reducer;

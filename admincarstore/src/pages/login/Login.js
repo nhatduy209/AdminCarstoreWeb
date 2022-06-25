@@ -17,12 +17,12 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (getUser.isLoggin === STATUS.SUCCESS) {
+    if (getUser?.isLoggin === STATUS.SUCCESS) {
       toast.success('Success Loggin !', {
         position: toast.POSITION.TOP_RIGHT,
       });
       setTimeout(() => navigate('/'), 3000);
-    } else if (getUser.isLoggin === STATUS.FAIL) {
+    } else if (getUser?.isLoggin === STATUS.FAIL) {
       toast.error('Invalid password or email ', {
         position: toast.POSITION.TOP_RIGHT,
         hideProgressBar: true,
@@ -30,7 +30,7 @@ const Login = () => {
       });
       dispatch(setLoginState(STATUS.NONE));
     }
-  }, [getUser.isLoggin]);
+  }, [getUser?.isLoggin]);
 
   const handleLogin = useCallback((email, password) => {
     dispatch(login({email, password}));
