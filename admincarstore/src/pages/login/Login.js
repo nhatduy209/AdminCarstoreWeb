@@ -48,6 +48,7 @@ const Login = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        value={true}
       />
       {/* Same as */}
       <ToastContainer />

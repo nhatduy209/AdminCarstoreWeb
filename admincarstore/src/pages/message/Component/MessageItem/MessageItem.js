@@ -52,7 +52,8 @@ const MessageItem = (side, message, isShowInfo, isShowTime, isToday) => {
           </div>
         )}
         {message?.shareItem && (
-          <div className={`message-item__share-item`}>
+          <div style={message.shareItem && {'cursor': 'pointer'}}
+          className={`message-item__share-item`}>
             <img
               className="message-item__share-item__image"
               src={message?.shareItem.img || ''}

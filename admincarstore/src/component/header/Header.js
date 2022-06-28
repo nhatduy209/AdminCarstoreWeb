@@ -41,7 +41,7 @@ const Header = (toggleDrawer,isOpen) => {
             <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
             <div className='icon icon__notification'></div>
             </Badge>
-          <img onClick={() => toggleProfile(!isShow)} className='mini-avatar toggle-button' src={info.image.length < 1 ? defaultAvatar : info.image }></img>
+          <img onClick={() => toggleProfile(!isShow)} className='mini-avatar toggle-button' src={info?.image || defaultAvatar }></img>
           </div>
         </div>
     </div>

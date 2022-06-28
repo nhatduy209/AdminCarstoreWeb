@@ -52,10 +52,10 @@ const Home = () => {
   const dispatch = useDispatch();
   const bills = useSelector(state => state.PaymentHistoryReducer.bills ?? []);
   const categories = useSelector(state => state.CategoryReducer.listCategory);
-  const userStatus = useSelector(state => state.AccountReducer.listAcc.status);
+  const userStatus = useSelector(state => state.AccountReducer.listAcc?.status);
   const [value, setValue] = useState(moment());
   const preValue = moment(value).set('month', moment(value).get('month') - 1);
-  const listUser = useSelector(state => state.AccountReducer?.listAcc.listUser);
+  const listUser = useSelector(state => state.AccountReducer?.listAcc?.listUser || []);
   const cars = useSelector(state => state.CarReducer.listCar);
   const carStatus = useSelector(state => state.CarReducer.status);
   // const handleData = data => {
@@ -142,7 +142,6 @@ const Home = () => {
         });
       }
     });
-    console.log(list);
     return list;
   };
   const getTopCar = () => {
@@ -150,10 +149,9 @@ const Home = () => {
   };
   const getRating = (name) => {
     if(cars?.length < 1) {
-      return [];
+      return 0;
     }
     const listComments = cars.filter(el => el.name === name)[0]?.list_comments || [];
-    console.log(listComments, name);
     if(listComments.length < 1) {
       return 0;
     }

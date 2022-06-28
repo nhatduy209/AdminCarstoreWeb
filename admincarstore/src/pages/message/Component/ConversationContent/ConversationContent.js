@@ -12,7 +12,7 @@ import { getCategory } from '../../../../Redux/reducer/CategoryReducer';
 import { toNumber } from '../../../../helps/formatter';
 import CarForm from '../../../car-management/Component/CarForm/CarForm';
 const socket = io(
-  'https://96c2-2402-800-631d-2376-e95b-79c3-2cd6-874.ngrok.io/',
+  'https://8048-2402-800-631c-8a74-e856-37a2-16de-e39d.ngrok.io/',
   {
     transports: ['websocket'],
   },
@@ -104,7 +104,6 @@ const ConversationContent = () => {
         console.log(mess.shareItem.name, e.name, e.name.includes(mess.shareItem.name));
         return e.name.includes(mess.shareItem.name);
       });
-      console.log(item);
       if(item.length > 0) {
         setSelectedItem(item[0]);
         setOpen(true);
@@ -120,7 +119,7 @@ const ConversationContent = () => {
       </div>
       <div className="conversation-content__body">
         {messages?.payload?.map((message, index) => {
-          return (<div style={{'cursor': 'pointer'}} key={index} onClick={() => showDetail(message)}>
+          return (<div key={index} onClick={() => showDetail(message)}>
             {MessageItem(getType(message), message, showUser(index), showTime(index), today(index))}
           </div>)
         })}

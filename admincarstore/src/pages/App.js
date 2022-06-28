@@ -8,26 +8,20 @@ import '../assets/css/colors.scss';
 import HomeLayout from './home/HomeLayout';
 import Login from './login/Login';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import CarManagement from './car-management/CarManagement';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {token_authen} from '../Config/Status/Key';
-import { getCurrentUser, login } from '../Redux/reducer/AccountReducer';
+import { login } from '../Redux/reducer/AccountReducer';
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const getUser = useSelector(getCurrentUser);
-  const isLoggin = useSelector(state => state.AccountReducer?.account?.isLoggin)
-  const tokenID = 'token';
+  const isLoggin = useSelector(state => state.AccountReducer?.account?.isLoggin);
   useEffect(() => {
-    const tokenID = localStorage.getItem(token_authen);
-    const email = localStorage.email;
-    const password = localStorage.password;
-    if (!tokenID) {
+    // const tokenID = localStorage.getItem(token_authen);
+    // const email = localStorage.email;
+    // const password = localStorage.password;
+    if (!isLoggin) {
       navigate('/login');
-    }
-    if (tokenID && getUser.isLoggin === 'NONE') {
-      dispatch(login({email, password}));
     }
   }, [isLoggin]);
   
