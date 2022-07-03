@@ -274,17 +274,6 @@ const Home = () => {
 
   return (
     <div className="home-page-container">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="month-picker-container">
         <div className="statistic-item__summary">
           <div className="statistic-item__summary__group">

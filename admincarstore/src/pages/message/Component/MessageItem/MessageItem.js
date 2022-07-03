@@ -3,7 +3,7 @@ import './style.scss';
 import {useState, useEffect} from 'react';
 import {formatTimeDuration} from '../../../../helps/formatter';
 
-const MessageItem = (side, message, isShowInfo, isShowTime, isToday) => {
+const MessageItem = (side, message, isShowInfo, isShowTime, isToday, showDetail) => {
   const getMail = () => {
     return message?.id?.split('_')[1] || '--';
   };
@@ -53,7 +53,7 @@ const MessageItem = (side, message, isShowInfo, isShowTime, isToday) => {
         )}
         {message?.shareItem && (
           <div style={message.shareItem && {'cursor': 'pointer'}}
-          className={`message-item__share-item`}>
+          className={`message-item__share-item`} onClick={showDetail}>
             <img
               className="message-item__share-item__image"
               src={message?.shareItem.img || ''}
