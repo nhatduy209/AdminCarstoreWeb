@@ -53,21 +53,37 @@ const Header = (toggleDrawer, isOpen) => {
 
   return (
     <div className={`header-container ${isOpen ? 'collapse' : ''}`}>
-        <div className='header-content'>
-          {
-            hideMenu ? <div className="icon icon__collapse toggle-button" onClick={() => toggleDrawer(!isOpen)}></div> :
-            <Icon baseClassName="fas"
-            className={!isOpen ? 'fas fa-angles-left toggle-button' : 'fas fa-angles-right toggle-button'}
-            onClick={() => toggleDrawer(!isOpen)} sx={{ fontSize: 24 }} />
-          }
-          <div className='header__noti-group-button'>
-          <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
-            <div className='icon icon__message' onClick={() => navigate('/message')}></div>
-            </Badge>
-            <Badge color="secondary" className='toggle-button' overlap="circular" badgeContent=" " variant="dot">
-            <div className='icon icon__notification'></div>
-            </Badge>
-          <img onClick={() => toggleProfile(!isShow)} className='mini-avatar toggle-button' src={info?.image || defaultAvatar }></img>
+      <div className="header-content">
+        {hideMenu ? (
+          <Icon
+            baseClassName="fas"
+            className="fas fa-reorder toggle-button"
+            onClick={() => toggleDrawer(!isOpen)}
+            sx={{fontSize: 24}}
+          />
+        ) : (
+          <Icon
+            baseClassName="fas"
+            className={
+              !isOpen
+                ? 'fas fa-angles-left toggle-button'
+                : 'fas fa-angles-right toggle-button'
+            }
+            onClick={() => toggleDrawer(!isOpen)}
+            sx={{fontSize: 24}}
+          />
+        )}
+        <div className="header__noti-group-button">
+          <div
+            className="icon icon__message toggle-button"
+            onClick={() => navigate('/message')}></div>
+          <div
+            className="icon icon__notification toggle-button"
+            onClick={() => navigate('/booking')}></div>
+          <img
+            onClick={() => toggleProfile(!isShow)}
+            className="mini-avatar toggle-button"
+            src={info?.image || defaultAvatar}></img>
         </div>
       </div>
       {showNotification && <NotificaitonBooking />}

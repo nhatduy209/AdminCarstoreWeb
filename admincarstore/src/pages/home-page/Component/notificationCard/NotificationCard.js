@@ -1,15 +1,25 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
+import defaultAvatar from '../../../../assets/img/default-avatar.svg';
 
-const NotificationCard = (data) => {
-  console.log(data)
+const NotificationCard = data => {
   return (
     <div className="notification-card">
-      <img className='notification-card__image' height="50px" width="50px" src={data.image}/>
+      <img
+        className="notification-card__image"
+        height="50px"
+        width="50px"
+        src={data?.image || defaultAvatar}
+      />
       <div>
-        <div>{data.name}</div>
+        <div className="text--bold">{data?.name || 'user name'}</div>
+        <div
+          className={`notification-card__content ${
+            data.type === 'message' ? 'text--ellipsis' : ''
+          }`}>
+          {data?.content || 'empty text'}
+        </div>
       </div>
-      <div>{data.content}</div>
     </div>
   );
 };

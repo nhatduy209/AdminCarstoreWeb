@@ -197,7 +197,7 @@
     border-radius: 12px;
     background-color: #292557;
     @media screen and (max-width: 700px) {
-      width: 70vw;
+      width: 80vw !important;
       margin: auto;
     }
     h1 {
@@ -311,13 +311,14 @@
         &__top {
           display: grid;
           justify-items: center;
+          margin-left: 16px;
         }
       }
       &-item {
-        width: 50%;
+        width: 80vw;
         margin-right: 0;
-        min-width: 350px;
-        padding: 0;
+        min-width: 250px;
+        padding: 24px;
         margin-bottom: 12px;
         &-revenue {
           margin-block: 24px;
@@ -336,6 +337,46 @@
             min-width: 0;
             transition: 0.5s ease-in-out;
             width: 80%;
+          }
+        }
+      }
+    }
+    .top-car {
+      &__item {
+        position: relative;
+        &__image {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        &__count {
+          opacity: 0;
+        }
+        &__detail {
+          width: 50%;
+          position: absolute;
+          top: 0;
+          left: 120px;
+        }
+        &:hover {
+          flex-direction: row;
+          .show-more {
+            border: 1px solid #000;
+          }
+          .top-car {
+            &__item {
+              &__image {
+                opacity: 0.1;
+              }
+              &__detail {
+                z-index: 10;
+              }
+              &__count {
+                opacity: 1;
+                padding-left: 12px;
+                color: #000;
+              }
+            }
           }
         }
       }

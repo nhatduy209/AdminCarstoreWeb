@@ -16,10 +16,11 @@ import Dialog from '@mui/material/Dialog';
 import {showProfile, showStore} from '../../Redux/reducer/GlobalReducer';
 import Message from '../message/Message';
 import {getListMessage} from '../../Redux/reducer/MessageReducer';
-import {io, Socket} from 'socket.io-client';
+import {io} from 'socket.io-client';
 import {URL_MESSAGE} from '../../Config/Url/URL';
 import {toast, ToastContainer} from 'react-toastify';
 import NotificationCard from '../home-page/Component/notificationCard/NotificationCard';
+import { getAllUser } from '../../Redux/reducer/AccountReducer';
 const socket = io(URL_MESSAGE, {transports: ['websocket']});
 
 const HomeLayout = () => {
@@ -32,10 +33,13 @@ const HomeLayout = () => {
   const conversations = useSelector(state => state.MessageReducer.listConv);
   const conversationsStatus = useSelector(state => state.MessageReducer.status);
   const listUser = useSelector(
-    state => state.AccountReducer?.listAcc?.listUser || [],
+    state => state.AccountReducer?.listAcc?.listUser,
   );
   useEffect(() => {
-    console.log(conversations);
+    console.log(listUser);
+    dispatch(getAllUser())
+  }, [listUser?.length])
+  useEffect(() => {
     if (conversations.length > 0) {
       conversations.forEach(element => {
         socket.on(element.idSendingFromClient || '', async dataFromServer => {
@@ -49,7 +53,7 @@ const HomeLayout = () => {
                 ...user[0],
                 image: user[0].image,
                 content: dataFromServer.data,
-                type: 'message'
+                type: 'message',
               }),
               {
                 position: toast.POSITION.TOP_RIGHT,
@@ -60,8 +64,27 @@ const HomeLayout = () => {
       });
     } else {
       dispatch(getListMessage());
+      socket.on('receive_booking_from_admin', async res => {
+        const user = listUser.filter(el =>
+          res.data.clients_email.toString().includes(el.email),
+        );
+        if (user && user.length > 0) {
+          toast(
+            NotificationCard({
+              ...user[0],
+              image: user[0].image,
+              content: `${user[0].name} just request a meeting!!`,
+              type: 'booking',
+            }),
+            {
+              position: toast.POSITION.TOP_RIGHT,
+            },
+          );
+        }
+      });
     }
   }, [conversationsStatus, conversations.length]);
+
   const handleClose = () => {
     dispatch(showProfile(!isShow));
   };
@@ -84,7 +107,7 @@ const HomeLayout = () => {
       className={`main-layout ${isOpen ? 'collapse' : ''} ${
         hideMenu ? 'hide' : ''
       }`}>
-        <ToastContainer
+      <ToastContainer
         position="top-right"
         // autoClose={3000}
         hideProgressBar={false}
