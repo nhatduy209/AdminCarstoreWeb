@@ -14,7 +14,8 @@ import {getCar} from '../../../../Redux/reducer/CarReducer';
 import {getCategory} from '../../../../Redux/reducer/CategoryReducer';
 import {toNumber} from '../../../../helps/formatter';
 import CarForm from '../../../car-management/Component/CarForm/CarForm';
-const socket = io('https://371f-42-115-124-132.ngrok.io/', {
+import { URL_NGROK } from '../../../../Config/Url/URL';
+const socket = io(URL_NGROK, {
   transports: ['websocket'],
 });
 const adminId = 'admin_123';
