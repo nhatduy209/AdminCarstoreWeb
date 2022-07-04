@@ -1,29 +1,35 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { STATUS } from '../../../Config/Status/Index';
+import {STATUS} from '../../../Config/Status/Index';
 import {ToastContainer, toast} from 'react-toastify';
-import { changeEditStatus, editStoreInfo, getStoreInfo } from '../../../Redux/reducer/StoreInfoReducer';
+import {
+  changeEditStatus,
+  editStoreInfo,
+  getStoreInfo,
+} from '../../../Redux/reducer/StoreInfoReducer';
 import './style.scss';
 
 const StoreInfoForm = (detail, setOpen) => {
   const dispatch = useDispatch();
   const [storeDetail, setStoreDetail] = useState(detail);
-  const editStatus = useSelector(state => state.StoreInfoReducer?.editStatus ?? false)
+  const editStatus = useSelector(
+    state => state.StoreInfoReducer?.editStatus ?? false,
+  );
   useEffect(() => {
-    if(editStatus === STATUS.SUCCESS) {
+    if (editStatus === STATUS.SUCCESS) {
       dispatch(changeEditStatus());
       setOpen(false);
     }
-  },[editStatus])
+  }, [editStatus]);
 
   useEffect(() => {
-    setStoreDetail(detail)
-  },[detail]);
+    setStoreDetail(detail);
+  }, [detail]);
 
   const handleEdit = () => {
     dispatch(editStoreInfo(storeDetail));
-  }
+  };
   return (
     <div>
       <form className="form-content">
@@ -50,9 +56,11 @@ const StoreInfoForm = (detail, setOpen) => {
           </div>
           <div className="form-content__field">
             <div className="form-content__field__label">Like</div>
-            <div className="form-content__field__input">
-              {detail?.like ?? '--'}
-            </div>
+            <input
+              type="text"
+              value={detail?.like}
+              disabled
+              className="form-content__field__input"></input>
           </div>
           <div className="form-content__field">
             <div className="form-content__field__label">Phone</div>
@@ -77,11 +85,11 @@ const StoreInfoForm = (detail, setOpen) => {
         </div>
       </form>
       <div className="form-group-btn">
-        <button className="confirm-btn">
-          <div onClick={() => handleEdit()}>Edit</div>
-        </button>
         <button className="cancel-btn">
           <div onClick={() => setOpen(false)}>Cancel</div>
+        </button>
+        <button className="confirm-btn">
+          <div onClick={() => handleEdit()}>Edit</div>
         </button>
       </div>
     </div>

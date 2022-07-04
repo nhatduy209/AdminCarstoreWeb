@@ -81,7 +81,7 @@ const Navigator = (isOpen, setIsOpen) => {
           // onClick={() => navigate('/profile')}
           onClick={() => dispatch(showStore(!isShow))}
             className="navigator-header__avatar"
-            src={defaultAvatar}></img>
+            src={logo}></img>
           <div className="navigator-header__info"></div>
         </div>
         <div className="navigator-menu">

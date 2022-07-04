@@ -31,3 +31,37 @@
     font-weight: bold;
   }
 }
+
+input:disabled {
+  border: none;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.no-border {
+  border: none;
+}
+
+.disabled {
+  background-color: -internal-light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3)) !important;
+  border: none !important;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-around {
+  justify-content: space-around;
+}
+.justify-center {
+  justify-content: center;
+}

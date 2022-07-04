@@ -67,9 +67,9 @@ const StoreInfo = () => {
         className="form"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-        <div className="form--main">
+        <div className="form--main store-info-form">
           <div className="form__header">
-            <div className="form__header__title">Title</div>
+            <div className="form__header__title">Edit store information</div>
             <Icon
               onClick={() => setOpen(false)}
               baseClassName="fas"

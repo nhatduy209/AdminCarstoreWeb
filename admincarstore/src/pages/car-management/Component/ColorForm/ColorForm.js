@@ -35,8 +35,8 @@ const ColorForm = (setColorOpen, colorOpen) => {
     }
   }, [colorOpen]);
   const renderSwatches = () => {
-    if(!img) {
-      return (<div></div>);
+    if (!img) {
+      return <div></div>;
     }
     return colors.map((color, id) => {
       return (
@@ -88,10 +88,10 @@ const ColorForm = (setColorOpen, colorOpen) => {
 
   const getColors = listColor => setColor([...listColor]);
   return (
-    <Dialog open={colorOpen} className="color-form">
-      <div className="color-form--main">
-        <div className="color-form__header">
-          <div>Title</div>
+    <Dialog open={colorOpen} className="car-form color-form">
+      <div className="car-form--main">
+        <div className="car-form__header">
+          <div>Add car color</div>
           <Icon
             onClick={() => setColorOpen(false)}
             baseClassName="fas"
@@ -99,7 +99,7 @@ const ColorForm = (setColorOpen, colorOpen) => {
             sx={{fontSize: 24}}
           />
         </div>
-        <div className="color-form--container">
+        <div className="car-form--container">
           <Avatar
             className="color-form-content__img"
             alt="Remy Sharp"
@@ -137,8 +137,8 @@ const ColorForm = (setColorOpen, colorOpen) => {
                 type="number"
               />
             </div>
-
-            <div className="group-btn">
+          </div>
+          <div className="form-group-btn">
               <button className="cancel-btn">
                 <div onClick={() => setColorOpen(false)}>Cancel</div>
               </button>
@@ -146,7 +146,6 @@ const ColorForm = (setColorOpen, colorOpen) => {
                 <div onClick={() => addCurentColor()}>Confirm</div>
               </button>
             </div>
-          </div>
         </div>
       </div>
     </Dialog>

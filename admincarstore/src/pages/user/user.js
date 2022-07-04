@@ -102,12 +102,15 @@ const User = () => {
       {/* Same as */}
       <ToastContainer />
       <div className="car-management__header">
-        <div className="car-management__header__title">Users</div>
         <div className="car-management__header__control">
-          <div className="filter">
-            <div className="filter-text">Find:</div>
+          <div className="filter filter-input">
+            <Icon
+              baseClassName="fas"
+              className="fa-search"
+              sx={{fontSize: 20, padding: 1, color: '#cecece'}}
+            />
             <input
-              className="filter-input"
+              className="no-border"
               placeholder="Find by name"
               onChange={val => onSearch(val)}></input>
           </div>
@@ -161,7 +164,9 @@ const User = () => {
                       className="dt-table__avatar"
                       src={row.image ?? defaultAvatar}
                     />
-                    <div style={{marginBlock: 'auto', marginLeft: '12px'}}>{row.name ?? '--'}</div>
+                    <div style={{marginBlock: 'auto', marginLeft: '12px'}}>
+                      {row.name ?? '--'}
+                    </div>
                   </div>
                 </TableCell>
                 <TableCell className="dt-table__body__cell" align="right">

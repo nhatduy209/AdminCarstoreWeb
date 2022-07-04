@@ -1,15 +1,12 @@
 .store-info{
   height: 100%;
-  background-image: url('../../assets//img/background-store-info.jpg');
   background-repeat: round;
   &__img {
     width: 250px;
   }
   &__container {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0 ,0.3) 0px 3px 7px -3px;
     padding: 12px;
     border-radius: 20px;
-    background-image: linear-gradient(150deg, #dfe3ee, transparent);
     .profile-content__field__label {
       font-weight: bold;
     }
@@ -17,11 +14,5 @@
   .group-btn {
     position: inherit !important;
     width: auto;
-    .confirm-btn {
-      background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));
-      &:hover {
-        background-image: linear-gradient(to right, rgba(51,102,255,0.5) , rgba(51,102,255,0.9));
-      }
-    }
   }
 }

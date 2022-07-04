@@ -102,12 +102,15 @@ const PaymentHistory = () => {
       {/* Same as */}
       <ToastContainer />
       <div className="car-management__header">
-        <div className="car-management__header__title">Payment History</div>
         <div className="car-management__header__control">
-          <div className="filter">
-            <div className="filter-text">Find:</div>
+          <div className="filter filter-input">
+            <Icon
+              baseClassName="fas"
+              className="fa-search"
+              sx={{fontSize: 20, padding: 1, color: '#cecece'}}
+            />
             <input
-              className="filter-input"
+              className="no-border"
               placeholder="Find by name"
               onChange={val => onSearch(val)}></input>
           </div>
@@ -119,29 +122,47 @@ const PaymentHistory = () => {
           <TableHead className="dt-table__header">
             <TableRow className="dt-table__header__row">
               <TableCell className="dt-table__header__cell">#</TableCell>
-              <TableCell className="dt-table__header__cell" align="right" width="45">
+              <TableCell
+                className="dt-table__header__cell"
+                align="right"
+                width="45">
                 Image
               </TableCell>
-              <TableCell className="dt-table__header__cell" align="right">Name</TableCell>
-              <TableCell className="dt-table__header__cell" align="right">Selling Date</TableCell>
-              <TableCell className="dt-table__header__cell" align="right">Info</TableCell>
-              <TableCell className="dt-table__header__cell" align="right">Admin Info</TableCell>
-              <TableCell className="dt-table__header__cell" align="right"></TableCell>
+              <TableCell className="dt-table__header__cell" align="right">
+                Name
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="right">
+                Selling Date
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="right">
+                Info
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="right">
+                Admin Info
+              </TableCell>
+              <TableCell
+                className="dt-table__header__cell"
+                align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="dt-table__body">
             {bills?.map((row, index) => (
               <TableRow
-              className="dt-table__body__row"
+                className="dt-table__body__row"
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell className="dt-table__body__cell" component="th" scope="row">
+                <TableCell
+                  className="dt-table__body__cell"
+                  component="th"
+                  scope="row">
                   {index + 1}
                 </TableCell>
                 <TableCell className="dt-table__body__cell" align="right">
                   <img width={100} src={row.car.image} />
                 </TableCell>
-                <TableCell className="dt-table__body__cell" align="right">{row.car.car_name ?? '--'}</TableCell>
+                <TableCell className="dt-table__body__cell" align="right">
+                  {row.car.car_name ?? '--'}
+                </TableCell>
                 <TableCell className="dt-table__body__cell" align="right">
                   {row.car.selling_date ?? '--'}
                 </TableCell>
@@ -158,8 +179,8 @@ const PaymentHistory = () => {
                   </div>
                 </TableCell>
                 <TableCell className="dt-table__body__cell" align="right">
-                  <div className="user-option">
-                    <div className="user-option-item view">
+                  <div className="option">
+                    <div className="option-item view">
                       <Icon
                         baseClassName="fas"
                         className="fa-info"

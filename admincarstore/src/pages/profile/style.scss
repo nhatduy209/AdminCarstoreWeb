@@ -50,11 +50,13 @@
     button {
       width: 180px;
       height: 42px;
-      border-radius: 12px;
+      border-radius: 4px;
     }
     .confirm-btn {
       background-color: transparent;
-      background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));
+      background-color: #6868ac;
+      cursor: pointer;
+      color: #fff;
     }
   }
 }

@@ -11,32 +11,32 @@
     padding-bottom: 12px;
     padding-inline: 20px;
     text-transform: capitalize;
+    span {
+      cursor: pointer;
+    }
   }
   &-content {
     padding: 24px;
     &__field {
       padding: 8px;
       margin-top: 8px;
-      &__label {
-        padding-bottom: 12px;
-        font-weight: bold;
+      &__label{
+        padding-block: 12px;
+        font-weight: bolder;
+        color: #8d8d94;
       }
       &__input {
-        // background-image: linear-gradient(to right,rgba(240,240,240,0.2) , rgba(240,240,240,0.5));
-        width: 96%;
-        height: 30px;
-        border: 0.5px solid #ccc;
-        padding: 4px 8px;
-        border-radius: 4px;
         font-size: 14px;
-        // box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+        width: 93%;
+        height: 40px;
+        border: 0.5px solid #ccc;
+        padding-inline: 12px;
+        border-radius: 4px;
         &.select-list {
           width: 100%;
-          border: 0.5px solid #ccc;
-          height: 40px;
+          height: 44px;
+          border: none;
           font-size: 14px;
-          padding: 4px 8px;
-          border-radius: 4px;
         }
       }
       option {
@@ -50,18 +50,17 @@
   &-group-btn {
     display: flex;
     justify-content: flex-end;
-    padding-right: 12px;
-    padding-top: 12px;
+    padding: 12px 24px;
     border-top: 0.5px solid rgba(20,20,20, 0.1);
     button {
-      height: 36px;
+      height: 40px;
       width: 120px;
       font-size: 14px;
       margin-left: 12px;
       padding-inline: 8px;
       cursor: pointer;
       border: none;
-      border-radius: 12px;
+      border-radius: 4px;
       box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     }
     .cancel-btn {
@@ -70,7 +69,8 @@
     }
     .confirm-btn {
       cursor: pointer;
-      background-image: linear-gradient(to right, rgba(104,104,172,0.5) , rgba(104,104,172,0.9));
+      background-color: rgba(104,104,172,1);
+      color: #fff;
     }
     .cancel-booking-btn{
       width: fit-content;
@@ -79,6 +79,9 @@
     .go-to-history-perchase {
       width: fit-content;
     }
+  }
+  &--container {
+    padding: 24px;
   }
 }
 .css-hz1bth-MuiDialog-container {

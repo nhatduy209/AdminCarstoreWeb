@@ -100,6 +100,7 @@ const CarManagement = () => {
   };
 
   const onSearch = val => {
+    setPage(0);
     setTimeout(() => setSearchText(val.target.value), 1000);
   };
 
@@ -109,15 +110,23 @@ const CarManagement = () => {
     ) : (
       <caption>
         <div className="table-null">
-          <img
-            height={100}
-            width={100}
-            src={emptyList}
-          />{' '}
-          No data
+          <img height={100} width={100} src={emptyList} /> No data
         </div>
       </caption>
     );
+  };
+
+  const getCarPagination = () => {
+    if (page - 1 < 0) {
+      return cars?.slice(0, rowsPerPage) || [];
+    } else {
+      return (
+        cars?.slice(
+          page * rowsPerPage,
+          (page + 1) * rowsPerPage < cars.length ? (page + 1) * rowsPerPage : cars.length,
+        ) || []
+      );
+    }
   };
   return (
     <div className="management-container">
@@ -133,27 +142,33 @@ const CarManagement = () => {
         pauseOnHover
       />
       <div className="car-management__header">
-        <div className="car-management__header__title">Cars</div>
         <div className="car-management__header__control">
-          <div className="filter">
-            <div className="filter-text">Find:</div>
+          <div className="filter filter-input">
+            <Icon
+              baseClassName="fas"
+              className="fa-search"
+              sx={{fontSize: 20, padding: 1, color: '#cecece'}}
+            />
             <input
-              className="filter-input"
+              className="no-border"
               placeholder="Find by name"
               onChange={val => onSearch(val)}></input>
           </div>
-          <div className="add-button">
+          <div className="add-button btn">
             <Icon
               onClick={() => optionClick()}
               baseClassName="fas"
-              className="fa-car-side"
-              sx={{fontSize: 20, padding: 1, color: '#fff', marginLeft: -0.5}}
+              className="fa-add"
+              sx={{fontSize: 20, padding: 1, color: '#fff'}}
             />
           </div>
         </div>
       </div>
       <TableContainer component={Paper}>
-        <Table sx={{minWidth: 650}} aria-label="simple table" className="dt-table">
+        <Table
+          sx={{minWidth: 650}}
+          aria-label="simple table"
+          className="dt-table">
           {renderNull()}
           <TableHead className="dt-table__header">
             <TableRow className="dt-table__header__row">
@@ -161,65 +176,75 @@ const CarManagement = () => {
               {/* <TableCell className="dt-table__header__cell" align="center" width="45">
                 Image
               </TableCell> */}
-              <TableCell className="dt-table__header__cell" align="center">Name</TableCell>
-              <TableCell className="dt-table__header__cell" align="center">Brand</TableCell>
-              <TableCell className="dt-table__header__cell" align="center">Quantity</TableCell>
-              <TableCell className="dt-table__header__cell" align="center">Price</TableCell>
-              <TableCell className="dt-table__header__cell" align="center">Color</TableCell>
-              <TableCell className="dt-table__header__cell" align="center" width="120"></TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Name
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Brand
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Quantity
+              </TableCell>
+              <TableCell className="dt-table__header__cell" align="center">
+                Price
+              </TableCell>
+              <TableCell
+                className="dt-table__header__cell"
+                align="center"
+                width="120"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {cars.map((row, index) => (
-              <TableRow className="dt-table__body__row"
+            {getCarPagination().map((row, index) => (
+              <TableRow
+                className="dt-table__body__row"
                 key={index}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell className="dt-table__body__cell" component="th" scope="row">
-                  {index + 1}
+                <TableCell
+                  className="dt-table__body__cell"
+                  component="th"
+                  scope="row">
+                  {index + page * rowsPerPage + 1}
                 </TableCell>
                 {/* <TableCell className="dt-table__body__cell" align="center">
                   <img className="dt-table__avatar" src={row.img} />
                 </TableCell> */}
-                <TableCell className="dt-table__body__cell" align="center">{row.name ?? '--'}</TableCell>
-                <TableCell className="dt-table__body__cell" align="center">{row.category ?? '--'}</TableCell>
+                <TableCell className="dt-table__body__cell" align="center">
+                  {row.name ?? '--'}
+                </TableCell>
+                <TableCell className="dt-table__body__cell" align="center">
+                  {row.category ?? '--'}
+                </TableCell>
                 <TableCell className="dt-table__body__cell" align="center">
                   {row?.color[0]?.numberInStore ?? '--'}
                 </TableCell>
-                <TableCell className="dt-table__body__cell" align="center">{`$${row.prices ?? '--'}`}</TableCell>
-                <TableCell className="dt-table__body__cell" align="center">
-                  <div
-                    className="color-preview"
-                    style={{
-                      backgroundColor: row.color[0]?.color ?? 'black',
-                    }}></div>
-                </TableCell>
+                <TableCell className="dt-table__body__cell" align="center">{`$${
+                  row.prices ?? '--'
+                }`}</TableCell>
                 <TableCell className="dt-table__body__cell" align="center">
                   <div className="option">
                     <div className="option-item edit">
                       <div
-                      className="icon icon__edit"
+                        className="icon icon__edit"
                         onClick={() => {
                           setFormType('edit');
                           setSelectedItem(row);
                           setOpen(true);
-                        }}
-                      ></div>
+                        }}></div>
                     </div>
                     <div className="option-item view">
                       <div
-                      className="icon icon__detail"
+                        className="icon icon__detail"
                         onClick={() => {
                           setFormType('detail');
                           setSelectedItem(row);
                           setOpen(true);
-                        }}
-                      ></div>
+                        }}></div>
                     </div>
                     <div className="option-item delete">
                       <div
-                      className="icon icon__delete"
-                        onClick={() => handleDelete(row)}
-                      ></div>
+                        className="icon icon__delete"
+                        onClick={() => handleDelete(row)}></div>
                     </div>
                   </div>
                 </TableCell>
@@ -228,7 +253,7 @@ const CarManagement = () => {
           </TableBody>
         </Table>
         <TablePagination
-        className="dt-table__pagination"
+          className="dt-table__pagination"
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={cars.length ?? 0}
@@ -249,9 +274,13 @@ const CarManagement = () => {
               sx={{fontSize: 24}}
             />
           </div>
-          <div className='confirm-content'>
-          <img width={200} src={selectedItem?.img ?? ''} style={{margin: 'auto'}}/>
-          Are you sure you want to delete this car?
+          <div className="confirm-content">
+            <img
+              width={200}
+              src={selectedItem?.img ?? ''}
+              style={{margin: 'auto'}}
+            />
+            Are you sure you want to delete this car?
           </div>
           <div className="form-group-btn">
             <button className="cancel-btn">
