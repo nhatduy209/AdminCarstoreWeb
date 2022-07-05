@@ -9,3 +9,5 @@ export const GET_LIST_USER_STATUS = {
   FAIL: 'GET_LIST_USER_FAIL',
   NONE: 'NONE',
 };
+
+export const UNATHORIZE_MESSAGE = 'Not authorized to access this resource';

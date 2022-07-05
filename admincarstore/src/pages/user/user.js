@@ -88,7 +88,7 @@ const User = () => {
 
   return (
     <div className="management-container">
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -98,9 +98,8 @@ const User = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
-      {/* Same as */}
-      <ToastContainer />
+      /> */}
+
       <div className="car-management__header">
         <div className="car-management__header__control">
           <div className="filter filter-input">
