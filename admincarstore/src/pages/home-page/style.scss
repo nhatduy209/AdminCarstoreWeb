@@ -5,11 +5,16 @@
   overflow-x: hidden;
   canvas {
     max-height: 750px;
-    min-width: 550px;
     min-height: 550px;
     width: 650px;
   }
   .statistic {
+    &-list {
+      display: flex;
+      @media screen and (max-width: 925px) {
+        flex-direction: column;
+      }
+    }
     &-group {
       justify-items: center;
       &__chart {
@@ -20,28 +25,15 @@
         justify-content: space-between;
         width: 100%;
         overflow-x: scroll;
-        .show-more {
-          border: 1px solid #d896ff;
-          border-radius: 12px;
-          padding-bottom: 4px;
-          margin-top: 24px;
-          width: 0;
-          opacity: 0;
-          transition: 0.5s ease-in-out;
-          margin-inline: auto;
-          cursor: pointer;
-        }
+        
       }
     }
     &-item {
       width: 100%;
-      min-width: 550px;
-      max-width: 750px;
+      max-width: 550px;
       padding: 20px;
-      margin-right: 24px;
-      box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+      margin: 24px;
       border-radius: 12px;
-      background-color: #292557;
       &.month-detail {
         width: 450px;
       }
@@ -97,18 +89,18 @@
     }
   }
   .top-user {
-    padding: 24px;
     display: flex;
     overflow-x: scroll;
     align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-evenly;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 12px;
     &-container {
-      box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
       border-radius: 12px;
-      margin: 24px 0;
-      background-color: #292557;
       padding-top: 12px;
+      margin: 12px;
       .statistic-title {
         text-align: center;
       }
@@ -120,10 +112,10 @@
       width: 20vw;
       margin: 12px;
       padding: 12px;
-      border-radius: 50px;
+      border-radius: 4px;
       min-width: 290px;
       max-width: 350px;
-      background-color: #fff;
+      background-color: #d1d1d1;
       transition: 0.5s ease-in-out;
       align-items: center;
       display: flex;
@@ -134,12 +126,10 @@
         height: 64px;
         width: 64px;
         object-fit: cover;
-        background-color: #1a1736;
-        box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
         transition: 0.5s ease-in-out;
       }
       &:hover {
-        background-image: linear-gradient(to right, #cac6f5, #645da8, #3124a5);
+        background-color: #00a0a0;
         transition: 0.5s ease-in-out;
         box-shadow: rgba(21, 14, 48, 0.8) 0px 3px 16px;
         border-radius: 120px;
@@ -148,8 +138,8 @@
             color: #fff;
           }
           &__item__image {
-            height: 120px;
-            width: 120px;
+            height: 80px;
+            width: 80px;
             transition: 0.5s ease-in-out;
           }
         }
@@ -158,19 +148,11 @@
     &__detail {
       padding: 12px;
       display: grid;
-      justify-items: flex-end;
+      justify-items: flex-start;
       align-content: start;
       transition: 0.5s ease-in-out;
     }
     .order {
-      font-weight: 600;
-      padding: 8px 14px;
-      border-radius: 24px;
-      transition: 0.5s ease-in-out;
-      position: absolute;
-      left: -20px;
-      top: 0;
-      background-color: orange;
       &-name {
         font-weight: 600;
         font-size: 20px;
@@ -192,10 +174,9 @@
     // }
   }
   .top-car {
-    padding: 24px;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+    padding: 24px 0;
     border-radius: 12px;
-    background-color: #292557;
+    margin: 12px;
     @media screen and (max-width: 700px) {
       width: 80vw !important;
       margin: auto;
@@ -205,7 +186,9 @@
     }
     &-container {
       width: 100%;
-      display: grid;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       h1 {
         text-align: start;
         padding-left: 24px;
@@ -217,6 +200,7 @@
       align-content: center;
     }
     &__item {
+      width: 100%;
       margin: 12px 24px;
       height: 160px;
       border-radius: 12px;
@@ -226,7 +210,7 @@
       background-color: #fefefe;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       &:hover {
-        background-image: linear-gradient(to right, #cac6f5, #645da8, #322997);
+        background-image: linear-gradient(to right, #b0ffff, #00a0a0, #006666);
         color: #fefefe;
         transition: 0.5s ease-in-out;
         .show-more {
@@ -249,22 +233,37 @@
         margin-right: 10px;
       }
       &__count {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
         float: right;
         margin-right: 24px;
       }
     }
   }
+  .show-more {
+    border: 1px solid #d896ff;
+    border-radius: 12px;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    width: 0;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+    margin-inline: auto;
+    cursor: pointer;
+    color: #fff;
+  }
   .statistic-title {
     padding-block: 0 20px;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: bold;
     text-align: start;
-    color: #fff;
+    color: #000;
+    text-align: center;
   }
   .month-picker {
     text-align: left;
     padding-left: 12px;
-    border: 0.5px solid #ccc;
     width: fit-content;
     border-radius: 8px;
     margin-bottom: 12px;
@@ -342,8 +341,13 @@
       }
     }
     .top-car {
+      &-container {
+        flex-wrap: nowrap;
+        flex-direction: column;
+      }
       &__item {
         position: relative;
+        margin-left: -4px;
         &__image {
           position: absolute;
           top: 0;
@@ -361,7 +365,7 @@
         &:hover {
           flex-direction: row;
           .show-more {
-            border: 1px solid #000;
+            border: 1px solid #fff;
           }
           .top-car {
             &__item {

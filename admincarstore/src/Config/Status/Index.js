@@ -2,6 +2,7 @@ export const STATUS = {
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
   NONE: 'NONE',
+  PENDING: 'PENDING'
 };
 
 export const GET_LIST_USER_STATUS = {

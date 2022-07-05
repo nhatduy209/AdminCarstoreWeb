@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Icon} from '@mui/material';
+import {Dialog, Icon} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,6 +26,7 @@ const options = ['View', 'Edit', 'Delete'];
 const User = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [pageIndex, setPageIndex] = useState(1);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -51,8 +52,8 @@ const User = () => {
   };
 
   const handleDelete = useCallback(email => {
-    dispatch(deleteUser({email}));
-    dispatch(deleteUserRedux(email));
+    setSelectedItem(email);
+    setDeleteOpen(true);
   }, []);
 
   const handleChangeRowsPerPage = event => {
@@ -85,7 +86,30 @@ const User = () => {
       </caption>
     );
   };
-
+  const confirmDelete = () => {
+    dispatch(deleteUser({email: selectedItem}));
+    dispatch(deleteUserRedux(selectedItem));
+    setSelectedItem(null);
+    setDeleteOpen(false);
+  };
+  const cancelDelete = () => {
+    setSelectedItem(null);
+    setDeleteOpen(false);
+  };
+  const getUserPagination = () => {
+    if (page - 1 < 0) {
+      return listUser?.slice(0, rowsPerPage) || [];
+    } else {
+      return (
+        listUser?.slice(
+          page * rowsPerPage,
+          (page + 1) * rowsPerPage < listUser.length
+            ? (page + 1) * rowsPerPage
+            : listUser.length,
+        ) || []
+      );
+    }
+  };
   return (
     <div className="management-container">
       {/* <ToastContainer
@@ -145,7 +169,7 @@ const User = () => {
             </TableRow>
           </TableHead>
           <TableBody className="dt-table__body">
-            {listUser?.map((row, index) => (
+            {getUserPagination().map((row, index) => (
               <TableRow
                 className="dt-table__body__row"
                 key={index}
@@ -212,6 +236,36 @@ const User = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
+      <Dialog open={deleteOpen}>
+        <div className="car-form--main">
+          <div className="car-form__header">
+            <div></div>
+            <Icon
+              onClick={() => cancelDelete()}
+              baseClassName="fas"
+              className="fa-xmark"
+              sx={{fontSize: 24}}
+            />
+          </div>
+          <div className="confirm-content">
+            <img
+              width={200}
+              src={selectedItem?.img ?? ''}
+              style={{margin: 'auto'}}
+            />
+            Are you sure you want to delete this user?
+          </div>
+          <div className="form-group-btn">
+            <button className="cancel-btn">
+              <div onClick={() => cancelDelete()}>Cancel</div>
+            </button>
+            <button
+              className="confirm-btn">
+              <div onClick={() => confirmDelete()}>Confirm</div>
+            </button>
+          </div>
+        </div>
+      </Dialog>
       {ProfileForm(setOpen, open, selectedItem, true)}
     </div>
   );

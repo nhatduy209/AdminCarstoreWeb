@@ -85,7 +85,20 @@ const PaymentHistory = () => {
       </caption>
     );
   };
-
+  const getCarPagination = () => {
+    if (page - 1 < 0) {
+      return bills?.slice(0, rowsPerPage) || [];
+    } else {
+      return (
+        bills?.slice(
+          page * rowsPerPage,
+          (page + 1) * rowsPerPage < bills.length
+            ? (page + 1) * rowsPerPage
+            : bills.length,
+        ) || []
+      );
+    }
+  };
   return (
     <div className="management-container">
       <ToastContainer
@@ -146,7 +159,7 @@ const PaymentHistory = () => {
             </TableRow>
           </TableHead>
           <TableBody className="dt-table__body">
-            {bills?.map((row, index) => (
+            {getCarPagination().map((row, index) => (
               <TableRow
                 className="dt-table__body__row"
                 key={index}
@@ -205,7 +218,7 @@ const PaymentHistory = () => {
             ))}
           </TableBody>
         </Table>
-        {/* <TablePagination
+        <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={bills.length ?? 0}
@@ -213,7 +226,7 @@ const PaymentHistory = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
+        />
       </TableContainer>
       <Dialog
         open={open}

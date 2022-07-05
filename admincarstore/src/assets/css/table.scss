@@ -1,7 +1,7 @@
 .dt-table {
   &__header {
     &__row {
-      background-color: lavender;
+      background-color: #f0f8f8;
       text-transform: uppercase;
     }
     &__cell {
@@ -44,7 +44,7 @@
         background-color: #DFE3EE
       }
       &.edit{
-        background-color: #7289DA
+        background-color: #00afaf
       }
       &.delete{
         background-color: #ff0000

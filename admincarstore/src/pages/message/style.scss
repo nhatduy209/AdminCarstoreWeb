@@ -9,7 +9,7 @@
     padding: 12px;
     align-items: center;
     &:hover {
-      background-color: lavender;
+      background-color: #f0f8f8;
     }
     &__body {
       width: 100%;
@@ -31,14 +31,14 @@
       height: 100%;
       width: 100%;
       max-width: 360px;
-      border-right: 1px solid lavender;
+      border-right: 1px solid #f0f8f8;
       .search-input {
         height: 50px;
         width: 100vh;
         margin-inline: 12px;
         max-width: 300px;
         border: none;
-        background-color: lavender;
+        background-color: #f0f8f8;
         border-radius: 12px;
         padding-inline: 12px;
         font-size: 16px;
@@ -52,19 +52,19 @@
         align-items: center;
         padding-inline: 24px;
         height: 100px;
-        border-block: 1px solid lavender;
+        border-block: 1px solid #f0f8f8;
       }
       &__body {
         height: calc(100% - 180px);
         position: relative;
         padding-inline: 12px;
         overflow-y: auto;
-        background-color: lavender;
+        background-color: #f0f8f8;
       }
       &__footer {
         display: flex;
         align-items: center;
-        background-color: lavender;
+        background-color: #f0f8f8;
         margin: 12px;
         border-radius: 12px;
         .message-input {

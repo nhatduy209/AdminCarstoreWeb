@@ -55,7 +55,9 @@ const Home = () => {
   const userStatus = useSelector(state => state.AccountReducer.listAcc?.status);
   const [value, setValue] = useState(moment());
   const preValue = moment(value).set('month', moment(value).get('month') - 1);
-  const listUser = useSelector(state => state.AccountReducer?.listAcc?.listUser || []);
+  const listUser = useSelector(
+    state => state.AccountReducer?.listAcc?.listUser || [],
+  );
   const cars = useSelector(state => state.CarReducer.listCar);
   const carStatus = useSelector(state => state.CarReducer.status);
   // const handleData = data => {
@@ -147,16 +149,20 @@ const Home = () => {
   const getTopCar = () => {
     return cloneListCar().sort((a, b) => b.count - a.count);
   };
-  const getRating = (name) => {
-    if(cars?.length < 1) {
+  const getRating = name => {
+    if (cars?.length < 1) {
       return 0;
     }
-    const listComments = cars.filter(el => el.name === name)[0]?.list_comments || [];
-    if(listComments.length < 1) {
+    const listComments =
+      cars.filter(el => el.name === name)[0]?.list_comments || [];
+    if (listComments.length < 1) {
       return 0;
     }
-    return listComments?.map(cmt => cmt.rating).reduce((total, a) => total + a, 0) / listComments.length;
-  }
+    return (
+      listComments?.map(cmt => cmt.rating).reduce((total, a) => total + a, 0) /
+      listComments.length
+    );
+  };
   // Today booking
   const getTodayBooking = () => {
     const list = bills.filter(
@@ -300,10 +306,10 @@ const Home = () => {
               />
               <div>
                 <div className="statistic-item__summary-content">{`${
-                  getNewUser().length
+                  getTopUser().length
                 } user(s)`}</div>
                 <div className="statistic-item__summary-description">
-                  New registor {getTopUser().length}
+                  New registor
                 </div>
               </div>
             </div>
@@ -346,73 +352,106 @@ const Home = () => {
             <div className="statistic-title">Category</div>
             <Pie data={data} />
           </div>
-          <div className="top-car top-car-container">
+          <div className="filter-group">
+            <div className="month-picker">
+              <div className="month-picker-title">Pick a year</div>
+              <Select
+                value={value}
+                onChange={handleChange}
+                displayEmpty
+                inputProps={{'aria-label': 'Without label'}}>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </div>
+            <div className="month-picker">
+              <div className="month-picker-title">Pick a year</div>
+              <Select
+                value={value}
+                onChange={handleChange}
+                displayEmpty
+                inputProps={{'aria-label': 'Without label'}}>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </div>
+          </div>
+        </div>
+        <div className="statistic-list">
+          <div className="top-car">
             <div className="statistic-title">Top Seller</div>
-            {getTopCar().length > 0 &&
-              getTopCar().map((item, index) => {
-                if (index < 3) {
-                  return (
-                    <div className="top-car__item" key={index}>
-                      <img
-                        className="top-car__item__image"
-                        src={item.image || defaultAvatar}
-                      />
-                      <div className="top-car__item__detail">
-                        <div className="order">Top {index + 1}</div>
-                        <div className="top-car__info">
-                          <h2 className="top-car__info__name">
-                            {item.car_name}
-                          </h2>
-                          <Rating name="half-rating-read" defaultValue={0} precision={0.1} value={getRating(item.car_name)} readOnly/>
+            <div className="top-car-container">
+              {getTopCar().length > 0 &&
+                getTopCar().map((item, index) => {
+                  if (index < 3) {
+                    return (
+                      <div className="top-car__item" key={index}>
+                        <img
+                          className="top-car__item__image"
+                          src={item.image || defaultAvatar}
+                        />
+                        <div className="top-car__item__detail">
+                          <div className="order">Top {index + 1}</div>
+                          <div className="top-car__info">
+                            <h2 className="top-car__info__name">
+                              {item.car_name}
+                            </h2>
+                            <Rating
+                              name="half-rating-read"
+                              defaultValue={0}
+                              precision={0.1}
+                              value={getRating(item.car_name)}
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                        <div className="top-car__item__count">
+                          <div className="show-more">more</div>
+                          <h2>{item.count} car(s)</h2>
                         </div>
                       </div>
-                      <div className="top-car__item__count">
-                        <div className="show-more">more</div>
-                        <h2>{item.count} car(s)</h2>
+                    );
+                  }
+                })}
+            </div>
+          </div>
+          <div className="top-user-container">
+            <div className="statistic-title">Top User</div>
+            <div className="top-user">
+              {getTopUser().map((item, index) => {
+                if (index < 5) {
+                  return (
+                    <div className="top-user__item" key={index}>
+                      <img
+                        className="top-user__item__image"
+                        src={item.image || defaultAvatar}
+                      />
+                      <div className="top-user__detail">
+                        <div className="order-name">
+                          {index + 1}.{item.name}
+                        </div>
+                        <div className="order-name">
+                          <Icon
+                            baseClassName="fas"
+                            className="fa-bell summary-icon"
+                            sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
+                          />
+                          {item.payed} {"payment(s)"}
+                        </div>
                       </div>
                     </div>
                   );
                 }
               })}
-          </div>
-        </div>
-        <div className="filter-group">
-          {/* <div className="month-picker">
-            <div className="month-picker-title">Pick a year</div>
-            <Select
-              value={value}
-              onChange={handleChange}
-              displayEmpty
-              inputProps={{'aria-label': 'Without label'}}>
-
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </div> */}
-        </div>
-        <div className="top-user-container">
-          <div className="statistic-title">Top User</div>
-          <div className="top-user">
-            {getTopUser().map((item, index) => {
-              if (index < 5) {
-                return (
-                  <div className="top-user__item" key={index}>
-                    <img
-                      className="top-user__item__image"
-                      src={item.image || defaultAvatar}
-                    />
-                    <div className="order">{index + 1}</div>
-                    <div className="top-user__detail">
-                      <div className="order-name">{item.name}</div>
-                    </div>
-                  </div>
-                );
-              }
-            })}
+            </div>
           </div>
         </div>
       </div>

@@ -62,7 +62,7 @@
         display: flex;
         padding: 16px;
         text-decoration: none;
-        color: rgb(14, 18, 62);
+        color: #006666;
         &__title{
             text-align: left;
             margin-left: 12px !important;
@@ -77,13 +77,13 @@
         }
         &.item-selected {
             color: #fff;
-            background-color:  rgb(14, 18, 62);
+            background-color:  #006666;
             border-radius: 30px;
             box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
             transition: 0.5s ease-in-out;
         }
         &:hover {
-            background-color:  rgb(123, 130, 211);
+            background-color:  #00a0a0;
             border-radius: 30px;
             transition: 0.5s ease-in-out;
         }

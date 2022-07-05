@@ -29,6 +29,8 @@ const Login = () => {
         autoClose: 2000,
       });
       dispatch(setLoginState(STATUS.NONE));
+    } else if (getUser?.isLoggin === STATUS.PENDING) {
+      dispatch(login({email, password}));
     }
   }, [getUser?.isLoggin]);
 

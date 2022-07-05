@@ -71,7 +71,7 @@ export const changeProfile = createAsyncThunk(
 // First, create the thunk
 export const deleteUser = createAsyncThunk('account/delete', async email => {
   const params = {
-    email: email,
+    email: email.email,
   };
   var delService = new DeleteService();
   const response = await delService.DeleteAPI(APP_URL.DELETE_USER, params);
