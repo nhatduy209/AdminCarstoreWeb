@@ -6,7 +6,7 @@ import GetService from '../../Service/GetService';
 import DeleteService from '../../Service/DeleteService';
 import {token_authen} from '../../Config/Status/Key';
 import {toast} from 'react-toastify';
-import { uploadImageToStorage } from '../../common/PushImage';
+import {uploadImageToStorage} from '../../common/PushImage';
 
 const initialState = {
   account: {
@@ -44,29 +44,29 @@ export const login = createAsyncThunk('account/login', async paramsLogin => {
 });
 
 // First, create the thunk
-export const changeProfile = createAsyncThunk('account/changeinfo', async data => {
-  if(data.img) {
-    const newList = await uploadImageToStorage(
-      data.url,
-      data.img,
-    );
-    data.avatar = newList;
-  }
+export const changeProfile = createAsyncThunk(
+  'account/changeinfo',
+  async data => {
+    if (data.img) {
+      const newList = await uploadImageToStorage(data.url, data.img);
+      data.avatar = newList;
+    }
 
-  const postService = new PostService();
-  const params = {
-    name: data.name,
-    image: data.avatar,
-    email: data.email,
-    phone: data.phoneNum,
-    address: data.address,
-    password: data.password,
-    gender: data.gender,
-    birthday: data.date,
-  };
-  var response = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
-  return response.data;
-});
+    const postService = new PostService();
+    const params = {
+      name: data.name,
+      image: data.avatar,
+      email: data.email,
+      phone: data.phoneNum,
+      address: data.address,
+      password: data.password,
+      gender: data.gender,
+      birthday: data.date,
+    };
+    var response = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
+    return response.data;
+  },
+);
 
 // First, create the thunk
 export const deleteUser = createAsyncThunk('account/delete', async email => {
@@ -75,6 +75,7 @@ export const deleteUser = createAsyncThunk('account/delete', async email => {
   };
   var delService = new DeleteService();
   const response = await delService.DeleteAPI(APP_URL.DELETE_USER, params);
+  console.log('response delete ---' + JSON.stringify(response.data));
   return response.data;
 });
 
@@ -174,7 +175,15 @@ export const accountReducer = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {changeName, deleteUserRedux, filterUser, clearAccountInfo, changeAccountStatus, updateProfile, setLoginState} = accountReducer.actions;
+export const {
+  changeName,
+  deleteUserRedux,
+  filterUser,
+  clearAccountInfo,
+  changeAccountStatus,
+  updateProfile,
+  setLoginState,
+} = accountReducer.actions;
 
 export const getCurrentUser = state => state.AccountReducer.account;
 

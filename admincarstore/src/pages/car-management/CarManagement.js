@@ -123,14 +123,16 @@ const CarManagement = () => {
       return (
         cars?.slice(
           page * rowsPerPage,
-          (page + 1) * rowsPerPage < cars.length ? (page + 1) * rowsPerPage : cars.length,
+          (page + 1) * rowsPerPage < cars.length
+            ? (page + 1) * rowsPerPage
+            : cars.length,
         ) || []
       );
     }
   };
   return (
     <div className="management-container">
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -140,7 +142,7 @@ const CarManagement = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
       <div className="car-management__header">
         <div className="car-management__header__control">
           <div className="filter filter-input">

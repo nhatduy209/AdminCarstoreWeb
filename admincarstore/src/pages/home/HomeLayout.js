@@ -20,7 +20,8 @@ import {io} from 'socket.io-client';
 import {URL_MESSAGE} from '../../Config/Url/URL';
 import {toast, ToastContainer} from 'react-toastify';
 import NotificationCard from '../home-page/Component/notificationCard/NotificationCard';
-import { getAllUser } from '../../Redux/reducer/AccountReducer';
+import {getAllUser} from '../../Redux/reducer/AccountReducer';
+import {UNATHORIZE_MESSAGE} from '../../Config/Status/Index';
 const socket = io(URL_MESSAGE, {transports: ['websocket']});
 
 const HomeLayout = () => {
@@ -32,28 +33,51 @@ const HomeLayout = () => {
   const transitionStyles = {enter: 300, exit: 500};
   const conversations = useSelector(state => state.MessageReducer.listConv);
   const conversationsStatus = useSelector(state => state.MessageReducer.status);
+  const statusAuth = useSelector(state => state.MessageReducer.statusAuth);
   const listUser = useSelector(
     state => state.AccountReducer?.listAcc?.listUser,
   );
   useEffect(() => {
     console.log(listUser);
-    dispatch(getAllUser())
-  }, [listUser?.length])
+    dispatch(getAllUser());
+  }, [listUser?.length]);
   useEffect(() => {
-    if (conversations.length > 0) {
-      conversations.forEach(element => {
-        socket.on(element.idSendingFromClient || '', async dataFromServer => {
+    if (statusAuth !== UNATHORIZE_MESSAGE) {
+      if (conversations?.length > 0) {
+        conversations.forEach(element => {
+          socket.on(element.idSendingFromClient || '', async dataFromServer => {
+            const user = listUser.filter(el =>
+              element.id.toString().includes(el.email),
+            );
+            if (user && user.length > 0) {
+              await dispatch(getListMessage());
+              toast(
+                NotificationCard({
+                  ...user[0],
+                  image: user[0].image,
+                  content: dataFromServer.data,
+                  type: 'message',
+                }),
+                {
+                  position: toast.POSITION.TOP_RIGHT,
+                },
+              );
+            }
+          });
+        });
+      } else {
+        dispatch(getListMessage());
+        socket.on('receive_booking_from_admin', async res => {
           const user = listUser.filter(el =>
-            element.id.toString().includes(el.email),
+            res.data.clients_email.toString().includes(el.email),
           );
           if (user && user.length > 0) {
-            await dispatch(getListMessage());
             toast(
               NotificationCard({
                 ...user[0],
                 image: user[0].image,
-                content: dataFromServer.data,
-                type: 'message',
+                content: `${user[0].name} just request a meeting!!`,
+                type: 'booking',
               }),
               {
                 position: toast.POSITION.TOP_RIGHT,
@@ -61,29 +85,11 @@ const HomeLayout = () => {
             );
           }
         });
-      });
+      }
     } else {
-      dispatch(getListMessage());
-      socket.on('receive_booking_from_admin', async res => {
-        const user = listUser.filter(el =>
-          res.data.clients_email.toString().includes(el.email),
-        );
-        if (user && user.length > 0) {
-          toast(
-            NotificationCard({
-              ...user[0],
-              image: user[0].image,
-              content: `${user[0].name} just request a meeting!!`,
-              type: 'booking',
-            }),
-            {
-              position: toast.POSITION.TOP_RIGHT,
-            },
-          );
-        }
-      });
+      console.log('HELLO UNAUTH');
     }
-  }, [conversationsStatus, conversations.length]);
+  }, [conversationsStatus, conversations?.length]);
 
   const handleClose = () => {
     dispatch(showProfile(!isShow));

@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {APP_URL} from '../../Config/Url/URL';
-import {STATUS} from '../../Config/Status/Index';
+import {STATUS, UNATHORIZE_MESSAGE} from '../../Config/Status/Index';
 import PostService from '../../Service/PostService';
 import GetService from '../../Service/GetService';
 
@@ -10,16 +10,20 @@ const initialState = {
   listConv: [],
   currentConv: null,
   loading: false,
-  indexShowTime: -1
+  indexShowTime: -1,
+  statusAuth: 'NONE',
 };
 
 // First, create the thunk
-export const sendMessage = createAsyncThunk('message/sendingmessage', async (data) => {
-  var postService = new PostService();
+export const sendMessage = createAsyncThunk(
+  'message/sendingmessage',
+  async data => {
+    var postService = new PostService();
 
-  var response = await postService.PostAPI(APP_URL.SEND_MESSAGE, data);
-  return response;
-});
+    var response = await postService.PostAPI(APP_URL.SEND_MESSAGE, data);
+    return response;
+  },
+);
 
 export const getListMessage = createAsyncThunk('message/getlist', async () => {
   var getService = new GetService();
@@ -43,7 +47,7 @@ export const messageReducer = createSlice({
     },
     setIndex: (state, index) => {
       state.indexShowTime = index;
-    }
+    },
   },
   extraReducers: builder => {
     builder.addCase(sendMessage.fulfilled, (state, action) => {
@@ -56,8 +60,11 @@ export const messageReducer = createSlice({
     });
     builder.addCase(getListMessage.fulfilled, (state, action) => {
       // Add user to the state array
+      console.log('session out =====' + JSON.stringify(action.payload));
       if (action.payload.status === STATUS.SUCCESS) {
-        state.listConv = action.payload.data.data;
+        if (action.payload.data.error === UNATHORIZE_MESSAGE) {
+          state.statusAuth = UNATHORIZE_MESSAGE;
+        } else state.listConv = action.payload.data.data;
       } else {
         state.listConv = [];
       }
@@ -67,8 +74,8 @@ export const messageReducer = createSlice({
 });
 
 // export const {} = messageReducer.actions;
-export const {setListMessage, setCurrentConv, setLoading, setIndex} = messageReducer.actions;
-
+export const {setListMessage, setCurrentConv, setLoading, setIndex} =
+  messageReducer.actions;
 
 // export const getCurrentUser = state => state.AccountReducer.account;
 
