@@ -38,7 +38,6 @@ const HomeLayout = () => {
     state => state.AccountReducer?.listAcc?.listUser,
   );
   useEffect(() => {
-    console.log(listUser);
     dispatch(getAllUser());
   }, [listUser?.length]);
   useEffect(() => {

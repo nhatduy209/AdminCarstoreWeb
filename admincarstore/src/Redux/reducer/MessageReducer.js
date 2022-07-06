@@ -60,7 +60,7 @@ export const messageReducer = createSlice({
     });
     builder.addCase(getListMessage.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('session out =====' + JSON.stringify(action.payload));
+      
       if (action.payload.status === STATUS.SUCCESS) {
         if (action.payload.data.error === UNATHORIZE_MESSAGE) {
           state.statusAuth = UNATHORIZE_MESSAGE;
