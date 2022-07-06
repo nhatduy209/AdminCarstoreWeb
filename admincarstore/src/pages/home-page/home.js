@@ -1,11 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './style.scss';
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ToastContainer} from 'react-toastify';
 import {toast} from 'react-toastify';
-import {Icon, Rating} from '@mui/material';
-import Select, {SelectChangeEvent} from '@mui/material/Select';
+import {
+  Icon,
+  Rating,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import defaultAvatar from '../../assets/img/default-avatar.svg';
 import {
@@ -29,10 +34,9 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-import {Pie, Line} from 'react-chartjs-2';
+import {Pie} from 'react-chartjs-2';
 import {getBills} from '../../Redux/reducer/PaymentHistoryReducer';
 import {getCategory} from '../../Redux/reducer/CategoryReducer';
-import {getBooking} from '../../Redux/reducer/BookingReducer';
 import {getAllUser} from '../../Redux/reducer/AccountReducer';
 import {getCar} from '../../Redux/reducer/CarReducer';
 import moment from 'moment';
@@ -48,18 +52,32 @@ export const options = {
   },
 };
 
+export const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 const Home = () => {
   const dispatch = useDispatch();
   const bills = useSelector(state => state.PaymentHistoryReducer.bills ?? []);
   const categories = useSelector(state => state.CategoryReducer.listCategory);
   const userStatus = useSelector(state => state.AccountReducer.listAcc?.status);
   const [value, setValue] = useState(moment());
-  const preValue = moment(value).set('month', moment(value).get('month') - 1);
+  const [filterType, setFilterType] = useState('range');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
   const listUser = useSelector(
     state => state.AccountReducer?.listAcc?.listUser || [],
   );
   const cars = useSelector(state => state.CarReducer.listCar);
   const carStatus = useSelector(state => state.CarReducer.status);
+  const getListYear = () => {
+    let currentYear = new Date().getFullYear();
+    const list = [];
+    for (currentYear; currentYear >= 2000; currentYear--) {
+      list.push(currentYear);
+    }
+    return list;
+  };
   // const handleData = data => {
   //   const list = [];
   //   data.forEach(element => {
@@ -171,9 +189,27 @@ const Home = () => {
     return list;
   };
 
-  const formatBills = month => {
-    const list = bills.filter(
-      el => moment(el.selling_date).month() === moment(month).month(),
+  const formatBills = data => {
+    let list = [];
+    if (month && year) {
+      list = bills.filter(el => {
+        return (
+          moment(el.selling_date).month() + 1 === month &&
+          moment(el.selling_date).year() === year
+        );
+      });
+      return list;
+    }
+    if (startDate && endDate) {
+      list = bills.filter(
+        el =>
+          moment(el.selling_date) > moment(startDate) &&
+          moment(el.selling_date).year() < moment(endDate),
+      );
+      return list;
+    }
+    list = bills.filter(
+      el => moment(el.selling_date).month() === moment(data).month(),
     );
     return list;
   };
@@ -192,10 +228,32 @@ const Home = () => {
         }
       });
       monthData.length > 0
-        ? data.push((list.length / bills.length) * 100)
+        ? data.push((list.length / monthData.length) * 100)
         : data.push(0);
     });
     monthData.length < 1 && data.push(100);
+    return data;
+  };
+
+  const categoryFilter = () => {
+    const data = [];
+    const monthData = formatBills(value);
+    if (!bills) {
+      return [100];
+    }
+    categories.forEach(element => {
+      const list = [];
+      monthData.forEach(el => {
+        if (el.car.category === element.name) {
+          list.push(el);
+        }
+      });
+      data.push({
+        list,
+        name: element.name,
+        url: element.image,
+      });
+    });
     return data;
   };
 
@@ -221,25 +279,13 @@ const Home = () => {
     dispatch(getCategory());
   }, []);
 
-  // const lineData = {
-  //   labels: categories.map(el => el.name),
-  //   datasets: [
-  //     {
-  //       label: `Month: ${moment(value).month() + 1}`,
-  //       data: handleMonthData(value),
-  //       borderColor: 'rgb(255, 99, 132)',
-  //       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //     },
-  //     {
-  //       label: `Month: ${
-  //         moment(value).month() === 0 ? 12 : moment(value).month()
-  //       }`,
-  //       data: handleMonthData(preValue),
-  //       borderColor: 'rgb(53, 162, 235)',
-  //       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-  //     },
-  //   ],
-  // };
+  const changeFilterType = (event, val) => {
+    setFilterType(val);
+    setMonth();
+    setYear();
+    setStartDate();
+    setEndDate();
+  };
 
   const pieLabels = () => {
     const labels = categories.map(el => el.name);
@@ -249,35 +295,36 @@ const Home = () => {
     return labels;
   };
 
-  const data = {
-    labels: pieLabels(),
-    datasets: [
-      {
-        label: '# of Votes',
-        data: handleCategoryData(),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          formatBills(value).length < 1 && 'rgba(200, 200, 200, 0.7)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          formatBills(value).length < 1 && 'rgba(100, 100, 100, 0.5)',
-        ],
-        borderWidth: 1,
-      },
-    ],
+  const data = () => {
+    return {
+      labels: pieLabels(),
+      datasets: [
+        {
+          label: '# of Votes',
+          data: handleCategoryData(),
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            formatBills(value).length < 1 && 'rgba(200, 200, 200, 0.7)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            formatBills(value).length < 1 && 'rgba(100, 100, 100, 0.5)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
   };
-
   return (
     <div className="home-page-container">
       <div className="month-picker-container">
@@ -350,38 +397,102 @@ const Home = () => {
         <div className="statistic-group__top">
           <div className="statistic-item">
             <div className="statistic-title">Category</div>
-            <Pie data={data} />
+            <Pie data={data()} />
           </div>
-          <div className="filter-group">
-            <div className="month-picker">
-              <div className="month-picker-title">Pick a year</div>
-              <Select
-                value={value}
-                onChange={handleChange}
-                displayEmpty
-                inputProps={{'aria-label': 'Without label'}}>
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </div>
-            <div className="month-picker">
-              <div className="month-picker-title">Pick a year</div>
-              <Select
-                value={value}
-                onChange={handleChange}
-                displayEmpty
-                inputProps={{'aria-label': 'Without label'}}>
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
+          <div className="filter-group-container">
+            <div className="filter-group">
+              <ToggleButtonGroup
+                color="primary"
+                value={filterType}
+                exclusive
+                onChange={changeFilterType}>
+                <ToggleButton value="range" disabled={filterType === 'range'}>
+                  Range date
+                </ToggleButton>
+                <ToggleButton
+                  value="element"
+                  disabled={filterType === 'element'}>
+                  Selected
+                </ToggleButton>
+              </ToggleButtonGroup>
+              {filterType === 'element' && (
+                <div className="filter-seleted-item row my-32">
+                  <div className="month-picker mr-24">
+                    <div className="month-picker-title text--label text--bold">
+                      Month
+                    </div>
+                    <Select
+                      style={{width: '163px'}}
+                      value={month}
+                      onChange={(event, val) => setMonth(val.props.value)}
+                      displayEmpty
+                      inputProps={{'aria-label': 'Without label'}}>
+                      {months.map(item => {
+                        return (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </div>
+                  <div className="month-picker">
+                    <div className="month-picker-title text--label text--bold">
+                      Year
+                    </div>
+                    <Select
+                      style={{width: '163px'}}
+                      value={year}
+                      onChange={(event, val) => setYear(val.props.value)}
+                      displayEmpty
+                      inputProps={{'aria-label': 'Without label'}}>
+                      {getListYear().map(item => {
+                        return (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </div>
+                </div>
+              )}
+              {filterType === 'range' && (
+                <div className="filter-range row my-32">
+                  <div className="mr-24">
+                    <div className="text--label text--bold">Start date</div>
+                    <TextField
+                      onChange={event => setStartDate(event.target.value)}
+                      value={startDate}
+                      type="date"></TextField>
+                  </div>
+                  <div>
+                    <div className="text--label text--bold">End date</div>
+                    <TextField
+                      onChange={event => setEndDate(event.target.value)}
+                      value={endDate}
+                      type="date"></TextField>
+                  </div>
+                </div>
+              )}
+              {categoryFilter().map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="category-item row align-center my-16 pa-12">
+                    <img
+                      className="top-user__item__image"
+                      src={item.url || defaultAvatar}
+                    />
+                    <div className="col">
+                      <div className="text--bold">{item.name}</div>
+                      <div className="row order-count">
+                        {item.list?.length} car(s) are sold
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -438,13 +549,13 @@ const Home = () => {
                         <div className="order-name">
                           {index + 1}.{item.name}
                         </div>
-                        <div className="order-name">
+                        <div className="text--label row order-count">
                           <Icon
                             baseClassName="fas"
-                            className="fa-bell summary-icon"
-                            sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
+                            className="fa-receipt summary-icon"
+                            sx={{fontSize: 18, padding: 0.5, color: '	#006666'}}
                           />
-                          {item.payed} {"payment(s)"}
+                          {item.payed} {'payment(s)'}
                         </div>
                       </div>
                     </div>

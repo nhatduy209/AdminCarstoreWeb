@@ -1,4 +1,6 @@
-//@mixin
+$--list-range: (
+  "8", "12", "16", "24", "32"
+);
 @mixin text-ellipsis{
   display: block;
   overflow: hidden;
@@ -29,6 +31,10 @@
   }
   &--bold {
     font-weight: bold;
+  }
+  &--label {
+    font-size: 14px;
+    color: #cecece;
   }
 }
 
@@ -64,4 +70,60 @@ input:disabled {
 }
 .justify-center {
   justify-content: center;
+}
+.align {
+  &-center {
+    align-items: center;
+  }
+}
+
+.m {
+  @each $range in $--list-range {
+    &t-#{$range}{
+      margin-top: #{$range}px !important;
+    }
+    &b-#{$range}{
+      margin-bottom: #{$range}px !important;
+    }
+    &l-#{$range}{
+      margin-left: #{$range}px !important;
+    }
+    &r-#{$range}{
+      margin-right: #{$range}px !important;
+    }
+    &a-#{$range}{
+      margin: #{$range}px !important;
+    }
+    &x-#{$range}{
+      margin-inline: #{$range}px !important;
+    }
+    &y-#{$range}{
+      margin-block: #{$range}px !important;
+    }
+  }
+}
+.p {
+  @each $range in $--list-range {
+    &t-#{$range}{
+      padding-top: #{$range}px !important;
+    }
+    &b-#{$range}{
+      padding-bottom: #{$range}px !important;
+    }
+    &l-#{$range}{
+      padding-left: #{$range}px !important;
+    }
+    &r-#{$range}{
+      padding-right: #{$range}px !important;
+    }
+    &a-#{$range}{
+      padding: #{$range}px !important;
+    }
+    &x-#{$range}{
+      padding-inline: #{$range}px !important;
+    }
+    &y-#{$range}{
+      padding-block: #{$range}px !important;
+    }
+  }
 }

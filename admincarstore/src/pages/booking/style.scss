@@ -24,8 +24,7 @@
 }
 .booking {
   &-container {
-    height: calc(100% - 50px);
-    padding-inline: 10%;
+    padding-inline: 5vw;
     padding-block: 20px 10px;
     .fc-view-harness {
       min-height: 550px;
@@ -33,6 +32,14 @@
     }
     .fc-scrollgrid-section-body {
       min-width: 550px;
+    }
+    .fc-button {
+      background-color: #006666;
+      border-color: #006666;
+      &-active {
+        background-color: #00a0a0 !important;
+        border-color: #00a0a0 !important;
+      }
     }
   }
 }
