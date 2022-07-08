@@ -334,7 +334,7 @@ const Home = () => {
               <Icon
                 baseClassName="fas"
                 className="fa-bell summary-icon"
-                sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
+                sx={{fontSize: 18, padding: 0.5, color: '	#006666'}}
               />
               <div>
                 <div className="statistic-item__summary-content">{`${
@@ -348,8 +348,8 @@ const Home = () => {
             <div className="statistic-item__summary--card">
               <Icon
                 baseClassName="fas"
-                className="fa-car-side summary-icon"
-                sx={{fontSize: 18, padding: 0.5, color: '#6565bf'}}
+                className="fa-user summary-icon"
+                sx={{fontSize: 18, padding: 0.5, color: '#006666'}}
               />
               <div>
                 <div className="statistic-item__summary-content">{`${
@@ -366,28 +366,22 @@ const Home = () => {
               <Icon
                 baseClassName="fas"
                 className="fa-hand-holding-dollar summary-icon"
-                sx={{fontSize: 18, padding: 0.5, color: '	#00f9ff'}}
+                sx={{fontSize: 18, padding: 0.5, color: '	#006666'}}
               />
               <div>
                 <div className="statistic-item__summary-content">{`$${handleOverall()}`}</div>
-                <div className="statistic-item__summary-description">
-                  Earned this month
-                </div>
               </div>
             </div>
             <div className="statistic-item__summary--card">
               <Icon
                 baseClassName="fas"
                 className="fa-car-side summary-icon"
-                sx={{fontSize: 18, padding: 0.5, color: '#6565bf'}}
+                sx={{fontSize: 18, padding: 0.5, color: '#006666'}}
               />
               <div>
                 <div className="statistic-item__summary-content">{`${
                   formatBills(value).length
                 } car(s)`}</div>
-                <div className="statistic-item__summary-description">
-                  Selled this month
-                </div>
               </div>
             </div>
           </div>

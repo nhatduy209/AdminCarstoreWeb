@@ -47,6 +47,13 @@ const ListConversation = () => {
       dispatch(setListMessage(curConv?.message || []));
     }
   }, [conversations]);
+
+  const filterConversation = () => {
+    if(inputText?.length > 0) {
+      return conversations?.filter((item) => item.id?.includes(inputText)) || [];
+    }
+    return conversations || [];
+  }
   return (
     <div className="conversation-list">
       <div
@@ -61,7 +68,7 @@ const ListConversation = () => {
       </div>
       <input className="search-input" onChange={(value) => setInputText(value.target.value)} value={inputText} placeholder="Search..."/>
       <div className="conversation-list__items">
-        {conversations?.map((user, index) => {
+        {filterConversation()?.map((user, index) => {
           return Conversation(user, index, () => {
             dispatch(setListMessage(user.message));
             dispatch(setCurrentConv(user));
