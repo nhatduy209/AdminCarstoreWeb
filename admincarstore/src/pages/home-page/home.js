@@ -40,6 +40,7 @@ import {getCategory} from '../../Redux/reducer/CategoryReducer';
 import {getAllUser} from '../../Redux/reducer/AccountReducer';
 import {getCar} from '../../Redux/reducer/CarReducer';
 import moment from 'moment';
+import { getBooking } from '../../Redux/reducer/BookingReducer';
 export const options = {
   responsive: true,
   plugins: {
@@ -70,6 +71,9 @@ const Home = () => {
   );
   const cars = useSelector(state => state.CarReducer.listCar);
   const carStatus = useSelector(state => state.CarReducer.status);
+  const meetingStatus = useSelector(state => state.BookingReducer.status);
+  const meetings = useSelector(state => state.BookingReducer.listBooking,
+  );
   const getListYear = () => {
     let currentYear = new Date().getFullYear();
     const list = [];
@@ -78,60 +82,25 @@ const Home = () => {
     }
     return list;
   };
-  // const handleData = data => {
-  //   const list = [];
-  //   data.forEach(element => {
-  //     list.push({
-  //       title: element.full_name,
-  //       extendedProps: {
-  //         item: element,
-  //       },
-  //       date: element.date_meeting,
-  //     });
-  //   });
-  //   console.log(list);
-  //   return list;
-  // };
-  // const meetings = useSelector(state =>
-  //   handleData(state.BookingReducer.listBooking),
-  // );
-  // const meetingStatus = useSelector(state => state.BookingReducer.status);
-
-  // useEffect(() => {
-  //   dispatch(getBooking('admin@gmail.com'));
-  // }, [meetingStatus]);
 
   useEffect(() => {
     dispatch(getAllUser());
-  }, [userStatus]);
+  }, []);
   useEffect(() => {
     dispatch(getCar({start: 0, end: 100}));
   }, [carStatus]);
+  useEffect(() => {
+    dispatch(getBooking('admin@gmail.com'));
+  }, [meetingStatus]);
 
   const handleOverall = () => {
     let overall = 0;
     formatBills(value).forEach(el => (overall += el.car.prices));
     return overall;
   };
-  const handleChange = newValue => {
-    if (!newValue) {
-      setValue(moment());
-      return;
-    }
-    if (moment().get('year') < moment(newValue).get('year')) {
-      toast.error('Please choose current or previous date');
-      return;
-    } else if (moment().get('year') === moment(newValue).get('year')) {
-      if (moment(newValue).get('month') > moment().get('month')) {
-        toast.error('Please choose current or previous date');
-        return;
-      }
-    }
-    setValue(newValue);
-  };
   // User have no meeting
   const getNewUser = () => {
-    const list = listUser.filter(el => el.meetings.length > 0);
+    const list = listUser.filter(el => el.meetings.length < 1);
     return list;
   };
   // Top user
@@ -183,8 +152,12 @@ const Home = () => {
   };
   // Today booking
   const getTodayBooking = () => {
-    const list = bills.filter(
-      el => moment(el.selling_date).month() === moment(new Date()).month(),
+    console.log(meetings);
+    const list = meetings.filter(
+      el => {
+        console.log(moment(el.date_meeting).toDate(), moment(new Date()), moment(el.date_meeting) === moment(new Date()));
+        return moment(el.date_meeting).toDate().getDate() === moment(new Date()).toDate().getDate();
+      },
     );
     return list;
   };
@@ -253,23 +226,6 @@ const Home = () => {
         name: element.name,
         url: element.image,
       });
-    });
-    return data;
-  };
-
-  const handleMonthData = month => {
-    const data = [];
-    if (!bills) {
-      return [];
-    }
-    categories.forEach(element => {
-      const list = [];
-      formatBills(month).forEach(el => {
-        if (el.car.category === element.name) {
-          list.push(el);
-        }
-      });
-      data.push(list.length);
     });
     return data;
   };
@@ -353,7 +309,7 @@ const Home = () => {
               />
               <div>
                 <div className="statistic-item__summary-content">{`${
-                  getTopUser().length
+                  getNewUser().length
                 } user(s)`}</div>
                 <div className="statistic-item__summary-description">
                   New registor

@@ -21,7 +21,7 @@ function App() {
   );
 
   useEffect(() => {
-    // const tokenID = localStorage.getItem(token_authen);
+    const tokenID = localStorage.getItem(token_authen);
     // const email = localStorage.email;
     // const password = localStorage.password;
     if (isLoggin === STATUS.NONE || isLoggin === STATUS.FAIL) {
