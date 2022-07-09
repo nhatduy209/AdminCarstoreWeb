@@ -129,7 +129,7 @@ const BookingForm = (selectedMeeting, setOpen, showPayment) => {
           <div className="booking-form-content__field end-field">
             <div className="booking-form-content__field__label">Prices</div>
             <div className="booking-form-content__field__input">
-              {meetingDetail?.car_booking?.prices ?? '--'}
+              {meetingDetail?.car_booking?.prices ?? '--'}$
             </div>
           </div>
         </div>

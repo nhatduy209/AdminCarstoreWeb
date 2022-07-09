@@ -142,7 +142,7 @@ export const accountReducer = createSlice({
         localStorage.setItem('email', action.payload.data.email);
         localStorage.setItem('password', action.payload.data.password);
       } else {
-        initialState.account.isLoggin = STATUS.FAIL;
+        state.account.isLoggin = STATUS.FAIL;
       }
     });
     builder.addCase(getAllUser.fulfilled, (state, action) => {

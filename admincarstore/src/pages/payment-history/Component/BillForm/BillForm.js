@@ -6,9 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 // import { changePaymentStatus } from '../../../../Redux/reducer/PaymentHistoryReducer';
 const BillForm = (selectedItem, setOpenPayment) => {
   const dispatch = useDispatch();
-  const status = useSelector(
-    state => state.PaymentHistoryReducer.status,
-  );
+  const status = useSelector(state => state.PaymentHistoryReducer.status);
   // useEffect(() => {
   //   if( status === STATUS.SUCCESS) {
   //     setOpenPayment(false);
@@ -55,7 +53,9 @@ const BillForm = (selectedItem, setOpenPayment) => {
         <div className="booking-form-content__title">Client information</div>
         <div className="booking-form-content__group">
           <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">Client name</div>
+            <div className="booking-form-content__field__label">
+              Client name
+            </div>
             <div className="booking-form-content__field__input">
               {selectedItem?.client?.name ?? '--'}
             </div>
@@ -73,7 +73,9 @@ const BillForm = (selectedItem, setOpenPayment) => {
             </div>
           </div>
           <div className="booking-form-content__field end-field">
-            <div className="booking-form-content__field__label">Personal ID</div>
+            <div className="booking-form-content__field__label">
+              Personal ID
+            </div>
             <div className="booking-form-content__field__input">
               {selectedItem?.client?.personal_id ?? '--'}
             </div>
@@ -89,9 +91,7 @@ const BillForm = (selectedItem, setOpenPayment) => {
             </div>
           </div>
           <div className="booking-form-content__field">
-            <div className="booking-form-content__field__label">
-              Email
-            </div>
+            <div className="booking-form-content__field__label">Email</div>
             <div className="booking-form-content__field__input">
               {selectedItem?.admin?.email ?? '--'}
             </div>
@@ -106,11 +106,6 @@ const BillForm = (selectedItem, setOpenPayment) => {
           </div>
         </div>
       </form>
-      <div className="group-btn">
-        <button className="cancel-btn">
-          <div>Cancel</div>
-        </button>
-      </div>
     </div>
   );
 };
