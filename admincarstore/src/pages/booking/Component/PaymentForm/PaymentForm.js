@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {STATUS} from '../../../../Config/Status/Index';
-import { createPayment } from '../../../../Redux/reducer/PaymentHistoryReducer';
+import {createPayment} from '../../../../Redux/reducer/PaymentHistoryReducer';
 import {getBooking} from '../../../../Redux/reducer/BookingReducer';
 import './style.scss';
 import {ToastContainer} from 'react-toastify';
@@ -20,8 +20,12 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const confirmStatus = useSelector(
     state => state.PaymentHistoryReducer.status,
   );
+
+  console.log(
+    ' meetingDetail?.car_booking?' + JSON.stringify(meetingDetail?.car_booking),
+  );
   const handleConfirm = () => {
-    if(!meetingDetail?.clients_email) {
+    if (!meetingDetail?.clients_email) {
       toast.error('Add car error');
       return;
     }
@@ -34,7 +38,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
       },
       car: {
         name: meetingDetail?.car_booking?.car_name ?? 'CAMRY 2.0G',
-        prices: meetingDetail?.car_booking?.price ?? 20000,
+        prices: meetingDetail?.car_booking?.prices ?? 20000,
         color: meetingDetail?.car_booking?.color ?? 'black',
         category: meetingDetail?.car_booking?.category ?? 'Toyota',
         image: meetingDetail?.car_booking?.image ?? '',
@@ -45,7 +49,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
         personal_id: '12412411',
       },
       id_meeting: meetingDetail?.id_meeting ?? '',
-    }
+    };
     dispatch(createPayment(data));
   };
 
@@ -59,15 +63,15 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const routeToPayment = () => {
     navigate('/payment-history');
     setOpenPayment(false);
-  }
+  };
 
   const renderConfirmButton = () => {
-    if(meetingDetail?.status_payment) {
+    if (meetingDetail?.status_payment) {
       return (
         <button className="go-to-history-perchase confirm-btn">
-        <div onClick={() => routeToPayment()}>Go to history purchase</div>
-      </button>
-      )
+          <div onClick={() => routeToPayment()}>Go to history purchase</div>
+        </button>
+      );
     }
     return (
       <button className="confirm-btn">
