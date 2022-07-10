@@ -12,15 +12,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {token_authen} from '../Config/Status/Key';
 import { login } from '../Redux/reducer/AccountReducer';
+import { STATUS } from '../Config/Status/Index';
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggin = useSelector(state => state.AccountReducer?.account?.isLoggin);
   useEffect(() => {
-    // const tokenID = localStorage.getItem(token_authen);
+    const tokenID = localStorage.getItem(token_authen);
     // const email = localStorage.email;
     // const password = localStorage.password;
-    if (!isLoggin) {
+    if ((isLoggin === STATUS.NONE || isLoggin === STATUS.FAIL) && !tokenID) {
       navigate('/login');
     }
   }, [isLoggin]);

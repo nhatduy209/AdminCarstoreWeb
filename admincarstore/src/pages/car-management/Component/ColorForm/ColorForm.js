@@ -3,12 +3,13 @@ import './style.scss';
 import {Icon} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
-import {ColorExtractor} from 'react-color-extractor';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addColor} from '../../../../Redux/reducer/ColorReducer';
 import {validate} from '../../../../helps/validattion';
 import {toast} from 'react-toastify';
+import { ColorPicker, useColor } from "react-color-palette";
+import "react-color-palette/lib/css/styles.css";
 const defaultImage =
   'http://autopro8.mediacdn.vn/2016/dscf0015-1476658861227.jpg';
 const SWATCHES_STYLES = {
@@ -19,39 +20,18 @@ const SWATCHES_STYLES = {
 
 const ColorForm = (setColorOpen, colorOpen) => {
   const dispatch = useDispatch();
-  const [colors, setColor] = useState([]);
-  const [selectedColor, setSelectedColor] = useState(null);
   const [img, setImg] = useState(null);
   const [url, setUrl] = useState(defaultImage);
   const [numberInStore, setNumberInStore] = useState(0);
-  const listColor = useSelector(state => state.ColorReducer.listColor);
+  const [color, setColor] = useColor("hex", "#121212");
 
   useEffect(() => {
     if (!colorOpen) {
-      setSelectedColor(null);
       setUrl(defaultImage);
       setImg(null);
       setNumberInStore(0);
     }
   }, [colorOpen]);
-  const renderSwatches = () => {
-    if (!img) {
-      return <div></div>;
-    }
-    return colors.map((color, id) => {
-      return (
-        <div
-          onClick={() => setSelectedColor(color)}
-          key={id}
-          style={{
-            backgroundColor: color,
-            width: 24,
-            height: 24,
-          }}
-        />
-      );
-    });
-  };
 
   const addCurentColor = () => {
     if (numberInStore === '') {
@@ -59,7 +39,7 @@ const ColorForm = (setColorOpen, colorOpen) => {
       return;
     }
     const item = {
-      color: selectedColor,
+      color: color.hex,
       img,
       url,
       numberInStore,
@@ -85,8 +65,6 @@ const ColorForm = (setColorOpen, colorOpen) => {
     };
     reader.readAsDataURL(files[0]);
   };
-
-  const getColors = listColor => setColor([...listColor]);
   return (
     <Dialog open={colorOpen} className="car-form color-form">
       <div className="car-form--main">
@@ -116,13 +94,14 @@ const ColorForm = (setColorOpen, colorOpen) => {
               className="image-picker-btn"
             />
           </div>
-          <ColorExtractor src={url} getColors={getColors} />
-          <div style={SWATCHES_STYLES}>{renderSwatches()}</div>
+          <ColorPicker width={456} height={228} 
+                   color={color} 
+                   onChange={setColor} hideHSV dark />
           <div className="color-form-content">
             <div className="car-form-content__field review-color">
               <div className="car-form-content__field__label">Color</div>
               <div
-                style={{backgroundColor: selectedColor}}
+                style={{backgroundColor: color.hex}}
                 className="selected-color"></div>
             </div>
 
