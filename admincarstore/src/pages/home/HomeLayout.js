@@ -2,6 +2,7 @@
 import './style.scss';
 import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import Navigator from '../../component/navigator/Navidator';
 import Header from '../../component/header/Header';
 import {Routes, Route} from 'react-router-dom';
@@ -26,6 +27,7 @@ const socket = io(URL_MESSAGE, {transports: ['websocket']});
 
 const HomeLayout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [hideMenu, setHideMenu] = useState(window.innerWidth < 991);
   const isShow = useSelector(state => state.GlobalReducer.isShowProfile);
@@ -56,6 +58,7 @@ const HomeLayout = () => {
                   image: user[0].image,
                   content: dataFromServer.data,
                   type: 'message',
+                  handleClick: () => navigate('/booking')
                 }),
                 {
                   position: toast.POSITION.TOP_RIGHT,
@@ -78,6 +81,7 @@ const HomeLayout = () => {
                 image: user[0].image,
                 content: `${user[0].name} just request a meeting!!`,
                 type: 'booking',
+                handleClick: () => navigate('/booking')
               }),
               {
                 position: toast.POSITION.TOP_RIGHT,

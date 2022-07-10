@@ -4,7 +4,7 @@ import defaultAvatar from '../../../../assets/img/default-avatar.svg';
 
 const NotificationCard = data => {
   return (
-    <div className="notification-card">
+    <div className="notification-card" onClick={data.handleClick}>
       <img
         className="notification-card__image"
         height="40px"
