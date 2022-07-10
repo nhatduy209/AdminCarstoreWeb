@@ -40,7 +40,7 @@ import {getCategory} from '../../Redux/reducer/CategoryReducer';
 import {getAllUser} from '../../Redux/reducer/AccountReducer';
 import {getCar} from '../../Redux/reducer/CarReducer';
 import moment from 'moment';
-import { getBooking } from '../../Redux/reducer/BookingReducer';
+import {getBooking} from '../../Redux/reducer/BookingReducer';
 export const options = {
   responsive: true,
   plugins: {
@@ -64,16 +64,15 @@ const Home = () => {
   const [filterType, setFilterType] = useState('range');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [month, setMonth] = useState();
+  const [year, setYear] = useState();
   const listUser = useSelector(
     state => state.AccountReducer?.listAcc?.listUser || [],
   );
   const cars = useSelector(state => state.CarReducer.listCar);
   const carStatus = useSelector(state => state.CarReducer.status);
   const meetingStatus = useSelector(state => state.BookingReducer.status);
-  const meetings = useSelector(state => state.BookingReducer.listBooking,
-  );
+  const meetings = useSelector(state => state.BookingReducer.listBooking);
   const getListYear = () => {
     let currentYear = new Date().getFullYear();
     const list = [];
@@ -152,12 +151,10 @@ const Home = () => {
   };
   // Today booking
   const getTodayBooking = () => {
-    console.log(meetings);
     const list = meetings.filter(
-      el => {
-        console.log(moment(el.date_meeting).toDate(), moment(new Date()), moment(el.date_meeting) === moment(new Date()));
-        return moment(el.date_meeting).toDate().getDate() === moment(new Date()).toDate().getDate();
-      },
+      el =>
+        moment(el.date_meeting).toDate().getDate() ===
+        moment(new Date()).toDate().getDate(),
     );
     return list;
   };
@@ -376,6 +373,7 @@ const Home = () => {
                       value={month}
                       onChange={(event, val) => setMonth(val.props.value)}
                       displayEmpty
+                      defaultValue={months[0]}
                       inputProps={{'aria-label': 'Without label'}}>
                       {months.map(item => {
                         return (
@@ -395,6 +393,7 @@ const Home = () => {
                       value={year}
                       onChange={(event, val) => setYear(val.props.value)}
                       displayEmpty
+                      defaultValue={getListYear()[0]}
                       inputProps={{'aria-label': 'Without label'}}>
                       {getListYear().map(item => {
                         return (

@@ -75,7 +75,6 @@ export const deleteUser = createAsyncThunk('account/delete', async email => {
   };
   var delService = new DeleteService();
   const response = await delService.DeleteAPI(APP_URL.DELETE_USER, params);
-  console.log('response delete ---' + JSON.stringify(response.data));
   return response.data;
 });
 
@@ -133,8 +132,6 @@ export const accountReducer = createSlice({
   extraReducers: builder => {
     builder.addCase(login.fulfilled, (state, action) => {
       // Add user to the state array
-
-      //  console.log('state account ---' + JSON.stringify(action.payload.data));
       if (action.payload.result === STATUS.SUCCESS) {
         state.account = action.payload.data;
         state.account.isLoggin = STATUS.SUCCESS;
@@ -147,9 +144,6 @@ export const accountReducer = createSlice({
     });
     builder.addCase(getAllUser.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log('state ---' + JSON.stringify(state));
-
-      console.log('payload ---' + JSON.stringify(action.payload.data));
       if (action.payload.result === STATUS.SUCCESS) {
         state.listAcc.listUser = action.payload.data;
         state.listAcc.status = GET_LIST_USER_STATUS.SUCCESS;

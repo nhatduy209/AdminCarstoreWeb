@@ -22,10 +22,12 @@ function App() {
 
   useEffect(() => {
     const tokenID = localStorage.getItem(token_authen);
-    // const email = localStorage.email;
-    // const password = localStorage.password;
+    const email = localStorage.email;
+    const password = localStorage.password;
     if ((isLoggin === STATUS.NONE || isLoggin === STATUS.FAIL) && !tokenID) {
       navigate('/login');
+    } else if(email && password) {
+      dispatch(login({email, password}));
     }
   }, [isLoggin]);
 
