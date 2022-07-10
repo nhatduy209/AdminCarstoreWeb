@@ -7,8 +7,8 @@ const NotificationCard = data => {
     <div className="notification-card">
       <img
         className="notification-card__image"
-        height="50px"
-        width="50px"
+        height="40px"
+        width="40px"
         src={data?.image || defaultAvatar}
       />
       <div>

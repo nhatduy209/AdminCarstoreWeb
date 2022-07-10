@@ -2,8 +2,16 @@
 import './style.scss';
 import {useState, useEffect} from 'react';
 import {formatTimeDuration} from '../../../../helps/formatter';
+export const ImageTemplate = 'https://firebasestorage.googleapis.com';
 
-const MessageItem = (side, message, isShowInfo, isShowTime, isToday, showDetail) => {
+const MessageItem = (
+  side,
+  message,
+  isShowInfo,
+  isShowTime,
+  isToday,
+  showDetail,
+) => {
   const getMail = () => {
     return message?.id?.split('_')[1] || '--';
   };
@@ -47,13 +55,28 @@ const MessageItem = (side, message, isShowInfo, isShowTime, isToday, showDetail)
           message?.shareItem ? 'share-item' : ''
         }`}>
         {message?.content && (
-          <div className={`message-item__content ${side || ''}`}>
-            <div className="text">{message.content}</div>
+          <div
+            className={`message-item__content ${side || ''}`}
+            style={{
+              paddingBlock: message?.content?.includes(ImageTemplate)
+                ? '8px'
+                : '',
+            }}>
+            {message?.content?.includes(ImageTemplate) ? (
+              <img
+                className="message-item__share-item__image"
+                src={message.content || ''}
+              />
+            ) : (
+              <div className="text">{message.content}</div>
+            )}
           </div>
         )}
         {message?.shareItem && (
-          <div style={message.shareItem && {'cursor': 'pointer'}}
-          className={`message-item__share-item`} onClick={showDetail}>
+          <div
+            style={message.shareItem && {cursor: 'pointer'}}
+            className={`message-item__share-item`}
+            onClick={showDetail}>
             <img
               className="message-item__share-item__image"
               src={message?.shareItem.img || ''}

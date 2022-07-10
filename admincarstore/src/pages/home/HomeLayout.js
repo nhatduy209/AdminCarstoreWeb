@@ -70,6 +70,7 @@ const HomeLayout = () => {
           const user = listUser.filter(el =>
             res.data.clients_email.toString().includes(el.email),
           );
+          console.log(user, res.data, listUser);
           if (user && user.length > 0) {
             toast(
               NotificationCard({
@@ -115,7 +116,7 @@ const HomeLayout = () => {
       <ToastContainer
         position="top-right"
         // autoClose={3000}
-        hideProgressBar={false}
+        hideProgressBar={true}
         newestOnTop={true}
         closeOnClick
         rtl={false}

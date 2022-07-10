@@ -16,7 +16,10 @@ import { STATUS } from '../Config/Status/Index';
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggin = useSelector(state => state.AccountReducer?.account?.isLoggin);
+  const isLoggin = useSelector(
+    state => state.AccountReducer?.account?.isLoggin,
+  );
+
   useEffect(() => {
     const tokenID = localStorage.getItem(token_authen);
     // const email = localStorage.email;
@@ -25,7 +28,7 @@ function App() {
       navigate('/login');
     }
   }, [isLoggin]);
-  
+
   return (
     <div className="App">
       <Routes>
