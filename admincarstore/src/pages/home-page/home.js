@@ -474,7 +474,7 @@ const Home = () => {
                           </div>
                         </div>
                         <div className="top-car__item__count">
-                          <div className="show-more">more</div>
+                          {/* <div className="show-more">more</div> */}
                           <h2>{item.count} car(s)</h2>
                         </div>
                       </div>

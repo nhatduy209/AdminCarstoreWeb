@@ -8,6 +8,7 @@ import {getBooking} from '../../../../Redux/reducer/BookingReducer';
 import './style.scss';
 import {ToastContainer} from 'react-toastify';
 import {toast} from 'react-toastify';
+import { formatFullDate } from '../../../../helps/formatter';
 
 const PaymentForm = (selectedMeeting, setOpenPayment) => {
   const navigate = useNavigate();
@@ -190,7 +191,7 @@ const PaymentForm = (selectedMeeting, setOpenPayment) => {
               Meeting date
             </div>
             <div className="booking-form-content__field__input">
-              {meetingDetail?.date_meeting ?? '--'}
+              {formatFullDate(meetingDetail?.date_meeting) ?? '--'}
             </div>
           </div>
         </div>

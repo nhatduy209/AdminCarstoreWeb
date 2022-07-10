@@ -2,13 +2,13 @@
   .css-1t1j96h-MuiPaper-root-MuiDialog-paper{
     width: 90%;
     max-width: 550px;
-    padding: 20px;
   }
   &__header {
     display: flex;
     justify-content: space-between;
   }
   &-content {
+    padding: 12px;
     &__img {
       height: 260px;
       max-width: 550px;
@@ -19,6 +19,11 @@
     .MuiDialog-paperScrollPaper {
       top: 150px;
     }
+  }
+  .selected-color{
+    height: 100px;
+    width: 100px;
+    border-radius: 4px;
   }
 }
 .booking {

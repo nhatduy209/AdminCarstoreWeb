@@ -2,6 +2,7 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {STATUS} from '../../../../Config/Status/Index';
+import { formatFullDate } from '../../../../helps/formatter';
 import {
   cancelBooking,
   confirmBooking,
@@ -155,7 +156,7 @@ const BookingForm = (selectedMeeting, setOpen, showPayment) => {
               Meeting date
             </div>
             <div className="booking-form-content__field__input">
-              {meetingDetail?.date_meeting ?? '--'}
+              {formatFullDate(meetingDetail?.date_meeting) ?? '--'}
             </div>
           </div>
         </div>

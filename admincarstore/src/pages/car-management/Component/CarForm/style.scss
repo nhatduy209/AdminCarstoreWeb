@@ -3,6 +3,11 @@
     max-width: 1050px;
     top: 70px;
   }
+  .selected-color{
+    height: 30px;
+    width: 30px;
+    border-radius: 4px;
+  }
   &__header {
     display: flex;
     justify-content: space-between;

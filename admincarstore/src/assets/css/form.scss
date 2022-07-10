@@ -7,9 +7,8 @@
     display: flex;
     justify-content: space-between;
     font-weight: 600;
-    border-bottom: 0.5px solid rgba(20,20,20, 0.1);
-    padding-bottom: 12px;
-    padding-inline: 20px;
+    padding: 12px;
+    background-color: #f7f7f7;
     text-transform: capitalize;
     span {
       cursor: pointer;

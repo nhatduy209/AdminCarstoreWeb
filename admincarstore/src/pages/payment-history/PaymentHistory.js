@@ -16,6 +16,7 @@ import {ToastContainer} from 'react-toastify';
 import BillForm from './Component/BillForm/BillForm';
 import {getBills} from '../../Redux/reducer/PaymentHistoryReducer';
 import emptyList from '../../assets/img/empty-list.svg';
+import { formatFullDate } from '../../helps/formatter';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -177,7 +178,7 @@ const PaymentHistory = () => {
                   {row.car.car_name ?? '--'}
                 </TableCell>
                 <TableCell className="dt-table__body__cell" align="right">
-                  {row.car.selling_date ?? '--'}
+                  {formatFullDate(row.car.selling_date) ?? '--'}
                 </TableCell>
                 <TableCell className="dt-table__body__cell" align="right">
                   <div>

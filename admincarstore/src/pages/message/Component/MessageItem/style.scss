@@ -18,6 +18,7 @@
   }
   &__share-item {
     display: flex;
+    flex-direction: column;
     background-color: white;
     padding: 12px;
     margin-block: 12px;

@@ -28,3 +28,11 @@ export const toNumber = (time) => {
 
   return new Date(time).getTime();
 }
+
+export const formatFullDate = (date) => {
+  if(!date) {
+    return "--";
+  }
+
+  return moment(date).format('HH:mm DD/MM/YYYY')
+} 

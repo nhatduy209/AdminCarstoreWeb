@@ -3,6 +3,7 @@ import './style.scss';
 // import { STATUS } from '../../../../Config/Status/Index';
 // import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { formatFullDate } from '../../../../helps/formatter';
 // import { changePaymentStatus } from '../../../../Redux/reducer/PaymentHistoryReducer';
 const BillForm = (selectedItem, setOpenPayment) => {
   const dispatch = useDispatch();
@@ -45,7 +46,17 @@ const BillForm = (selectedItem, setOpenPayment) => {
           <div className="booking-form-content__field">
             <div className="booking-form-content__field__label">Color</div>
             <div className="booking-form-content__field__input">
-              {selectedItem?.car?.color ?? '--'}
+              <div
+                style={{backgroundColor: selectedItem?.car?.color}}
+                className="selected-color"></div>
+            </div>
+          </div>
+          <div className="booking-form-content__field end-field">
+            <div className="booking-form-content__field__label">
+              Selling date
+            </div>
+            <div className="booking-form-content__field__input">
+              {formatFullDate(selectedItem?.car?.selling_date) ?? '--'}
             </div>
           </div>
         </div>
@@ -105,12 +116,12 @@ const BillForm = (selectedItem, setOpenPayment) => {
             </div>
           </div>
         </div>
-        <div className="form-group-btn">
-            <button className="cancel-btn" style={{marginBottom: "-12px"}}>
-              <div onClick={() => setOpenPayment(false)}>Cancel</div>
-            </button>
-          </div>
       </form>
+      <div className="form-group-btn mb-12">
+        <button className="cancel-btn" style={{marginBottom: '-12px'}}>
+          <div onClick={() => setOpenPayment(false)}>Cancel</div>
+        </button>
+      </div>
     </div>
   );
 };
