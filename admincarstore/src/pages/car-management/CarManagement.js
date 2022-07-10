@@ -19,7 +19,6 @@ import {
 } from '../../Redux/reducer/CarReducer';
 import CarForm from './Component/CarForm/CarForm';
 import {getCategory} from '../../Redux/reducer/CategoryReducer';
-import {ToastContainer} from 'react-toastify';
 import emptyList from '../../assets/img/empty-list.svg';
 
 const style = {
@@ -268,7 +267,7 @@ const CarManagement = () => {
       <Dialog open={deleteOpen}>
         <div className="car-form--main">
           <div className="car-form__header">
-            <div></div>
+            <div>Delete confirm</div>
             <Icon
               onClick={() => cancelDelete()}
               baseClassName="fas"
@@ -279,7 +278,7 @@ const CarManagement = () => {
           <div className="confirm-content">
             <img
               width={200}
-              src={selectedItem?.img ?? ''}
+              src={selectedItem?.img ?? ""}
               style={{margin: 'auto'}}
             />
             Are you sure you want to delete this car?

@@ -8,22 +8,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addColor} from '../../../../Redux/reducer/ColorReducer';
 import {validate} from '../../../../helps/validattion';
 import {toast} from 'react-toastify';
-import { ColorPicker, useColor } from "react-color-palette";
-import "react-color-palette/lib/css/styles.css";
-const defaultImage =
-  'http://autopro8.mediacdn.vn/2016/dscf0015-1476658861227.jpg';
-const SWATCHES_STYLES = {
-  marginTop: 4,
-  display: 'flex',
-  justifyContent: 'center',
-};
+import {ColorPicker, useColor} from 'react-color-palette';
+import 'react-color-palette/lib/css/styles.css';
+import defaultImage from '../../../../assets/img/default-car.svg';
 
 const ColorForm = (setColorOpen, colorOpen) => {
   const dispatch = useDispatch();
   const [img, setImg] = useState(null);
   const [url, setUrl] = useState(defaultImage);
   const [numberInStore, setNumberInStore] = useState(0);
-  const [color, setColor] = useColor("hex", "#121212");
+  const [color, setColor] = useColor('hex', '#121212');
 
   useEffect(() => {
     if (!colorOpen) {
@@ -78,25 +72,34 @@ const ColorForm = (setColorOpen, colorOpen) => {
           />
         </div>
         <div className="car-form--container">
-          <Avatar
-            className="color-form-content__img"
-            alt="Remy Sharp"
-            src={url}
-            sx={{width: 160, height: 160}}
-          />
-          <div className="color-form-content__img-picker">
-            Pick image
-            <input
-              required
-              onChange={upload}
-              type="file"
-              accept=".png, .jpg, .jpeg"
-              className="image-picker-btn"
+          <div className="row justify-around pa-12">
+            <ColorPicker
+              width={300}
+              height={200}
+              color={color}
+              onChange={setColor}
+              hideHSV
+              dark
             />
+            <div className="color-form-content__pick-img">
+              <Avatar
+                className="color-form-content__img"
+                alt="Remy Sharp"
+                src={url}
+                sx={{width: 300, height: 300}}
+              />
+              <div className="color-form-content__img-picker">
+                Pick image
+                <input
+                  required
+                  onChange={upload}
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  className="image-picker-btn"
+                />
+              </div>
+            </div>
           </div>
-          <ColorPicker width={456} height={228} 
-                   color={color} 
-                   onChange={setColor} hideHSV dark />
           <div className="color-form-content">
             <div className="car-form-content__field review-color">
               <div className="car-form-content__field__label">Color</div>
@@ -118,13 +121,13 @@ const ColorForm = (setColorOpen, colorOpen) => {
             </div>
           </div>
           <div className="form-group-btn">
-              <button className="cancel-btn">
-                <div onClick={() => setColorOpen(false)}>Cancel</div>
-              </button>
-              <button className="confirm-btn">
-                <div onClick={() => addCurentColor()}>Confirm</div>
-              </button>
-            </div>
+            <button className="cancel-btn">
+              <div onClick={() => setColorOpen(false)}>Cancel</div>
+            </button>
+            <button className="confirm-btn">
+              <div onClick={() => addCurentColor()}>Confirm</div>
+            </button>
+          </div>
         </div>
       </div>
     </Dialog>

@@ -105,6 +105,11 @@ const BillForm = (selectedItem, setOpenPayment) => {
             </div>
           </div>
         </div>
+        <div className="form-group-btn">
+            <button className="cancel-btn" style={{marginBottom: "-12px"}}>
+              <div onClick={() => setOpenPayment(false)}>Cancel</div>
+            </button>
+          </div>
       </form>
     </div>
   );
