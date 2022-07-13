@@ -13,6 +13,7 @@ import {useEffect} from 'react';
 import {token_authen} from '../Config/Status/Key';
 import { login } from '../Redux/reducer/AccountReducer';
 import { STATUS } from '../Config/Status/Index';
+import { deCode } from '../common/Utils';
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,10 +25,10 @@ function App() {
     const tokenID = localStorage.getItem(token_authen);
     const email = localStorage.email;
     const password = localStorage.password;
-    if ((isLoggin === STATUS.NONE || isLoggin === STATUS.FAIL) && !tokenID) {
+    if (!(isLoggin === STATUS.SUCCESS || tokenID) || (password && password % 2 === 1)) {
       navigate('/login');
     } else if(email && password) {
-      dispatch(login({email, password}));
+      dispatch(login({email, password: deCode(password)}));
     }
   }, [isLoggin]);
 

@@ -7,6 +7,7 @@ import DeleteService from '../../Service/DeleteService';
 import {token_authen} from '../../Config/Status/Key';
 import {toast} from 'react-toastify';
 import {uploadImageToStorage} from '../../common/PushImage';
+import { enCode } from '../../common/Utils';
 
 const initialState = {
   account: {
@@ -137,7 +138,7 @@ export const accountReducer = createSlice({
         state.account.isLoggin = STATUS.SUCCESS;
         localStorage.setItem(token_authen, action.payload.data.token);
         localStorage.setItem('email', action.payload.data.email);
-        localStorage.setItem('password', action.payload.data.password);
+        localStorage.setItem('password', enCode(action.payload.data.password));
       } else {
         state.account.isLoggin = STATUS.FAIL;
       }

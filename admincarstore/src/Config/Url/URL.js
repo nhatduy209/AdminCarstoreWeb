@@ -1,5 +1,5 @@
 export const URL_HEROKU = 'https://nodejs-cars.herokuapp.com/';
-export const URL_NGROK = 'https://abc6-2402-800-6375-dc36-415f-61a3-1795-8dad.ngrok.io/';
+export const URL_NGROK = 'https://f39f-2402-800-6375-dc36-c0de-2038-1728-a24b.ngrok.io/';
 export const URL_DEV = 'http://localhost:8000';
 export const URL_MESSAGE = 'http://localhost:8080';
 export const APP_URL = {

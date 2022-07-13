@@ -58,7 +58,7 @@ const HomeLayout = () => {
                   image: user[0].image,
                   content: dataFromServer.data,
                   type: 'message',
-                  handleClick: () => navigate('/booking')
+                  handleClick: () => navigate('/message')
                 }),
                 {
                   position: toast.POSITION.TOP_RIGHT,
