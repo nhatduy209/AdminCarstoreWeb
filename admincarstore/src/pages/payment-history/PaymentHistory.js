@@ -244,7 +244,7 @@ const PaymentHistory = () => {
               sx={{fontSize: 24}}
             />
           </div>
-          {BillForm(selectedItem)}
+          {BillForm(selectedItem, setOpen)}
         </div>
       </Dialog>
     </div>
